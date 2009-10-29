@@ -4,9 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>abid.password</groupId>
-	<artifactId>MutablePassword</artifactId>
-	<name>MutablePassword</name>
+	<artifactId>mutable-password</artifactId>
 	<version>1.0-SNAPSHOT</version>
+    
+	<name>Mutable Password</name>
 	<description>Mutable passwords allows you to create expressions as a password which can change based on time or any other factor.</description>
 	<url>http://code.google.com/p/mutable-password/</url>
 	<inceptionYear>2009</inceptionYear>
