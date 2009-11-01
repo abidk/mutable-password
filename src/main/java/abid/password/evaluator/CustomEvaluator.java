@@ -15,6 +15,7 @@
 
 package abid.password.evaluator;
 
+import java.util.Map;
 
 @Deprecated
 public class CustomEvaluator implements Evaluator {
@@ -72,10 +73,10 @@ public class CustomEvaluator implements Evaluator {
     return value;
   }
 
-
   @Override
-  public String evaluateExpression(String expression) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Integer> map) throws ParseException {
     return null;
   }
+
 
 }

@@ -7,14 +7,14 @@ import abid.password.Password;
 import abid.password.parameters.TimeType;
 import abid.password.types.ShiftPassword;
 import abid.password.types.SimplePassword;
-import abid.password.types.TimePassword;
+import abid.password.types.ExtendedPassword;
 import abid.password.types.TimeLockPassword;
 
 public class PasswordTest extends TestCase {
 
-  public void testTimePassword() {
+  public void testExtendedPassword() {
     TimeType timeType = TimeType.YEAR;
-    Password dynamicPassword = TimePassword.createPassword("abid", timeType);
+    Password dynamicPassword = ExtendedPassword.createPassword("abid", timeType);
 
     String confirmPassword = "abid" + timeType.getCalendarValue();
     assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
@@ -23,19 +23,30 @@ public class PasswordTest extends TestCase {
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
   
-  public void testTimePassword2() {
+  public void testExtendedPassword2() {
     TimeType timeType = TimeType.YEAR;
-    Password dynamicPassword = TimePassword.createPassword("abid", "year+1.5");
-
-    String confirmPassword = "abid" + ( timeType.getCalendarValue() + 1.5 );
-    //System.out.println(confirmPassword);
+    Password dynamicPassword = ExtendedPassword.createPassword("abid", "year+year");
+    
+    String confirmPassword = "abid" + ( timeType.getCalendarValue() +  timeType.getCalendarValue() );
     assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid" + timeType.getCalendarValue();
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
   
+  
+  public void testExtendedPassword3() {
+    TimeType timeType = TimeType.YEAR;
+    Password dynamicPassword = ExtendedPassword.createPassword("abid", "year+1.5");
+    
+    String confirmPassword = "abid" + ( timeType.getCalendarValue() + 1.5 );
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
 
+    String wrongPassword = "abid" + timeType.getCalendarValue();
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+  
+  
   public void testShiftPassword() {
     Password dynamicPassword = ShiftPassword.createPassword("abid", 1);
 
@@ -46,7 +57,7 @@ public class PasswordTest extends TestCase {
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testUnknownPasswordType() {
+  public void testShiftPassword2() {
     MutablePassword dynamicPassword = ShiftPassword.createPassword("abid", 1);
 
     assertEquals("shift", dynamicPassword.getType());
@@ -135,7 +146,7 @@ public class PasswordTest extends TestCase {
     assertEquals(p1.getClass(), m1.getClass());
     assertEquals(p1.getPassword(), m1.getPassword());
 
-    Password p2 = TimePassword.createPassword("abid", TimeType.HOUR);
+    Password p2 = ExtendedPassword.createPassword("abid", TimeType.HOUR);
     Password m2 = PasswordFactory.getInstance(p2.getPassword());
     assertEquals(p2.getClass(), m2.getClass());
     assertEquals(p2.getPassword(), m2.getPassword());

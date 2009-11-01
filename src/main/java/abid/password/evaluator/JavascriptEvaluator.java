@@ -15,18 +15,17 @@
 
 package abid.password.evaluator;
 
+import java.util.Map;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import abid.password.MutablePassword;
 import abid.password.parameters.TimeType;
 
 /**
  * This will take a expression and evaluate it.
  * 
- * TODO This will need to be made configurable once we have other paramters
- * other than time.
  * 
  * @author Abid
  * 
@@ -40,36 +39,40 @@ public class JavascriptEvaluator implements Evaluator {
     engine = manager.getEngineByName("js");
   }
 
-  public String evaluateExpression(MutablePassword password) throws ParseException {
-    return evaluateExpression(password);
-  }
-
   @Override
-  public String evaluateExpression(String expression) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Integer> map) throws ParseException {
     try {
-      // set time parameters
-      // might have other parameters so this bit will need to be made
-      // configurable
-      for (TimeType timePassword : TimeType.values()) {
-        engine.put(timePassword.getType(), timePassword.getCalendarValue());
+      for (String key : map.keySet()) {
+        Integer value = map.get(key);
+        // System.out.println( value + " " + key );
+        engine.put(key, value);
       }
 
       // evaluate and get result
       String result = String.valueOf(engine.eval(expression));
-      return result;
+      // System.out.println(fixDecimalOutput(result));
+      return fixDecimalOutput(result);
     } catch (ScriptException e) {
       throw new ParseException(e);
     }
   }
 
+  /*
+   * This fixes the problem where you add two integers and you get a float which
+   * ends with '.0'
+   * 
+   */
+  private String fixDecimalOutput(String evaluation) {
+    return evaluation.replace(".0", "");
+  }
+
   public static void main(String[] args) {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     try {
-      String result = evaluator.evaluateExpression("hour>=0&&hour<=21");
+      String result = evaluator.evaluateExpression("2009+2009.2", TimeType.getValues());
       System.out.println(result);
     } catch (ParseException e) {
       e.printStackTrace();
     }
   }
-
 }

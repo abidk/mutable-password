@@ -23,7 +23,7 @@ import java.util.List;
 import abid.password.types.ShiftPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
-import abid.password.types.TimePassword;
+import abid.password.types.ExtendedPassword;
 
 /**
  * Method which allows you to select the password type object by passing it a
@@ -40,7 +40,7 @@ public class PasswordFactory {
     // add the existing types
     mutablePasswords.add(ShiftPassword.class);
     mutablePasswords.add(TimeLockPassword.class);
-    mutablePasswords.add(TimePassword.class);
+    mutablePasswords.add(ExtendedPassword.class);
   }
 
   /**
@@ -96,9 +96,12 @@ public class PasswordFactory {
     mutablePasswords.remove(passwordClass);
   }
 
-  public static void printClasses() {
-    for (Class<? extends MutablePassword> mutablePassword : mutablePasswords) {
-      System.out.println(mutablePassword);
-    }
+  /**
+   * Returns a list of all the mutables passwords.
+   * 
+   * @return
+   */
+  public static List<Class<? extends MutablePassword>> getMutablePasswordList() {
+    return mutablePasswords;
   }
 }
