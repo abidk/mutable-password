@@ -29,8 +29,11 @@ public enum TimeType {
   // not including a 'second' time enum, as it would make it impossible to guess
   // the password.
 
-  YEAR("year", Calendar.YEAR), MONTH("month", Calendar.MONTH), DAY("day", Calendar.DAY_OF_MONTH), HOUR("hour", Calendar.HOUR_OF_DAY), MINUTE("minute",
-      Calendar.MINUTE);
+  YEAR("year", Calendar.YEAR), 
+  MONTH("month", Calendar.MONTH), 
+  DAY("day", Calendar.DAY_OF_MONTH), 
+  HOUR("hour", Calendar.HOUR_OF_DAY), 
+  MINUTE("minute", Calendar.MINUTE);
 
   private String textField;
   private int calendarField;
