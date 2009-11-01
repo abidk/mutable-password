@@ -16,6 +16,7 @@
 package abid.password;
 
 /**
+ * Basic password
  * 
  * @author Abid
  * 
@@ -35,4 +36,7 @@ public abstract class Password {
     return password;
   }
 
+  public String toString() {
+    return getPassword();
+  }
 }

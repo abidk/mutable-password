@@ -38,6 +38,10 @@ public class ShiftPassword extends MutablePassword {
     super(password);
   }
 
+  public ShiftPassword(String text, MutableBlock block) {
+    super(text, block);
+  }
+
   private String getShiftedPassword(int shiftBy) {
     String shiftPassword = "";
     for (char character : getText().toCharArray()) {
@@ -62,13 +66,10 @@ public class ShiftPassword extends MutablePassword {
     // parser needs to be customisable
     Evaluator parsable = new JavascriptEvaluator();
     try {
-      String evaluation = parsable.evaluateExpression(getExpression());
+      String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues());
 
       if (evaluation != null) {
-        // need to convert this into float then get int value, otherwise we get
-        // the value 1.0
-        int shiftBy = Float.valueOf(evaluation).intValue();
-
+        int shiftBy = Integer.valueOf(evaluation);
         String shiftedPassword = getShiftedPassword(shiftBy);
         return shiftedPassword.equals(confirmPassword);
       }
@@ -85,13 +86,13 @@ public class ShiftPassword extends MutablePassword {
   }
 
   public static MutablePassword createPassword(String text, TimeType timeType) {
-    MutableBlock block = new MutableBlock(text, PASSWORD_TYPE, timeType.getType());
-    return new ShiftPassword(block.toString());
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeType.getTextField());
+    return new ShiftPassword(text, block);
   }
 
   public static MutablePassword createPassword(String text, int shiftValue) {
-    MutableBlock block = new MutableBlock(text, PASSWORD_TYPE, shiftValue);
-    return new ShiftPassword(block.toString());
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, shiftValue);
+    return new ShiftPassword(text, block);
   }
 
 }

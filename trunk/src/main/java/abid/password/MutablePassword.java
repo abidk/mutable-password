@@ -27,18 +27,30 @@ public abstract class MutablePassword extends Password {
   public abstract String getPasswordType();
 
   private MutableBlock mutableBlock;
+  private String text;
+
+  public MutablePassword(String text, MutableBlock mutableBlock) {
+    super(text + mutableBlock);
+    this.text = text;
+    this.mutableBlock = mutableBlock;
+  }
 
   public MutablePassword(String password) {
     super(password);
-    mutableBlock = new MutableBlock(password);
+    int startTag = password.indexOf(MutableBlock.MUTABLE_BLOCK_START_TAG);
+    if (startTag != -1) {
+      this.text = password.substring(0, startTag);
+      this.mutableBlock = new MutableBlock(password);
+    }
   }
 
   /**
+   * Returns the static text of the password.
    * 
    * @return static password text
    */
   public String getText() {
-    return mutableBlock.getText();
+    return text;
   }
 
   /**
@@ -46,7 +58,7 @@ public abstract class MutablePassword extends Password {
    * @return password type
    */
   public String getType() {
-    return mutableBlock.getType();
+    return mutableBlock != null ? mutableBlock.getType() : null;
   }
 
   /**
@@ -54,6 +66,6 @@ public abstract class MutablePassword extends Password {
    * @return password expression
    */
   public String getExpression() {
-    return mutableBlock.getExpression();
+    return mutableBlock != null ? mutableBlock.getExpression() : null;
   }
 }

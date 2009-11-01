@@ -18,9 +18,6 @@ package abid.password;
 /**
  * Allows you to create and parse the mutable block.
  * 
- * TODO move 'text' variable into the MutablePassword Class, so this class only
- * deals with the mutable bit.
- * 
  * @author Abid
  * 
  */
@@ -30,18 +27,17 @@ public class MutableBlock {
   public static final String EXPRESSION_START_TAG = "{";
   public static final String EXPRESSION_END_TAG = "}";
 
-  private String text;
+  // password type
   private String type;
 
   // expression for password
   private String expression;
 
-  public MutableBlock(String text, String type, int value) {
-    this(text, type, String.valueOf(value));
+  public MutableBlock(String type, int value) {
+    this(type, String.valueOf(value));
   }
 
-  public MutableBlock(String text, String type, String expression) {
-    this.text = text;
+  public MutableBlock(String type, String expression) {
     this.type = type;
     this.expression = expression;
   }
@@ -63,7 +59,7 @@ public class MutableBlock {
       if (expressionStartTag != -1 && expressionEndTag != -1) {
 
         // get the static password
-        this.text = password.substring(0, startTag);
+        // this.text = password.substring(0, startTag);
 
         // get the type of password e.g. time
         this.type = mutateBlock.substring(0, expressionStartTag);
@@ -72,15 +68,6 @@ public class MutableBlock {
         this.expression = mutateBlock.substring(expressionStartTag + 1, expressionEndTag);
       }
     }
-  }
-
-  /**
-   * Returns the static text of the password.
-   * 
-   * @return static password text
-   */
-  public String getText() {
-    return text;
   }
 
   /**
@@ -105,6 +92,6 @@ public class MutableBlock {
   public String toString() {
     // [time{year}]
     String mutableBlock = MUTABLE_BLOCK_START_TAG + type + EXPRESSION_START_TAG + expression + EXPRESSION_END_TAG + MUTABLE_BLOCK_END_TAG;
-    return text + mutableBlock;
+    return mutableBlock;
   }
 }

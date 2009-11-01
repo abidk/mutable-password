@@ -28,11 +28,11 @@ import abid.password.parameters.TimeType;
  * @author Abid
  *
  */
-public class TimePassword extends MutablePassword {
+public class ExtendedPassword extends MutablePassword {
 
-  public static final String PASSWORD_TYPE = "time";
+  public static final String PASSWORD_TYPE = "extend";
 
-  public TimePassword(String password) {
+  public ExtendedPassword(String password) {
     super(password);
   }
 
@@ -41,10 +41,11 @@ public class TimePassword extends MutablePassword {
     // parser needs to be customisable
     Evaluator parsable = new JavascriptEvaluator();
     try {
-      String evaluation = parsable.evaluateExpression(getExpression());
-
+      String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues() );
+      
       if (evaluation != null) {
         String evaluatedPassword = getText() + evaluation;
+        //System.out.println( "==>" + evaluatedPassword);
         return evaluatedPassword.equals(confirmPassword);
       }
     } catch (ParseException e) {
@@ -59,12 +60,12 @@ public class TimePassword extends MutablePassword {
   }
 
   public static MutablePassword createPassword(String text, TimeType timeValue) {
-    return createPassword(text, timeValue.getType());
+    return createPassword(text, timeValue.getTextField());
   }
 
   public static MutablePassword createPassword(String text, String expression) {
-    String mutablePassword = text + "[" + TimePassword.PASSWORD_TYPE + "{" + expression + "}]";
-    return new TimePassword(mutablePassword);
+    String mutablePassword = text + "[" + ExtendedPassword.PASSWORD_TYPE + "{" + expression + "}]";
+    return new ExtendedPassword(mutablePassword);
   }
 
 }

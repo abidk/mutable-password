@@ -15,6 +15,7 @@
 
 package abid.password.evaluator;
 
+import java.util.Map;
 
 /**
  * Allows you to implement this interface to create other evaluators e.g.
@@ -25,6 +26,6 @@ package abid.password.evaluator;
  */
 public interface Evaluator {
 
-  public abstract String evaluateExpression(String expression) throws ParseException;
+  public abstract String evaluateExpression(String expression, Map<String, Integer> map) throws ParseException;
 
 }

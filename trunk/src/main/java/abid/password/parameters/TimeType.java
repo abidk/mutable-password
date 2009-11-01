@@ -16,55 +16,59 @@
 package abid.password.parameters;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Time parameters which can be used in the password expressions.
+ * 
  * @author Abid
- *
+ * 
  */
 public enum TimeType {
-  // not including a 'second' time enum, as it would make it impossible to guess the password.
-  
-  YEAR("year", Calendar.YEAR), 
-  MONTH("month", Calendar.MONTH), 
-  DAY("day", Calendar.DAY_OF_MONTH), 
-  HOUR("hour", Calendar.HOUR_OF_DAY), 
-  MINUTE("minute", Calendar.MINUTE);
+  // not including a 'second' time enum, as it would make it impossible to guess
+  // the password.
 
-  private String type;
-  private int field;
+  YEAR("year", Calendar.YEAR), MONTH("month", Calendar.MONTH), DAY("day", Calendar.DAY_OF_MONTH), HOUR("hour", Calendar.HOUR_OF_DAY), MINUTE("minute",
+      Calendar.MINUTE);
 
-  private TimeType(String type, int calendarType) {
-    this.type = type;
-    this.field = calendarType;
+  private String textField;
+  private int calendarField;
+
+  private TimeType(String textField, int calendarField) {
+    this.textField = textField;
+    this.calendarField = calendarField;
   }
 
-  public String getType() {
-    return type;
-  }
-
-  public int getField() {
-    return field;
+  public String getTextField() {
+    return textField;
   }
 
   public int getCalendarValue() {
     Calendar calendar = Calendar.getInstance();
-    return calendar.get(field);
+    return calendar.get(calendarField);
   }
 
-  public static int getCalendarValue( String type ) {
+  public static int getCalendarValue(String type) {
     for (TimeType timeType : TimeType.values()) {
-      if( timeType.getType().equals(type )) {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(timeType.getField());
+      if (timeType.getTextField().equals(type)) {
+        return timeType.getCalendarValue();
       }
     }
-    
+
     return -1;
   }
-  
+
+  public static Map<String, Integer> getValues() {
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    for (TimeType timeType : TimeType.values()) {
+      map.put(timeType.getTextField(), timeType.getCalendarValue());
+    }
+    return map;
+  }
+
   public String toString() {
-    return type + ": " + getCalendarValue();
+    return textField + ": " + getCalendarValue();
   }
 
   public static void main(String[] args) {
