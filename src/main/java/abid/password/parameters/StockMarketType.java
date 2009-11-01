@@ -16,6 +16,7 @@ import abid.password.util.StreamManagement;
  * Please be advised this could stop working at any time and is just an
  * experimental class. Use at your own risk!
  * 
+ * 
  * @author Abid
  * 
  */
@@ -47,6 +48,7 @@ public enum StockMarketType {
       String csvData = StreamManagement.convertStreamToString(inputStream);
       String[] splitData = csvData.split(",");
 
+      //TODO fix the index value being converted into a integer.
       Integer value = Integer.valueOf(splitData[1]);
       return value;
     } catch (IOException e) {
