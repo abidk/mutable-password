@@ -31,10 +31,11 @@ public enum TimeType {
 
   YEAR("year", Calendar.YEAR), 
   MONTH("month", Calendar.MONTH), 
-  DAY("day", Calendar.DAY_OF_MONTH), 
+  DAY_OF_MONTH("dayOfMonth", Calendar.DAY_OF_MONTH), 
   HOUR("hour", Calendar.HOUR_OF_DAY), 
-  MINUTE("minute", Calendar.MINUTE);
-
+  MINUTE("minute", Calendar.MINUTE),
+  DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK);
+  
   private String textField;
   private int calendarField;
 
