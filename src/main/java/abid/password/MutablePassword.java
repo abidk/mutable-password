@@ -31,6 +31,8 @@ public abstract class MutablePassword extends Password {
 
   public MutablePassword(String text, MutableBlock mutableBlock) {
     super(text + mutableBlock);
+    // TODO escape the brackets in the text so it does not conflict with
+    // mutableblock tags.
     this.text = text;
     this.mutableBlock = mutableBlock;
   }
