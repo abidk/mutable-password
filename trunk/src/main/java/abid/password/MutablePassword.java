@@ -70,4 +70,12 @@ public abstract class MutablePassword extends Password {
   public String getExpression() {
     return mutableBlock != null ? mutableBlock.getExpression() : null;
   }
+
+  /**
+   * 
+   * @return mutable block
+   */
+  public MutableBlock getMutableBlock() {
+    return mutableBlock;
+  }
 }

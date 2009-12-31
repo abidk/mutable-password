@@ -17,18 +17,20 @@ package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
+import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeType;
 
 /**
- * Creates a password which can only be used at a specific time. 
+ * Creates a password which can only be used at a specific time.
  * 
- * e.g. pass[timelock{minute, 1, 25}] - password only works between 1 and 25 minutes
+ * e.g. pass[timelock{minute, 1, 25}] - password only works between 1 and 25
+ * minutes
  * 
  * @author Abid
- *
+ * 
  */
 public class TimeLockPassword extends MutablePassword {
 
@@ -43,16 +45,16 @@ public class TimeLockPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) {
-    String password = getText();
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
+    String passwordText = getText();
     // check if passwords match first
-    if (confirmPassword.equals(password)) {
+    if (confirmPassword.equals(passwordText)) {
       Evaluator parsable = new JavascriptEvaluator();
       try {
         String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues());
         return evaluation.equalsIgnoreCase("true");
       } catch (ParseException e) {
-        e.printStackTrace();
+        throw new PasswordException(e);
       }
     }
     return false;
@@ -63,10 +65,15 @@ public class TimeLockPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  public static MutablePassword createPassword(String text, TimeType timeType, int start, int end) {
+  public static MutableBlock createMutableBlock(TimeType timeType, int start, int end) {
     String type = timeType.getTextField();
     String expression = type + ">=" + start + "&&" + type + "<=" + end;
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
+    return block;
+  }
+
+  public static MutablePassword createPassword(String text, TimeType timeType, int start, int end) {
+    MutableBlock block = createMutableBlock(timeType, start, end);
     return new TimeLockPassword(text, block);
   }
 

@@ -17,13 +17,14 @@ package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
+import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeType;
 
 /**
- * Creates a Ceasar cipher type password. 
+ * Creates a Ceasar cipher type password.
  * 
  * e.g. pass[shift{1}] or pass[shift{month}]
  * 
@@ -32,7 +33,9 @@ import abid.password.parameters.TimeType;
  */
 public class ShiftPassword extends MutablePassword {
 
-  public static final String PASSWORD_TYPE = "shift";
+  //public String PASSWORD_TYPE = getClass().getSimpleName();
+  
+  public static final String PASSWORD_TYPE =  "shift";
 
   public ShiftPassword(String password) {
     super(password);
@@ -42,7 +45,13 @@ public class ShiftPassword extends MutablePassword {
     super(text, block);
   }
 
-  private String getShiftedPassword(int shiftBy) {
+  /**
+   * This will shift the alphabet (A-Z) by the argument value.
+   * 
+   * @param shiftBy
+   * @return shifted value
+   */
+  public String getShiftedPassword(int shiftBy) {
     String shiftPassword = "";
     for (char character : getText().toCharArray()) {
       if (character >= 65 && character <= 90) {
@@ -62,7 +71,7 @@ public class ShiftPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) {
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
     // parser needs to be customisable
     Evaluator parsable = new JavascriptEvaluator();
     try {
@@ -73,9 +82,8 @@ public class ShiftPassword extends MutablePassword {
         String shiftedPassword = getShiftedPassword(shiftBy);
         return shiftedPassword.equals(confirmPassword);
       }
-
     } catch (ParseException e) {
-      e.printStackTrace();
+      throw new PasswordException(e);
     }
     return false;
   }
@@ -85,13 +93,23 @@ public class ShiftPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  public static MutablePassword createPassword(String text, TimeType timeType) {
+  public static MutableBlock createMutableBlock(TimeType timeType) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeType.getTextField());
+    return block;
+  }
+
+  public static MutableBlock createMutableBlock(int shiftValue) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, shiftValue);
+    return block;
+  }
+
+  public static MutablePassword createPassword(String text, TimeType timeType) {
+    MutableBlock block = createMutableBlock(timeType);
     return new ShiftPassword(text, block);
   }
 
   public static MutablePassword createPassword(String text, int shiftValue) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, shiftValue);
+    MutableBlock block = createMutableBlock(shiftValue);
     return new ShiftPassword(text, block);
   }
 

@@ -25,7 +25,7 @@ public abstract class Password {
 
   private String password;
 
-  public abstract boolean confirmPassword(String confirmPassword);
+  public abstract boolean confirmPassword(String confirmPassword) throws PasswordException;
 
   public Password(String password) {
     // set this as the original password

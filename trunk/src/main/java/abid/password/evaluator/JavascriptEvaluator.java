@@ -26,6 +26,9 @@ import abid.password.parameters.TimeType;
 /**
  * This will take a expression and evaluate it.
  * 
+ * This uses Java version 6 JavaScript features, to make this compatible with Java
+ * version 5, remove this class and use beanshell instead.
+ * 
  * 
  * @author Abid
  * 
@@ -40,10 +43,10 @@ public class JavascriptEvaluator implements Evaluator {
   }
 
   @Override
-  public String evaluateExpression(String expression, Map<String, Integer> map) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
     try {
       for (String key : map.keySet()) {
-        Integer value = map.get(key);
+        Number value = map.get(key);
         // System.out.println( value + " " + key );
         engine.put(key, value);
       }
@@ -60,7 +63,6 @@ public class JavascriptEvaluator implements Evaluator {
   /*
    * This fixes the problem where you add two integers and you get a float which
    * ends with '.0'
-   * 
    */
   private String fixDecimalOutput(String evaluation) {
     return evaluation.replace(".0", "");
