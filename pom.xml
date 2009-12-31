@@ -4,7 +4,7 @@
 
 	<groupId>abid.password</groupId>
 	<artifactId>mutable-password</artifactId>
-	<version>1.2</version>
+	<version>1.3-SNAPSHOT</version>
 
 	<name>Mutable Password</name>
 	<description>Mutable passwords allows you to create expressions as a password which can change based on time or any other factor.</description>
@@ -26,9 +26,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://mutable-password.googlecode.com/svn/tags/mutable-password-1.2</connection>
-		<developerConnection>scm:svn:https://mutable-password.googlecode.com/svn/tags/mutable-password-1.2</developerConnection>
-		<url>https://mutable-password.googlecode.com/svn/tags/mutable-password-1.2</url>
+		<connection>scm:svn:http://mutable-password.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://mutable-password.googlecode.com/svn/trunk</developerConnection>
+		<url>https://mutable-password.googlecode.com/svn/trunk</url>
 	</scm>
 
 
