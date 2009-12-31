@@ -74,7 +74,7 @@ public class CustomEvaluator implements Evaluator {
   }
 
   @Override
-  public String evaluateExpression(String expression, Map<String, Integer> map) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
     return null;
   }
 

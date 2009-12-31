@@ -22,10 +22,10 @@ package abid.password;
  * 
  */
 public class MutableBlock {
-  public static final String MUTABLE_BLOCK_START_TAG = "[";
-  public static final String MUTABLE_BLOCK_END_TAG = "]";
-  public static final String EXPRESSION_START_TAG = "{";
-  public static final String EXPRESSION_END_TAG = "}";
+  public static final char MUTABLE_BLOCK_START_TAG = '[';
+  public static final char MUTABLE_BLOCK_END_TAG = ']';
+  public static final char EXPRESSION_START_TAG = '{';
+  public static final char EXPRESSION_END_TAG = '}';
 
   // password type
   private String type;
@@ -50,11 +50,11 @@ public class MutableBlock {
   public MutableBlock(String password) {
     // check to see if we have an mutable block
     int startTag = password.indexOf(MUTABLE_BLOCK_START_TAG);
-    int endTag = password.indexOf(MUTABLE_BLOCK_END_TAG);
+    int endTag = password.lastIndexOf(MUTABLE_BLOCK_END_TAG);
     if (startTag != -1 && endTag != -1) {
       String mutateBlock = password.substring(startTag + 1, endTag);
       int expressionStartTag = mutateBlock.indexOf(EXPRESSION_START_TAG);
-      int expressionEndTag = mutateBlock.indexOf(EXPRESSION_END_TAG);
+      int expressionEndTag = mutateBlock.lastIndexOf(EXPRESSION_END_TAG);
 
       if (expressionStartTag != -1 && expressionEndTag != -1) {
 

@@ -15,18 +15,22 @@
 
 package abid.password.types;
 
+import abid.password.MutableBlock;
 import abid.password.MutablePassword;
+import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
+import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeType;
+
 /**
- * Allows you to concatenate the time at the end of the static password. 
+ * Allows you to concatenate a parameter at the end of the static password.
  * 
- * e.g. pass[time{year}] = pass2009
+ * e.g. pass[extend{year}] = pass2009
  * 
  * @author Abid
- *
+ * 
  */
 public class ExtendedPassword extends MutablePassword {
 
@@ -37,19 +41,19 @@ public class ExtendedPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) {
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
     // parser needs to be customisable
     Evaluator parsable = new JavascriptEvaluator();
     try {
-      String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues() );
-      
+      String evaluation = parsable.evaluateExpression(getExpression(), ParameterFactory.getAllParamterData());
+
       if (evaluation != null) {
         String evaluatedPassword = getText() + evaluation;
-        //System.out.println( "==>" + evaluatedPassword);
+        // System.out.println( "==>" + evaluatedPassword);
         return evaluatedPassword.equals(confirmPassword);
       }
     } catch (ParseException e) {
-      e.printStackTrace();
+      throw new PasswordException(e);
     }
     return false;
   }
@@ -59,12 +63,23 @@ public class ExtendedPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
+  public static MutableBlock createMutableBlock(String expression) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
+    return block;
+  }
+
+  public static MutableBlock createMutableBlock(TimeType timeValue) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
+    return block;
+  }
+
   public static MutablePassword createPassword(String text, TimeType timeValue) {
     return createPassword(text, timeValue.getTextField());
   }
 
   public static MutablePassword createPassword(String text, String expression) {
-    String mutablePassword = text + "[" + ExtendedPassword.PASSWORD_TYPE + "{" + expression + "}]";
+    MutableBlock block = createMutableBlock(expression);
+    String mutablePassword = text + block;
     return new ExtendedPassword(mutablePassword);
   }
 

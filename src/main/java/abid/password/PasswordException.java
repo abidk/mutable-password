@@ -13,19 +13,20 @@
  *  limitations under the License.
  */
 
-package abid.password.evaluator;
+package abid.password;
 
-import java.util.Map;
+public class PasswordException extends Exception {
 
-/**
- * Allows you to implement this interface to create other evaluators e.g.
- * beanshell
- * 
- * @author Abid
- * 
- */
-public interface Evaluator {
+  public PasswordException(String message) {
+    super(message);
+  }
 
-  public abstract String evaluateExpression(String expression, Map<String, Number> map) throws ParseException;
+  public PasswordException(Throwable cause) {
+    super(cause);
+  }
+
+  public PasswordException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

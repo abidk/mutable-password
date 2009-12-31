@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.ShiftPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
@@ -41,6 +42,7 @@ public class PasswordFactory {
     mutablePasswords.add(ShiftPassword.class);
     mutablePasswords.add(TimeLockPassword.class);
     mutablePasswords.add(ExtendedPassword.class);
+    mutablePasswords.add(ExtendedTimeLockPassword.class);
   }
 
   /**
@@ -81,10 +83,11 @@ public class PasswordFactory {
    * 
    * @param passwordClass
    */
-  public static void addMutablePassword(Class<? extends MutablePassword> passwordClass) {
+  public static boolean addMutablePassword(Class<? extends MutablePassword> passwordClass) {
     if (!mutablePasswords.contains(passwordClass)) {
-      mutablePasswords.add(passwordClass);
+      return mutablePasswords.add(passwordClass);
     }
+    return false;
   }
 
   /**
@@ -92,12 +95,12 @@ public class PasswordFactory {
    * 
    * @param passwordClass
    */
-  public static void removeMutablePassword(Class<? extends MutablePassword> passwordClass) {
-    mutablePasswords.remove(passwordClass);
+  public static boolean removeMutablePassword(Class<? extends MutablePassword> passwordClass) {
+    return mutablePasswords.remove(passwordClass);
   }
 
   /**
-   * Returns a list of all the mutables passwords.
+   * Returns a list of all the mutable passwords.
    * 
    * @return
    */

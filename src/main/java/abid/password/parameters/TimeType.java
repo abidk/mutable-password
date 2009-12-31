@@ -26,16 +26,16 @@ import java.util.Map;
  * 
  */
 public enum TimeType {
-  // not including a 'second' time enum, as it would make it impossible to guess
-  // the password.
 
-  YEAR("year", Calendar.YEAR), 
+  YEAR("year", Calendar.YEAR),
+  WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR),
   MONTH("month", Calendar.MONTH), 
   DAY_OF_MONTH("dayOfMonth", Calendar.DAY_OF_MONTH), 
   HOUR("hour", Calendar.HOUR_OF_DAY), 
   MINUTE("minute", Calendar.MINUTE),
-  DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK);
-  
+  DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK),
+  SECOND("second", Calendar.SECOND);
+
   private String textField;
   private int calendarField;
 
@@ -63,8 +63,8 @@ public enum TimeType {
     return -1;
   }
 
-  public static Map<String, Integer> getValues() {
-    Map<String, Integer> map = new HashMap<String, Integer>();
+  public static Map<String, Number> getValues() {
+    Map<String, Number> map = new HashMap<String, Number>();
     for (TimeType timeType : TimeType.values()) {
       map.put(timeType.getTextField(), timeType.getCalendarValue());
     }
