@@ -16,13 +16,10 @@
 package abid.password.types;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.PasswordFactory;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
@@ -40,56 +37,37 @@ public class ExtendedTimeLockPassword extends MutablePassword {
 
   public static final String PASSWORD_TYPE = "extendedTimeLock";
 
-  private List<MutablePassword> mutablePasswordTypes = new ArrayList<MutablePassword>();
-
   public ExtendedTimeLockPassword(String password) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
     super(password);
-    parseExpression();
-  }
-
-  private void parseExpression() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException  {
-    String expression = getExpression();
-
-    int startTag = -1;
-
-    for (int x = 0; x < expression.length(); x++) {
-      if (expression.charAt(x) == MutableBlock.MUTABLE_BLOCK_START_TAG) {
-        startTag = x;
-      }
-
-      if (expression.charAt(x) == MutableBlock.MUTABLE_BLOCK_END_TAG) {
-        if (startTag != -1) {
-          MutableBlock mutableBlock = new MutableBlock(expression.substring(startTag, x + 1));
-          MutablePassword password = (MutablePassword) PasswordFactory.getInstance(mutableBlock.toString());
-          mutablePasswordTypes.add(password);
-          startTag = -1;
-        }
-      }
-    }
   }
 
   @Override
   public boolean confirmPassword(String confirmPassword) throws PasswordException {
+    String[] expressions = getExpression().split(",");
+
+    if (expressions.length < 2) {
+      throw new PasswordException("The expression for 'ExtendTimeLockPassword' is incorrect.");
+    }
+
+    String extendTimeExpression = expressions[0];
+    String lockExpression = expressions[1];
+
     try {
       // check if passwords match first
-      for (MutablePassword password : mutablePasswordTypes) {
-        Evaluator parsable = new JavascriptEvaluator();
+      Evaluator parsable = new JavascriptEvaluator();
 
-        String evaluation = parsable.evaluateExpression(password.getExpression(), ParameterFactory.getAllParamterData());
+      // check the extend bit is correct
+      String extendEvaluation = parsable.evaluateExpression(extendTimeExpression, ParameterFactory.getAllParamterData());
+      String evaluatedPassword = getText() + extendEvaluation;
+      if (!evaluatedPassword.equals(confirmPassword)) {
+        return false;
+      }
 
-        if (password.getType().equals(ExtendedPassword.PASSWORD_TYPE)) {
-          String evaluatedPassword = getText() + evaluation;
-
-          if (!evaluatedPassword.equals(confirmPassword)) {
-            return false;
-          }
-        } else if (password.getType().equals(TimeLockPassword.PASSWORD_TYPE)) {
-          if (!evaluation.equalsIgnoreCase("true")) {
-            return false;
-          }
-        }
-
+      // check the time expression is correct
+      String timeEvaluation = parsable.evaluateExpression(lockExpression, ParameterFactory.getAllParamterData());
+      if (!timeEvaluation.equalsIgnoreCase("true")) {
+        return false;
       }
     } catch (ParseException e) {
       throw new PasswordException(e);
@@ -103,10 +81,9 @@ public class ExtendedTimeLockPassword extends MutablePassword {
   }
 
   public static MutableBlock createMutableBlock(TimeType extendedTimeValue, TimeType lockTimeType, int lockStartTime, int lockEndTime) {
-    MutableBlock extendedMutableBlock = ExtendedPassword.createMutableBlock(extendedTimeValue);
-    MutableBlock timeLockMutableBlock = TimeLockPassword.createMutableBlock(lockTimeType, lockStartTime, lockEndTime);
-
-    String expression = extendedMutableBlock.toString() + timeLockMutableBlock.toString();
+    String extendExpression = extendedTimeValue.getTextField();
+    String lockExpression = lockTimeType.getTextField() + ">=" + lockStartTime + "&&" + lockTimeType.getTextField() + "<=" + lockEndTime;
+    String expression = extendExpression + "," + lockExpression;
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
     return block;
   }
