@@ -21,7 +21,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 
 /**
  * Creates a password which can only be used at a specific time.
@@ -51,7 +51,7 @@ public class TimeLockPassword extends MutablePassword {
     if (confirmPassword.equals(passwordText)) {
       Evaluator parsable = new JavascriptEvaluator();
       try {
-        String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues());
+        String evaluation = parsable.evaluateExpression(getExpression(), TimeParameter.getValues());
         return evaluation.equalsIgnoreCase("true");
       } catch (ParseException e) {
         throw new PasswordException(e);
@@ -65,14 +65,14 @@ public class TimeLockPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  public static MutableBlock createMutableBlock(TimeType timeType, int start, int end) {
+  public static MutableBlock createMutableBlock(TimeParameter timeType, int start, int end) {
     String type = timeType.getTextField();
     String expression = type + ">=" + start + "&&" + type + "<=" + end;
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeType timeType, int start, int end) {
+  public static MutablePassword createPassword(String text, TimeParameter timeType, int start, int end) {
     MutableBlock block = createMutableBlock(timeType, start, end);
     return new TimeLockPassword(text, block);
   }

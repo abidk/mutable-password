@@ -22,15 +22,15 @@ import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.PasswordFactory;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedTimeLockPassword;
+import abid.password.types.PasswordFactory;
 
 public class ExtendedTimeLockPasswordTest extends TestCase {
 
   public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
-    Password password = ExtendedTimeLockPassword.createPassword("abid", TimeType.YEAR, TimeType.HOUR, 0, 24);
+    Password password = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
     assertEquals(ExtendedTimeLockPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
@@ -39,8 +39,8 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
   public void testPassword() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException,
       NoSuchMethodException, PasswordException {
 
-    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeType.YEAR, TimeType.HOUR, 0, 24);
-    assertEquals(true, comboPassword.confirmPassword("abid" + (TimeType.YEAR).getCalendarValue()));
+    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
+    assertEquals(true, comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
   }
 
 }

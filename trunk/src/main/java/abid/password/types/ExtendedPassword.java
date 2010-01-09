@@ -22,7 +22,7 @@ import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 
 /**
  * Allows you to concatenate a parameter at the end of the static password.
@@ -68,12 +68,12 @@ public class ExtendedPassword extends MutablePassword {
     return block;
   }
 
-  public static MutableBlock createMutableBlock(TimeType timeValue) {
+  public static MutableBlock createMutableBlock(TimeParameter timeValue) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeType timeValue) {
+  public static MutablePassword createPassword(String text, TimeParameter timeValue) {
     return createPassword(text, timeValue.getTextField());
   }
 

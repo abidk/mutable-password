@@ -24,7 +24,7 @@ import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 
 /**
  * 
@@ -80,7 +80,7 @@ public class ExtendedTimeLockPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  public static MutableBlock createMutableBlock(TimeType extendedTimeValue, TimeType lockTimeType, int lockStartTime, int lockEndTime) {
+  public static MutableBlock createMutableBlock(TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime) {
     String extendExpression = extendedTimeValue.getTextField();
     String lockExpression = lockTimeType.getTextField() + ">=" + lockStartTime + "&&" + lockTimeType.getTextField() + "<=" + lockEndTime;
     String expression = extendExpression + "," + lockExpression;
@@ -88,7 +88,7 @@ public class ExtendedTimeLockPassword extends MutablePassword {
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeType extendedTimeValue, TimeType lockTimeType, int lockStartTime, int lockEndTime)
+  public static MutablePassword createPassword(String text, TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime)
       throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
     MutableBlock block = createMutableBlock(extendedTimeValue, lockTimeType, lockStartTime, lockEndTime);
 

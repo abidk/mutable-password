@@ -13,18 +13,16 @@
  *  limitations under the License.
  */
 
-package abid.password;
+package abid.password.types;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import abid.password.types.ExtendedTimeLockPassword;
-import abid.password.types.ShiftPassword;
-import abid.password.types.SimplePassword;
-import abid.password.types.TimeLockPassword;
-import abid.password.types.ExtendedPassword;
+import abid.password.MutableBlock;
+import abid.password.MutablePassword;
+import abid.password.Password;
 
 /**
  * Method which allows you to select the password type object by passing it a

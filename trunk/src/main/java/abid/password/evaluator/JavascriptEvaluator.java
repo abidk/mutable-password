@@ -21,7 +21,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 
 /**
  * This will take a expression and evaluate it.
@@ -71,7 +71,7 @@ public class JavascriptEvaluator implements Evaluator {
   public static void main(String[] args) {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     try {
-      String result = evaluator.evaluateExpression("2009+2009.2", TimeType.getValues());
+      String result = evaluator.evaluateExpression("2009+2009.2", TimeParameter.getValues());
       System.out.println(result);
     } catch (ParseException e) {
       e.printStackTrace();

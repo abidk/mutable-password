@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 import abid.password.types.TimeLockPassword;
 import junit.framework.TestCase;
 
@@ -28,14 +28,14 @@ public class TimeLockPasswordTest extends TestCase {
 
   public void testTimeLockPassword() throws PasswordException {
     String confirmPassword = "abid";
-    MutablePassword mutatingPassword = TimeLockPassword.createPassword("abid", TimeType.HOUR, 0, 24);
+    MutablePassword mutatingPassword = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
     assertEquals(true, mutatingPassword.confirmPassword(confirmPassword));
 
-    MutablePassword mutatingPassword2 = TimeLockPassword.createPassword("abid", TimeType.HOUR, -2, -1);
+    MutablePassword mutatingPassword2 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, -2, -1);
     assertEquals(false, mutatingPassword2.confirmPassword(confirmPassword));
 
     String wrongPassword = "diba";
-    MutablePassword mutatingPassword3 = TimeLockPassword.createPassword("abid", TimeType.HOUR, 0, 24);
+    MutablePassword mutatingPassword3 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
     assertEquals(false, mutatingPassword3.confirmPassword(wrongPassword));
   }
 
@@ -49,7 +49,7 @@ public class TimeLockPasswordTest extends TestCase {
     // Calendar.SATURDAY = 7
     String confirmPassword = "a";
     String wrongPassword = "wrongDayOfWeek";
-    MutablePassword mutatingPassword = TimeLockPassword.createPassword(confirmPassword, TimeType.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.SATURDAY);
+    MutablePassword mutatingPassword = TimeLockPassword.createPassword(confirmPassword, TimeParameter.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.SATURDAY);
     assertEquals(true, mutatingPassword.confirmPassword(confirmPassword));
     assertEquals(false, mutatingPassword.confirmPassword(wrongPassword));
   }

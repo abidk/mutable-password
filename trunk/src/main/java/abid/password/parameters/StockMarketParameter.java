@@ -38,11 +38,11 @@ import abid.password.util.StreamManagement;
  * @author Abid
  * 
  */
-public enum StockMarketType {
+public enum StockMarketParameter {
 
   FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
 
-  private static final Logger log = LoggerFactory.getLogger(StockMarketType.class);
+  private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
 
   // hmm, use Yahoo to get stock data
   public static final String YAHOO_FINANCE_URL = "http://uk.old.finance.yahoo.com/d/quotes.csv";
@@ -50,7 +50,7 @@ public enum StockMarketType {
   private String market;
   private String url;
 
-  private StockMarketType(String market, String url) {
+  private StockMarketParameter(String market, String url) {
     this.market = market;
     this.url = url;
   }
@@ -59,28 +59,23 @@ public enum StockMarketType {
     return market;
   }
 
-  public Number getIndexValue() {
-    try {
-      URL dataUrl = new URL(YAHOO_FINANCE_URL + url);
-      URLConnection connection = dataUrl.openConnection();
-      InputStream inputStream = connection.getInputStream();
+  public Number getIndexValue() throws IOException {
+    URL dataUrl = new URL(YAHOO_FINANCE_URL + url);
+    URLConnection connection = dataUrl.openConnection();
+    InputStream inputStream = connection.getInputStream();
 
-      String csvData = StreamManagement.convertStreamToString(inputStream);
-      String[] splitData = csvData.split(",");
+    String csvData = StreamManagement.convertStreamToString(inputStream);
+    String[] splitData = csvData.split(",");
 
-      // hmm do i want to make it a float, maybe it's best to convert it into an
-      // integer and lose the accuracy
-      Float value = Float.valueOf(splitData[1]);
-      return value;
-    } catch (IOException e) {
-      log.error("error occured whilst parsing the stock market value", e);
-    }
-    return -1;
+    // hmm do i want to make it a float, maybe it's best to convert it into an
+    // integer and lose the accuracy
+    Float value = Float.valueOf(splitData[1]);
+    return value;
   }
 
-  public static Map<String, Number> getValues() {
+  public static Map<String, Number> getValues() throws IOException {
     Map<String, Number> map = new HashMap<String, Number>();
-    for (StockMarketType stock : StockMarketType.values()) {
+    for (StockMarketParameter stock : StockMarketParameter.values()) {
       map.put(stock.getMarket(), stock.getIndexValue());
     }
     return map;
