@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Abid
  * 
  */
-public enum TimeType {
+public enum TimeParameter {
 
   YEAR("year", Calendar.YEAR),
   WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR),
@@ -39,7 +39,7 @@ public enum TimeType {
   private String textField;
   private int calendarField;
 
-  private TimeType(String textField, int calendarField) {
+  private TimeParameter(String textField, int calendarField) {
     this.textField = textField;
     this.calendarField = calendarField;
   }
@@ -54,7 +54,7 @@ public enum TimeType {
   }
 
   public static int getCalendarValue(String type) {
-    for (TimeType timeType : TimeType.values()) {
+    for (TimeParameter timeType : TimeParameter.values()) {
       if (timeType.getTextField().equals(type)) {
         return timeType.getCalendarValue();
       }
@@ -65,7 +65,7 @@ public enum TimeType {
 
   public static Map<String, Number> getValues() {
     Map<String, Number> map = new HashMap<String, Number>();
-    for (TimeType timeType : TimeType.values()) {
+    for (TimeParameter timeType : TimeParameter.values()) {
       map.put(timeType.getTextField(), timeType.getCalendarValue());
     }
     return map;
@@ -79,7 +79,7 @@ public enum TimeType {
     Calendar calendar = Calendar.getInstance();
     System.out.println(calendar.getTime());
 
-    for (TimeType timePassword : TimeType.values()) {
+    for (TimeParameter timePassword : TimeParameter.values()) {
       System.out.println(timePassword);
     }
   }

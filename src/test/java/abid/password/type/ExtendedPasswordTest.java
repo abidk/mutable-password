@@ -16,22 +16,23 @@
 
 package abid.password.type;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.PasswordFactory;
-import abid.password.parameters.StockMarketType;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.StockMarketParameter;
+import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedPassword;
+import abid.password.types.PasswordFactory;
 
 public class ExtendedPasswordTest extends TestCase {
 
   public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
-    TimeType timeType = TimeType.YEAR;
+    TimeParameter timeType = TimeParameter.YEAR;
     MutablePassword password = ExtendedPassword.createPassword("abid", timeType);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
@@ -39,49 +40,49 @@ public class ExtendedPasswordTest extends TestCase {
   }
 
   public void testExtendedPassword() throws PasswordException {
-    TimeType timeType = TimeType.YEAR;
-    Password dynamicPassword = ExtendedPassword.createPassword("abid", timeType);
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("abid", timeType);
 
     String confirmPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abida" + timeType.getCalendarValue();
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testExtendedPassword2() throws PasswordException {
-    TimeType timeType = TimeType.YEAR;
-    Password dynamicPassword = ExtendedPassword.createPassword("abid", "year+year");
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("abid", "year+year");
 
     String confirmPassword = "abid" + (timeType.getCalendarValue() + timeType.getCalendarValue());
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testExtendedPassword3() throws PasswordException {
-    TimeType timeType = TimeType.YEAR;
-    Password dynamicPassword = ExtendedPassword.createPassword("abid", "year+1.5");
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("abid", "year+1.5");
 
     String confirmPassword = "abid" + (timeType.getCalendarValue() + 1.5);
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
-  public void testExtendedPasswordStockMarketParameter() throws PasswordException {
-    StockMarketType stock = StockMarketType.FTSE100;
-    Password dynamicPassword = ExtendedPassword.createPassword("abid", stock.getMarket());
+  public void testExtendedPasswordStockMarketParameter() throws PasswordException, IOException {
+    StockMarketParameter stock = StockMarketParameter.FTSE100;
+    Password password = ExtendedPassword.createPassword("abid", stock.getMarket());
 
     //System.out.println(dynamicPassword.getPassword());
 
     String confirmPassword = "abid" + stock.getIndexValue();
     //System.out.println(confirmPassword);
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 }

@@ -19,7 +19,7 @@ package abid.password.type;
 import java.lang.reflect.InvocationTargetException;
 
 import abid.password.Password;
-import abid.password.PasswordFactory;
+import abid.password.types.PasswordFactory;
 import abid.password.types.SimplePassword;
 import junit.framework.TestCase;
 

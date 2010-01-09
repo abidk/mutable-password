@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.PasswordFactory;
+import abid.password.types.PasswordFactory;
 
 import junit.framework.TestCase;
 

@@ -22,8 +22,8 @@ import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.PasswordFactory;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
+import abid.password.types.PasswordFactory;
 import abid.password.types.ShiftPassword;
 
 public class ShiftPasswordTest extends TestCase {
@@ -58,7 +58,7 @@ public class ShiftPasswordTest extends TestCase {
 
   public void testShiftPasswordUsingTime() throws PasswordException {
     // shift password every hour
-    TimeType timeType = TimeType.DAY_OF_WEEK;
+    TimeParameter timeType = TimeParameter.DAY_OF_WEEK;
     ShiftPassword shiftPassword = (ShiftPassword) ShiftPassword.createPassword("abid", timeType);
 
     String shiftedPassword = shiftPassword.getShiftedPassword(timeType.getCalendarValue());

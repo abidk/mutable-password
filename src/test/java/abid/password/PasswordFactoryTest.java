@@ -20,7 +20,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
 import abid.password.Password;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
+import abid.password.types.PasswordFactory;
 import abid.password.types.ShiftPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.ExtendedPassword;
@@ -31,7 +32,7 @@ public class PasswordFactoryTest extends TestCase {
   public void testTimeLockPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
-    Password p1 = TimeLockPassword.createPassword("abid", TimeType.HOUR, 0, 24);
+    Password p1 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
     Password m1 = PasswordFactory.getInstance(p1.getPassword());
     
     // check if the correct class is found
@@ -42,7 +43,7 @@ public class PasswordFactoryTest extends TestCase {
   public void testExtendedPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
-    Password p2 = ExtendedPassword.createPassword("abid", TimeType.HOUR);
+    Password p2 = ExtendedPassword.createPassword("abid", TimeParameter.HOUR);
     Password m2 = PasswordFactory.getInstance(p2.getPassword());
     assertEquals(p2.getClass(), m2.getClass());
     assertEquals(p2.getPassword(), m2.getPassword());

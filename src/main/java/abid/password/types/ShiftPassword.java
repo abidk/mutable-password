@@ -21,7 +21,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
-import abid.password.parameters.TimeType;
+import abid.password.parameters.TimeParameter;
 
 /**
  * Creates a Ceasar cipher type password.
@@ -75,7 +75,7 @@ public class ShiftPassword extends MutablePassword {
     // parser needs to be customisable
     Evaluator parsable = new JavascriptEvaluator();
     try {
-      String evaluation = parsable.evaluateExpression(getExpression(), TimeType.getValues());
+      String evaluation = parsable.evaluateExpression(getExpression(), TimeParameter.getValues());
 
       if (evaluation != null) {
         int shiftBy = Integer.valueOf(evaluation);
@@ -93,7 +93,7 @@ public class ShiftPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  public static MutableBlock createMutableBlock(TimeType timeType) {
+  public static MutableBlock createMutableBlock(TimeParameter timeType) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeType.getTextField());
     return block;
   }
@@ -103,7 +103,7 @@ public class ShiftPassword extends MutablePassword {
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeType timeType) {
+  public static MutablePassword createPassword(String text, TimeParameter timeType) {
     MutableBlock block = createMutableBlock(timeType);
     return new ShiftPassword(text, block);
   }
