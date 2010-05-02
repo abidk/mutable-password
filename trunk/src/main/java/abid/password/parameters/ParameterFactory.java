@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ParameterFactory {
 
+  private ParameterFactory() {
+  }
+
   private static final Logger log = LoggerFactory.getLogger(ParameterFactory.class);
   private static Map<String, Number> parameters = new HashMap<String, Number>();
 
@@ -65,8 +68,8 @@ public class ParameterFactory {
     }
     return false;
   }
-  
-  public static void addAllParameters( Map<String, Number> newParams ) {
+
+  public static void addAllParameters(Map<String, Number> newParams) {
     parameters.putAll(newParams);
   }
 

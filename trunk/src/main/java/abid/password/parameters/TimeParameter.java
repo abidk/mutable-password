@@ -74,13 +74,4 @@ public enum TimeParameter {
   public String toString() {
     return textField + ": " + getCalendarValue();
   }
-
-  public static void main(String[] args) {
-    Calendar calendar = Calendar.getInstance();
-    System.out.println(calendar.getTime());
-
-    for (TimeParameter timePassword : TimeParameter.values()) {
-      System.out.println(timePassword);
-    }
-  }
 }

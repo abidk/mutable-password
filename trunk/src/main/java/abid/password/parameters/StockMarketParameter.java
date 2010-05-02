@@ -22,9 +22,6 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import abid.password.util.StreamManagement;
 
 /**
@@ -41,8 +38,6 @@ import abid.password.util.StreamManagement;
 public enum StockMarketParameter {
 
   FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
-
-  private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
 
   // hmm, use Yahoo to get stock data
   public static final String YAHOO_FINANCE_URL = "http://uk.old.finance.yahoo.com/d/quotes.csv";
@@ -65,12 +60,15 @@ public enum StockMarketParameter {
     InputStream inputStream = connection.getInputStream();
 
     String csvData = StreamManagement.convertStreamToString(inputStream);
+    inputStream.close();
+
     String[] splitData = csvData.split(",");
 
     // hmm do i want to make it a float, maybe it's best to convert it into an
     // integer and lose the accuracy
     Float value = Float.valueOf(splitData[1]);
     return value;
+
   }
 
   public static Map<String, Number> getValues() throws IOException {

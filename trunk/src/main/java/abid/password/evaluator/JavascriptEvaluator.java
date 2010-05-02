@@ -67,14 +67,4 @@ public class JavascriptEvaluator implements Evaluator {
   private String fixDecimalOutput(String evaluation) {
     return evaluation.replace(".0", "");
   }
-
-  public static void main(String[] args) {
-    JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    try {
-      String result = evaluator.evaluateExpression("2009+2009.2", TimeParameter.getValues());
-      System.out.println(result);
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-  }
 }
