@@ -33,9 +33,9 @@ import abid.password.parameters.TimeParameter;
  */
 public class ShiftPassword extends MutablePassword {
 
-  //public String PASSWORD_TYPE = getClass().getSimpleName();
-  
-  public static final String PASSWORD_TYPE =  "shift";
+  // public String PASSWORD_TYPE = getClass().getSimpleName();
+
+  public static final String PASSWORD_TYPE = "shift";
 
   public ShiftPassword(String password) {
     super(password);
@@ -52,22 +52,22 @@ public class ShiftPassword extends MutablePassword {
    * @return shifted value
    */
   public String getShiftedPassword(int shiftBy) {
-    String shiftPassword = "";
+    StringBuilder shiftPassword = new StringBuilder();
     for (char character : getText().toCharArray()) {
       if (character >= 65 && character <= 90) {
         // deal with upper case letters
         char shiftedChar = (char) ((((character - 65) + shiftBy) % 26) + 65);
-        shiftPassword += shiftedChar;
+        shiftPassword.append(shiftedChar);
       } else if (character >= 97 && character <= 122) {
         // deal with lower case letters
         char shiftedChar = (char) ((((character - 97) + shiftBy) % 26) + 97);
-        shiftPassword += shiftedChar;
+        shiftPassword.append(shiftedChar);
       } else {
         // it's not an alphabet so do nothing
-        shiftPassword += character;
+        shiftPassword.append(character);
       }
     }
-    return shiftPassword;
+    return shiftPassword.toString();
   }
 
   @Override

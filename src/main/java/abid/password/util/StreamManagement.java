@@ -13,7 +13,6 @@
  *  limitations under the License.
  */
 
-
 package abid.password.util;
 
 import java.io.BufferedReader;
@@ -23,21 +22,16 @@ import java.io.InputStreamReader;
 
 public class StreamManagement {
 
+  private StreamManagement() {
+  }
+
   public static String convertStreamToString(InputStream is) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
     StringBuilder sb = new StringBuilder();
 
     String line;
-    try {
-      while ((line = reader.readLine()) != null) {
-        sb.append(line + "\n");
-      }
-    } finally {
-      try {
-        is.close();
-      } catch (IOException e) {
-        // ignore
-      }
+    while ((line = reader.readLine()) != null) {
+      sb.append(line);
     }
 
     return sb.toString();

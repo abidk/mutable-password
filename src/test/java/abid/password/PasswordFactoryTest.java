@@ -13,18 +13,17 @@
  *  limitations under the License.
  */
 
-
 package abid.password;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import junit.framework.TestCase;
-import abid.password.Password;
 import abid.password.parameters.TimeParameter;
+import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
 import abid.password.types.ShiftPassword;
 import abid.password.types.SimplePassword;
-import abid.password.types.ExtendedPassword;
 import abid.password.types.TimeLockPassword;
 
 public class PasswordFactoryTest extends TestCase {
@@ -34,7 +33,7 @@ public class PasswordFactoryTest extends TestCase {
 
     Password p1 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
     Password m1 = PasswordFactory.getInstance(p1.getPassword());
-    
+
     // check if the correct class is found
     assertEquals(p1.getClass(), m1.getClass());
     assertEquals(p1.getPassword(), m1.getPassword());
@@ -65,5 +64,25 @@ public class PasswordFactoryTest extends TestCase {
     Password m4 = PasswordFactory.getInstance(p4.getPassword());
     assertEquals(p4.getClass(), m4.getClass());
     assertEquals(p4.getPassword(), m4.getPassword());
+  }
+
+  public void testPasswordFactory() {
+    boolean added = PasswordFactory.addMutablePassword(ExtendedPassword.class);
+    assertEquals(false, added);
+
+    List<Class<? extends MutablePassword>> list = PasswordFactory.getMutablePasswordList();
+    assertEquals(true, list.contains(ExtendedPassword.class));
+    
+    boolean removed = PasswordFactory.removeMutablePassword(ExtendedPassword.class);
+    assertEquals(true, removed);
+
+    list = PasswordFactory.getMutablePasswordList();
+    assertEquals(false, list.contains(ExtendedPassword.class));
+    
+    boolean addedAgain = PasswordFactory.addMutablePassword(ExtendedPassword.class);
+    assertEquals(true, addedAgain);
+
+    list = PasswordFactory.getMutablePasswordList();
+    assertEquals(true, list.contains(ExtendedPassword.class));
   }
 }

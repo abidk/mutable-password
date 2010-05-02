@@ -13,7 +13,6 @@
  *  limitations under the License.
  */
 
-
 package abid.password.type;
 
 import java.lang.reflect.InvocationTargetException;
@@ -33,6 +32,7 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
     Password password = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
+    System.out.println(password.toString());
     assertEquals(ExtendedTimeLockPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
   }
 
@@ -43,4 +43,14 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
     assertEquals(true, comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
   }
 
+  public void testExpressionLength() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+      InvocationTargetException, NoSuchMethodException, PasswordException {
+    Password pass = new ExtendedTimeLockPassword("abid[extendedTimeLock{year}]");
+    try {
+      pass.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue());
+    } catch (PasswordException e) {
+      return;
+    }
+    fail("Should not get here");
+  }
 }
