@@ -31,6 +31,21 @@
 		<url>https://mutable-password.googlecode.com/svn/trunk</url>
 	</scm>
 
+
+	<distributionManagement>
+		<repository>
+			<id>release</id>
+			<name>Maven repository of releases</name>
+			<url>svn:https://mutable-password.googlecode.com/svn/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot</id>
+			<name>Maven repository of snapshots</name>
+			<url>svn:https://mutable-password.googlecode.com/svn/maven2/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<build>
 		<extensions>
 			<extension>
@@ -40,6 +55,13 @@
 			</extension>
 		</extensions>
 		<plugins>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<updateReleaseInfo>true</updateReleaseInfo>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<!-- mvn license:format -->
 				<!-- mvn license:check -->
@@ -248,18 +270,5 @@
 		</repository>
 	</repositories>
 
-	<distributionManagement>
-		<repository>
-			<id>release</id>
-			<name>Maven repository of releases</name>
-			<url>svn:https://mutable-password.googlecode.com/svn/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshot</id>
-			<name>Maven repository of snapshots</name>
-			<url>svn:https://mutable-password.googlecode.com/svn/maven2/snapshots</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
 
 </project>
