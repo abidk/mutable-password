@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>abid.password</groupId>
@@ -31,6 +32,13 @@
 	</scm>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.jvnet.wagon-svn</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.9</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<!-- mvn license:format -->
@@ -53,11 +61,11 @@
 				<executions>
 					<execution>
 						<id>check-headers</id>
-						<phase>test</phase>
+						<phase>process-sources</phase>
 						<goals>
-							<!-- format -->
+							<!-- check -->
 							<!-- remove -->
-							<goal>check</goal>
+							<goal>format</goal>
 						</goals>
 					</execution>
 
@@ -239,4 +247,19 @@
 			</releases>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>release</id>
+			<name>Maven repository of releases</name>
+			<url>svn:https://mutable-password.googlecode.com/svn/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot</id>
+			<name>Maven repository of snapshots</name>
+			<url>svn:https://mutable-password.googlecode.com/svn/maven2/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
