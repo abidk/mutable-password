@@ -1,4 +1,5 @@
-/* Copyright 2009 Abid Khalil
+/**
+ * Copyright 2010 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -6,13 +7,12 @@
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
 
 package abid.password.type;
 
@@ -34,11 +34,11 @@ public class CreateNewPasswordTypeTest extends TestCase {
     // class is not registered with factory so the above line will not find the
     // appropriate class.
     assertNotSame(NewTypePassword.class, m1.getClass());
-    
+
     // The factory should return a SimplePassword object
     assertEquals(SimplePassword.class, m1.getClass());
 
-    //System.out.println(m1.getPassword());
+    // System.out.println(m1.getPassword());
   }
 
   public void testRegisteredNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
@@ -49,7 +49,7 @@ public class CreateNewPasswordTypeTest extends TestCase {
     NewTypePassword password = (NewTypePassword) NewTypePassword.createPassword("something");
 
     Password m1 = PasswordFactory.getInstance(password.getPassword());
-    
+
     // The factory should return a NewTypePassword object
     assertEquals(NewTypePassword.class, m1.getClass());
   }

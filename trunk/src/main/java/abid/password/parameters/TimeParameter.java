@@ -1,4 +1,5 @@
-/* Copyright 2009 Abid Khalil
+/**
+ * Copyright 2010 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -6,11 +7,11 @@
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package abid.password.parameters;
@@ -27,14 +28,9 @@ import java.util.Map;
  */
 public enum TimeParameter {
 
-  YEAR("year", Calendar.YEAR),
-  WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR),
-  MONTH("month", Calendar.MONTH), 
-  DAY_OF_MONTH("dayOfMonth", Calendar.DAY_OF_MONTH), 
-  HOUR("hour", Calendar.HOUR_OF_DAY), 
-  MINUTE("minute", Calendar.MINUTE),
-  DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK),
-  SECOND("second", Calendar.SECOND);
+  YEAR("year", Calendar.YEAR), WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR), MONTH("month", Calendar.MONTH), DAY_OF_MONTH("dayOfMonth",
+      Calendar.DAY_OF_MONTH), HOUR("hour", Calendar.HOUR_OF_DAY), MINUTE("minute", Calendar.MINUTE), DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK), SECOND(
+      "second", Calendar.SECOND);
 
   private String textField;
   private int calendarField;
