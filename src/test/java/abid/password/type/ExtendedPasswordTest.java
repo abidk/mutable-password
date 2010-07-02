@@ -75,6 +75,7 @@ public class ExtendedPasswordTest extends TestCase {
   /*
    * This method is well dodgy. Yahoo will throw a http response 99 sometimes.
    */
+  /*
   public void testExtendedPasswordStockMarketParameter() throws PasswordException {
     try {
       StockMarketParameter stock = StockMarketParameter.FTSE100;
@@ -91,8 +92,7 @@ public class ExtendedPasswordTest extends TestCase {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-  }
+  }*/
 
   public void testMutableBlock() {
     MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);

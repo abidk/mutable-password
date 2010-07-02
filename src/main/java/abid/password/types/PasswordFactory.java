@@ -43,13 +43,17 @@ public class PasswordFactory {
     mutablePasswords.add(ExtendedPassword.class);
     mutablePasswords.add(ExtendedTimeLockPassword.class);
   }
+  
+  private PasswordFactory( ) {
+    
+  }
 
   /**
    * Takes a password string and returns a suitable mutable password type
    * object.
    * 
-   * @param password
-   * @return
+   * @param String password
+   * @return mutable password type
    * @throws IllegalArgumentException
    * @throws InstantiationException
    * @throws IllegalAccessException
@@ -101,7 +105,7 @@ public class PasswordFactory {
   /**
    * Returns a list of all the mutable passwords.
    * 
-   * @return
+   * @return list of mutable password classes.
    */
   public static List<Class<? extends MutablePassword>> getMutablePasswordList() {
     return mutablePasswords;
