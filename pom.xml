@@ -25,9 +25,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/trunk/</connection>
-		<developerConnection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/trunk/</developerConnection>
-		<url>http://mutable-password.googlecode.com/svn/maven2/trunk/</url>
+		<connection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</connection>
+		<developerConnection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</developerConnection>
+		<url>http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</url>
 	</scm>
 
 
