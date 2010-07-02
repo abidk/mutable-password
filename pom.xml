@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>abid.password</groupId>
 	<artifactId>mutable-password</artifactId>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4</version>
 	<name>Mutable Password</name>
 	<description>Mutable passwords allows you to create expressions as a
 		password which can change based on time or any other factor.</description>
@@ -26,9 +25,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://mutable-password.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://mutable-password.googlecode.com/svn/trunk</developerConnection>
-		<url>https://mutable-password.googlecode.com/svn/trunk</url>
+		<connection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</connection>
+		<developerConnection>scm:svn:http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</developerConnection>
+		<url>http://mutable-password.googlecode.com/svn/maven2/tags/mutable-password-1.4</url>
 	</scm>
 
 
