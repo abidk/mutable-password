@@ -55,13 +55,17 @@ public enum StockMarketParameter {
     return market;
   }
 
-  public Number getIndexValue() throws IOException {
+  public Number getIndexValue() throws IOException{
     URL dataUrl = new URL(YAHOO_FINANCE_URL + url);
     URLConnection connection = dataUrl.openConnection();
     InputStream inputStream = connection.getInputStream();
 
     String csvData = StreamManagement.convertStreamToString(inputStream);
-    inputStream.close();
+    try {
+      inputStream.close();
+    } catch (IOException e) {
+      
+    }
 
     String[] splitData = csvData.split(",");
 

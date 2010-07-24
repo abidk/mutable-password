@@ -41,6 +41,10 @@ public class ExtendedPassword extends MutablePassword {
     super(password);
   }
 
+  public ExtendedPassword(String text, MutableBlock block) {
+    super(text, block);
+  }
+
   @Override
   public boolean confirmPassword(String confirmPassword) throws PasswordException {
     // parser needs to be customisable
@@ -48,18 +52,14 @@ public class ExtendedPassword extends MutablePassword {
     try {
       String evaluation = parsable.evaluateExpression(getExpression(), ParameterFactory.getAllParamterData());
 
-      if (evaluation != null) {
-        String evaluatedPassword = getText() + evaluation;
-        // System.out.println( "==>" + evaluatedPassword);
-        return evaluatedPassword.equals(confirmPassword);
-      }
+      String evaluatedPassword = getText() + evaluation;
+      // System.out.println( "==>" + evaluatedPassword);
+      return evaluatedPassword.equals(confirmPassword);
     } catch (ParseException e) {
       throw new PasswordException(e);
     }
-    return false;
   }
 
-  @Override
   public String getPasswordType() {
     return PASSWORD_TYPE;
   }

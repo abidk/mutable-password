@@ -27,5 +27,15 @@ public class JavascriptEvaluatorTest extends TestCase {
     String result = evaluator.evaluateExpression("2009+2009.2", TimeParameter.getValues());
     System.out.println(result);
   }
+  
+  public void testScriptException( ) {
+    JavascriptEvaluator evaluator = new JavascriptEvaluator();
+    String result = null;
+    try {
+      result = evaluator.evaluateExpression("2009(2009.2", TimeParameter.getValues());
+    } catch (ParseException e) {
+    }
+    assertNull(result);
+  }
 
 }

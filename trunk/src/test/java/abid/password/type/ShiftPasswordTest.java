@@ -19,6 +19,7 @@ package abid.password.type;
 import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
+import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
@@ -46,13 +47,127 @@ public class ShiftPasswordTest extends TestCase {
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testShiftPassword2() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("abid", 1);
+  public void testLowerCasePassword() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("abcdefghijklmnopqrstuvwxyz", 1);
 
-    String confirmPassword = "bcje";
+    String confirmPassword = "bcdefghijklmnopqrstuvwxyza";
     assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
 
-    String wrongPassword = "abid";
+    String wrongPassword = "abcdefghijklmnopqrstuvwxyz";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testLowerCaseNumberCombination() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6", 1);
+
+    String confirmPassword = "6bcdefghijklmn6opqrstuvwxyza6";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "6abcdefghijklm6nopqrstuvwxyz6";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testLowerCaseSymbolNumberCombination() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6", 1);
+
+    String confirmPassword = "6bcdefghijklmn^opqrstuvwxyza6";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "6abcdefghijklm^nopqrstuvwxyz6";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testUpperCasePassword() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1);
+
+    String confirmPassword = "BCDEFGHIJKLMNOPQRSTUVWXYZA";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testUpperCaseNumberCombination() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6", 1);
+
+    String confirmPassword = "6BCDEFGHIJKLM6NOPQRSTUVWXYZA6";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testUppercaseLowercaseCombo() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz", 1);
+
+    String confirmPassword = "BcDeFgHiJkLmNoPqRsTuVwXyZa";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "AbCdEfGhIjKlMnOpQrStUvWxYz";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testLowercaseUppercase() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 1);
+
+    String confirmPassword = "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+  
+  public void testLowercasePassword() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("az", 1);
+
+    String confirmPassword = "ba";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "az";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testLowercasePassword2() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("6z6", 1);
+
+    String confirmPassword = "6a6";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "6z6";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+  
+  public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^", 1);
+
+    String confirmPassword = "^BcDeFgHiJkLm^NoPqRsTuVwXyZa^";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "^AbCdEfGhIjKl^MnOpQrStUvWxYz^";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testUppercaseLowercaseNumberSymbolCombo() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6", 1);
+
+    String confirmPassword = "6BcDeFgHiJkLm^NoPqRsTuVwXyZa6";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "6AbCdEfGhIjKl^MnOpQrStUvWxYz6";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testShiftNonAlphabeticalCorrectPassword() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("ab^id", 1);
+
+    String confirmPassword = "bc^je";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+  }
+
+  public void testShiftNonAlphabeticalWrongPassword() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("ab^id", 1);
+
+    String wrongPassword = "ab^id";
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
 
@@ -69,4 +184,19 @@ public class ShiftPasswordTest extends TestCase {
     String wrongPassword = "abid";
     assertEquals(false, shiftPassword.confirmPassword(wrongPassword));
   }
+
+  public void testPasswordException() {
+    String passwordText = "abid";
+    MutableBlock mutableBlock = NewShiftPassword.createMutableBlock("a");
+    MutablePassword password = new ShiftPassword(passwordText, mutableBlock);
+
+    String wrongPassword = "abid";
+    try {
+      password.confirmPassword(wrongPassword);
+    } catch (PasswordException e) {
+      return;
+    }
+    fail("Should not read this!");
+  }
+
 }

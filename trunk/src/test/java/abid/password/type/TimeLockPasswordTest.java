@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-
-
 package abid.password.type;
 
 import java.util.Calendar;
 
+import junit.framework.TestCase;
+import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.TimeLockPassword;
-import junit.framework.TestCase;
 
 public class TimeLockPasswordTest extends TestCase {
 
@@ -56,4 +55,17 @@ public class TimeLockPasswordTest extends TestCase {
     assertEquals(false, mutatingPassword.confirmPassword(wrongPassword));
   }
 
+  public void testPasswordException() {
+    String passwordText = "abid";
+    String confirmPassword = "abid";
+    MutableBlock mutableBlock = NewTimeLockPassword.createMutableBlock(TimeParameter.HOUR, "a", "b");
+    MutablePassword mutatingPassword = new TimeLockPassword(passwordText, mutableBlock);
+
+    try {
+      mutatingPassword.confirmPassword(confirmPassword);
+    } catch (PasswordException e) {
+      return;
+    }
+    fail("Should not read this!");
+  }
 }

@@ -23,12 +23,16 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.parameters.StockMarketParameter;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
 
 public class ExtendedPasswordTest extends TestCase {
+
+  public void testPasswordType() {
+    MutablePassword password = ExtendedPassword.createPassword("abid", "year(year");
+    assertEquals("extend", password.getPasswordType());
+  }
 
   public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
@@ -76,27 +80,67 @@ public class ExtendedPasswordTest extends TestCase {
    * This method is well dodgy. Yahoo will throw a http response 99 sometimes.
    */
   /*
-  public void testExtendedPasswordStockMarketParameter() throws PasswordException {
-    try {
-      StockMarketParameter stock = StockMarketParameter.FTSE100;
-      Password password = ExtendedPassword.createPassword("abid", stock.getMarket());
-
-      // System.out.println(dynamicPassword.getPassword());
-
-      String confirmPassword = "abid" + stock.getIndexValue();
-      // System.out.println(confirmPassword);
-      assertEquals(true, password.confirmPassword(confirmPassword));
-
-      String wrongPassword = "abid";
-      assertEquals(false, password.confirmPassword(wrongPassword));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }*/
+   * public void testExtendedPasswordStockMarketParameter() throws
+   * PasswordException { try { StockMarketParameter stock =
+   * StockMarketParameter.FTSE100; Password password =
+   * ExtendedPassword.createPassword("abid", stock.getMarket());
+   * 
+   * // System.out.println(dynamicPassword.getPassword());
+   * 
+   * String confirmPassword = "abid" + stock.getIndexValue(); //
+   * System.out.println(confirmPassword); assertEquals(true,
+   * password.confirmPassword(confirmPassword));
+   * 
+   * String wrongPassword = "abid"; assertEquals(false,
+   * password.confirmPassword(wrongPassword)); } catch (Exception e) {
+   * e.printStackTrace(); } }
+   */
 
   public void testMutableBlock() {
     MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);
     assertEquals(TimeParameter.HOUR.getTextField(), mutableBlock.getExpression());
     assertEquals(ExtendedPassword.PASSWORD_TYPE, mutableBlock.getType());
+  }
+
+  public void testMutableBlockConstruction() throws PasswordException {
+    MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);
+    ExtendedPassword extendedPassword = new ExtendedPassword("abid", mutableBlock);
+
+    String confirmPassword = "abid" + TimeParameter.HOUR.getCalendarValue();
+    assertEquals(true, extendedPassword.confirmPassword(confirmPassword));
+  }
+
+  public void testNonAlphbecticalWrongPassword() throws PasswordException {
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("ab^id", timeType);
+
+    String confirmPassword = "abid" + timeType.getCalendarValue();
+    assertEquals(false, password.confirmPassword(confirmPassword));
+  }
+
+  public void testNonAlphbecticalCorrectPassword() throws PasswordException {
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("ab^id", timeType);
+
+    String confirmPassword = "ab^id" + timeType.getCalendarValue();
+    assertEquals(true, password.confirmPassword(confirmPassword));
+  }
+
+  public void testPasswordException() {
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("abid", "year(year");
+
+    String confirmPassword = "abid" + (timeType.getCalendarValue() + timeType.getCalendarValue());
+    boolean isAuthenticated = false;
+    try {
+      isAuthenticated = password.confirmPassword(confirmPassword);
+    } catch (PasswordException e) {
+    }
+    assertEquals(false, isAuthenticated);
+  }
+
+  public void testStringOutput() {
+    Password password = ExtendedPassword.createPassword("abid", "year(year");
+    System.out.println(password.toString());
   }
 }
