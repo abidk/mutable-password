@@ -27,7 +27,7 @@ import javax.script.ScriptException;
  * 
  * This uses Java version 6 JavaScript features, to make this compatible with
  * Java version 5, remove this class and use beanshell instead.
- *
+ * 
  */
 public class JavascriptEvaluator implements Evaluator {
 
@@ -41,9 +41,9 @@ public class JavascriptEvaluator implements Evaluator {
   @Override
   public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
     try {
-      for (String key : map.keySet()) {
-        Number value = map.get(key);
-        // System.out.println( value + " " + key );
+      for (Map.Entry<String, Number> e : map.entrySet()) {
+        String key = e.getKey();
+        Number value = e.getValue();
         engine.put(key, value);
       }
 
