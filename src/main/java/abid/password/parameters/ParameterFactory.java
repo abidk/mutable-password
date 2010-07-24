@@ -16,12 +16,8 @@
 
 package abid.password.parameters;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Combines all the parameter data into one Hashmap.
@@ -36,7 +32,6 @@ public class ParameterFactory {
   private ParameterFactory() {
   }
 
-  private static final Logger log = LoggerFactory.getLogger(ParameterFactory.class);
   private static Map<String, Number> parameters = new HashMap<String, Number>();
 
   /**
@@ -50,12 +45,6 @@ public class ParameterFactory {
     // get the latest time parameter values
     params.putAll(TimeParameter.getValues());
 
-    try {
-      // get the latest stock market parameter values
-      params.putAll(StockMarketParameter.getValues());
-    } catch (IOException e) {
-      log.error("Unable to add the stock market parameters, because...", e);
-    }
 
     // add any parameters the user may have added
     params.putAll(parameters);

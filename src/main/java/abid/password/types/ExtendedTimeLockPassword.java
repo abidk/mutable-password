@@ -16,8 +16,6 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
@@ -38,9 +36,12 @@ public class ExtendedTimeLockPassword extends MutablePassword {
 
   public static final String PASSWORD_TYPE = "extendedTimeLock";
 
-  public ExtendedTimeLockPassword(String password) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public ExtendedTimeLockPassword(String password) {
     super(password);
+  }
+  
+  public ExtendedTimeLockPassword(String text, MutableBlock block) {
+    super(text, block);
   }
 
   @Override
@@ -70,10 +71,10 @@ public class ExtendedTimeLockPassword extends MutablePassword {
       if (!timeEvaluation.equalsIgnoreCase("true")) {
         return false;
       }
+      return true;
     } catch (ParseException e) {
       throw new PasswordException(e);
     }
-    return true;
   }
 
   @Override
@@ -89,8 +90,7 @@ public class ExtendedTimeLockPassword extends MutablePassword {
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime)
-      throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+  public static MutablePassword createPassword(String text, TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime) {
     MutableBlock block = createMutableBlock(extendedTimeValue, lockTimeType, lockStartTime, lockEndTime);
 
     String mutablePassword = text + block;

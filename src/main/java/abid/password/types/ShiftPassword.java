@@ -77,19 +77,15 @@ public class ShiftPassword extends MutablePassword {
     Evaluator parsable = new JavascriptEvaluator();
     try {
       String evaluation = parsable.evaluateExpression(getExpression(), TimeParameter.getValues());
-
-      if (evaluation != null) {
-        int shiftBy = Integer.valueOf(evaluation);
-        String shiftedPassword = getShiftedPassword(shiftBy);
-        return shiftedPassword.equals(confirmPassword);
-      }
+      
+      int shiftBy = Integer.valueOf(evaluation);
+      String shiftedPassword = getShiftedPassword(shiftBy);
+      return shiftedPassword.equals(confirmPassword);
     } catch (ParseException e) {
       throw new PasswordException(e);
     }
-    return false;
   }
 
-  @Override
   public String getPasswordType() {
     return PASSWORD_TYPE;
   }
@@ -113,5 +109,4 @@ public class ShiftPassword extends MutablePassword {
     MutableBlock block = createMutableBlock(shiftValue);
     return new ShiftPassword(text, block);
   }
-
 }

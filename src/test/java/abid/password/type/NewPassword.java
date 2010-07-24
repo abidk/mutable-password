@@ -19,15 +19,15 @@ package abid.password.type;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 
-public class NewTypePassword extends MutablePassword {
+public class NewPassword extends MutablePassword {
 
   public static final String PASSWORD_TYPE = "test";
 
-  public NewTypePassword(String password) {
+  public NewPassword(String password) {
     super(password);
   }
 
-  public NewTypePassword(String text, MutableBlock mutableBlock) {
+  public NewPassword(String text, MutableBlock mutableBlock) {
     super(text, mutableBlock);
   }
 
@@ -43,7 +43,7 @@ public class NewTypePassword extends MutablePassword {
 
   public static MutablePassword createPassword(String text) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, 1);
-    return new NewTypePassword(text, block);
+    return new NewPassword(text, block);
   }
 
 }

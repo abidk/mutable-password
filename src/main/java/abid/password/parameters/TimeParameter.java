@@ -28,9 +28,14 @@ import java.util.Map;
  */
 public enum TimeParameter {
 
-  YEAR("year", Calendar.YEAR), WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR), MONTH("month", Calendar.MONTH), DAY_OF_MONTH("dayOfMonth",
-      Calendar.DAY_OF_MONTH), HOUR("hour", Calendar.HOUR_OF_DAY), MINUTE("minute", Calendar.MINUTE), DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK), SECOND(
-      "second", Calendar.SECOND);
+  YEAR("year", Calendar.YEAR), 
+  WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR), 
+  MONTH("month", Calendar.MONTH), 
+  DAY_OF_MONTH("dayOfMonth", Calendar.DAY_OF_MONTH), 
+  HOUR("hour", Calendar.HOUR_OF_DAY), 
+  MINUTE("minute", Calendar.MINUTE), 
+  DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK), 
+  SECOND( "second", Calendar.SECOND);
 
   private String textField;
   private int calendarField;

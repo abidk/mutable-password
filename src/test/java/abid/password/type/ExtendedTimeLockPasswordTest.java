@@ -19,6 +19,7 @@ package abid.password.type;
 import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
+import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
@@ -33,19 +34,17 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
     Password password = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
-    System.out.println(password.toString());
+    // System.out.println(password.toString());
     assertEquals(ExtendedTimeLockPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
   }
 
-  public void testPassword() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException,
-      NoSuchMethodException, PasswordException {
+  public void testPassword() throws PasswordException {
 
     Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
     assertEquals(true, comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
   }
 
-  public void testExpressionLength() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
+  public void testExpressionLength() {
     Password pass = new ExtendedTimeLockPassword("abid[extendedTimeLock{year}]");
     try {
       pass.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue());
@@ -53,5 +52,43 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
       return;
     }
     fail("Should not get here");
+  }
+
+  public void testWrongPasswordText() throws PasswordException {
+    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
+    assertEquals(false, comboPassword.confirmPassword("abid2" + (TimeParameter.YEAR).getCalendarValue()));
+  }
+
+  public void testWrongPasswordTime() throws PasswordException {
+    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
+    assertEquals(false, comboPassword.confirmPassword("abid" + 2009));
+  }
+
+  public void testWrongPasswordLock() throws PasswordException {
+    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, -1, -1);
+    assertEquals(false, comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
+  }
+
+  public void testExtendedException() {
+    Password pass = new ExtendedTimeLockPassword("abid[extendedTimeLock{year((+((year}]");
+    try {
+      pass.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue());
+    } catch (PasswordException e) {
+      return;
+    }
+
+    fail("Should not reach this!");
+  }
+
+  public void testTimeLockException() {
+    MutableBlock mutableBlock = NewExtendedTimeLockPassword.createMutableBlock(TimeParameter.YEAR, TimeParameter.HOUR, "a", "a");
+    Password comboPassword = new ExtendedTimeLockPassword("abid", mutableBlock);
+    try {
+      comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue());
+    } catch (PasswordException e) {
+      return;
+    }
+
+    fail("Should not reach this!");
   }
 }

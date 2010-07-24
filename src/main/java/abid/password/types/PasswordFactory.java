@@ -43,17 +43,17 @@ public class PasswordFactory {
     mutablePasswords.add(ExtendedPassword.class);
     mutablePasswords.add(ExtendedTimeLockPassword.class);
   }
-  
-  private PasswordFactory( ) {
-    
+
+  private PasswordFactory() {
+
   }
 
   /**
    * Takes a password string and returns a suitable mutable password type
    * object.
    * 
-   * @param String password
-   * @return mutable password type
+   * @param password
+   * @return The password type object
    * @throws IllegalArgumentException
    * @throws InstantiationException
    * @throws IllegalAccessException
@@ -63,7 +63,6 @@ public class PasswordFactory {
    */
   public static Password getInstance(String password) throws IllegalArgumentException, InstantiationException, IllegalAccessException,
       InvocationTargetException, SecurityException, NoSuchMethodException {
-
     MutableBlock block = new MutableBlock(password);
 
     Class<?>[] argTypes = { String.class };

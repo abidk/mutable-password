@@ -63,7 +63,8 @@ public class ParameterFactoryTest extends TestCase {
     boolean removed = ParameterFactory.removeParameter("madeUp");
     assertEquals(false, removed);
   }
-
+  
+  @SuppressWarnings("unused")
   public void testParameterConstruct() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
     final Class<?> cls = ParameterFactory.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
