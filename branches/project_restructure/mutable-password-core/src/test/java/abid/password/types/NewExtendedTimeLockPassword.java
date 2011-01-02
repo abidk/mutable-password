@@ -14,29 +14,24 @@
  * limitations under the License.
  */
 
-package abid.password.type;
+package abid.password.types;
 
 import abid.password.MutableBlock;
-import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.TimeLockPassword;
+import abid.password.types.ExtendedTimeLockPassword;
 
-public class NewTimeLockPassword extends TimeLockPassword {
+public class NewExtendedTimeLockPassword extends ExtendedTimeLockPassword {
 
-  public NewTimeLockPassword(String text, MutableBlock block) {
+  public NewExtendedTimeLockPassword(String text, MutableBlock block) {
     super(text, block);
   }
 
-  public static MutableBlock createMutableBlock(TimeParameter timeType, String start, String end) {
-    String type = timeType.getTextField();
-    String expression = type + ">=" + start + "&&" + type + "<=" + end;
+  public static MutableBlock createMutableBlock(TimeParameter extendedTimeValue, TimeParameter lockTimeType, String lockStartTime, String lockEndTime) {
+    String extendExpression = extendedTimeValue.getTextField();
+    String lockExpression = lockTimeType.getTextField() + ">=" + lockStartTime + "&&" + lockTimeType.getTextField() + "<=" + lockEndTime;
+    String expression = extendExpression + "," + lockExpression;
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
     return block;
   }
 
-  public static MutablePassword createPassword(String text, TimeParameter timeType, String start, String end) {
-    MutableBlock block = createMutableBlock(timeType, start, end);
-    return new TimeLockPassword(text, block);
-  }
-  
 }

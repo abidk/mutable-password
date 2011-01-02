@@ -14,36 +14,26 @@
  * limitations under the License.
  */
 
-package abid.password.type;
+package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
+import abid.password.types.ShiftPassword;
 
-public class NewPassword extends MutablePassword {
+public class NewShiftPassword extends ShiftPassword {
 
-  public static final String PASSWORD_TYPE = "test";
+  public NewShiftPassword(String text, MutableBlock block) {
+    super(text, block);
 
-  public NewPassword(String password) {
-    super(password);
   }
 
-  public NewPassword(String text, MutableBlock mutableBlock) {
-    super(text, mutableBlock);
+  public static MutableBlock createMutableBlock(String shiftValue) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, shiftValue);
+    return block;
   }
 
-  @Override
-  public String getPasswordType() {
-    return PASSWORD_TYPE;
+  public static MutablePassword createPassword(String text, String shiftValue) {
+    MutableBlock block = createMutableBlock(shiftValue);
+    return new ShiftPassword(text, block);
   }
-
-  @Override
-  public boolean confirmPassword(String confirmPassword) {
-    return confirmPassword.equals(getText() + "1");
-  }
-
-  public static MutablePassword createPassword(String text) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, 1);
-    return new NewPassword(text, block);
-  }
-
 }
