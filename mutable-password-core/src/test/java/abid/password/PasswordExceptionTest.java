@@ -16,6 +16,7 @@
 
 package abid.password;
 
+import abid.password.PasswordException;
 import junit.framework.TestCase;
 
 public class PasswordExceptionTest extends TestCase {

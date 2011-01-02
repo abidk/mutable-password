@@ -19,6 +19,8 @@ package abid.password;
 import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
+import abid.password.MutablePassword;
+import abid.password.Password;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.ShiftPassword;
 

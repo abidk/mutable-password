@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.type;
+package abid.password.types;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
