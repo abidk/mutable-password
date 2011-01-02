@@ -53,12 +53,35 @@
 				</excludes>
 			</testResource>
 		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>wicketbench.wicketnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>abid.password</groupId>
 			<artifactId>mutable-password-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -25,12 +25,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
 
-public class StreamManagementTest extends TestCase {
+public class StreamUtilsTest extends TestCase {
 
   public void testStreamToString() throws IOException {
     String testStr = "test";
     InputStream in = new ByteArrayInputStream(testStr.getBytes());
-    String convertedStr = StreamManagement.convertStreamToString(in);
+    String convertedStr = StreamUtils.convertStreamToString(in);
     in.close();
     assertEquals(testStr, convertedStr);
   }
@@ -39,7 +39,7 @@ public class StreamManagementTest extends TestCase {
    * Workaround to get 100% coverage on a private constructor.
    */
   public void testStream() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
-    final Class<?> cls = StreamManagement.class;
+    final Class<?> cls = StreamUtils.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
     final Object n = c.newInstance((Object[]) null);

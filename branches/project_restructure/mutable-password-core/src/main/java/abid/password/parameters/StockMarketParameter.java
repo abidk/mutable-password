@@ -23,7 +23,7 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-import abid.password.util.StreamManagement;
+import abid.password.util.StreamUtils;
 
 /**
  * This is an example of the types of parameters that can be used to change your
@@ -60,7 +60,7 @@ public enum StockMarketParameter {
     URLConnection connection = dataUrl.openConnection();
     InputStream inputStream = connection.getInputStream();
 
-    String csvData = StreamManagement.convertStreamToString(inputStream);
+    String csvData = StreamUtils.convertStreamToString(inputStream);
     try {
       inputStream.close();
     } catch (IOException e) {

@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package abid.password.util;
+package abid.password.wicket.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+public class UserException extends Exception {
 
-public class StreamManagement {
+  private static final long serialVersionUID = 1L;
 
-  private StreamManagement() {
+  public UserException(String msg) {
+    super(msg);
   }
 
-  public static String convertStreamToString(InputStream is) throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-    StringBuilder sb = new StringBuilder();
-
-    String line;
-    while ((line = reader.readLine()) != null) {
-      sb.append(line);
-    }
-
-    return sb.toString();
+  public UserException(String msg, Exception e) {
+    super(msg, e);
   }
+
 }

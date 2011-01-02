@@ -23,6 +23,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.6.1</slf4j.version>
+		<hibernate.version>3.3.1.GA</hibernate.version>
+		<h2.version>1.2.147</h2.version>
 	</properties>
 
 	<licenses>
@@ -144,6 +146,21 @@
 				<groupId>abid.password</groupId>
 				<artifactId>mutable-password-core</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
