@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
@@ -56,7 +57,8 @@ public class ExtendedTimeLockPasswordField extends FormComponentPanel<String> {
     };
 
     List<TimeParameter> extendedChoices = Arrays.asList(TimeParameter.values());
-    extendedParameter = new DropDownChoice<TimeParameter>("extendedParameter", new Model<TimeParameter>(), extendedChoices) {
+    EnumChoiceRenderer<TimeParameter> timeParameterRenderer = new EnumChoiceRenderer<TimeParameter>(this);
+    extendedParameter = new DropDownChoice<TimeParameter>("extendedParameter", new Model<TimeParameter>(), extendedChoices, timeParameterRenderer) {
 
       private static final long serialVersionUID = 1L;
 
