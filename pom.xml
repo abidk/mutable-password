@@ -16,6 +16,7 @@
 	<modules>
 		<module>mutable-password-core</module>
 		<module>mutable-password-wicket-example</module>
+		<module>mutable-password-swing-example</module>
 	</modules>
 
 	<!-- mvn versions:display-dependency-updates -->
