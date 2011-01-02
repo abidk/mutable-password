@@ -73,6 +73,6 @@ public enum TimeParameter {
   }
 
   public String toString() {
-    return textField + ": " + getCalendarValue();
+    return textField + ":" + getCalendarValue();
   }
 }

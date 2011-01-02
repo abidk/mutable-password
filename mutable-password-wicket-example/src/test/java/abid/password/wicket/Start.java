@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password;
+package abid.password.wicket;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
