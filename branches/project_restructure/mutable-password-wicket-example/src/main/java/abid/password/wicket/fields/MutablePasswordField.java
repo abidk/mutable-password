@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.markup.html.fields;
+package abid.password.wicket.fields;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;

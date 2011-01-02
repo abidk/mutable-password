@@ -14,36 +14,38 @@
  * limitations under the License.
  */
 
-package abid.password.markup.html.fields;
+package abid.password.wicket.fields;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import abid.password.MutablePassword;
-import abid.password.parameters.TimeParameter;
-import abid.password.types.ShiftPassword;
+import abid.password.types.SimplePassword;
 
-public class ShiftPasswordField extends FormComponentPanel<String> {
+public class SimplePasswordField extends FormComponentPanel<String> {
 
   private static final long serialVersionUID = 1L;
 
   private final FormComponent<String> passwordField;
-  private final DropDownChoice<TimeParameter> timeChoice;
+  private final FormComponent<String> confirmField;
 
-  public ShiftPasswordField(String id) {
+  public SimplePasswordField(String id) {
     this(id, new Model<String>(""));
   }
 
-  public ShiftPasswordField(String id, IModel<String> model) {
+  public SimplePasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>("")) {
+    passwordField = new PasswordTextField("password", new Model<String>("")) {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      public boolean isRequired() {
+        return true;
+      }
+    };
+    confirmField = new PasswordTextField("confirm", new Model<String>("")) {
       private static final long serialVersionUID = 1L;
 
       @Override
@@ -52,27 +54,15 @@ public class ShiftPasswordField extends FormComponentPanel<String> {
       }
     };
 
-    // give it some logical shift values
-    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new DropDownChoice<TimeParameter>("parameter", new Model<TimeParameter>(), passwordChoices) {
-
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-
-    };
     add(passwordField);
-    add(timeChoice);
+    add(confirmField);
   }
 
   @Override
   protected void convertInput() {
     String password = passwordField.getConvertedInput();
-    TimeParameter parameter = timeChoice.getConvertedInput();
-    MutablePassword extendedPassword = ShiftPassword.createPassword(password, parameter);
-    setConvertedInput(extendedPassword.getPassword());
+    SimplePassword simplePass = new SimplePassword(password);
+    setConvertedInput(simplePass.getPassword());
   }
 
 }

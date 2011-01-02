@@ -27,12 +27,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import abid.password.markup.html.fields.ExtendedPasswordField;
-import abid.password.markup.html.fields.ExtendedTimeLockPasswordField;
-import abid.password.markup.html.fields.MutablePasswordField;
-import abid.password.markup.html.fields.ShiftPasswordField;
-import abid.password.markup.html.fields.SimplePasswordField;
-import abid.password.markup.html.fields.TimeLockPasswordField;
+import abid.password.wicket.fields.ExtendedPasswordField;
+import abid.password.wicket.fields.ExtendedTimeLockPasswordField;
+import abid.password.wicket.fields.MutablePasswordField;
+import abid.password.wicket.fields.ShiftPasswordField;
+import abid.password.wicket.fields.SimplePasswordField;
+import abid.password.wicket.fields.TimeLockPasswordField;
 
 public class ExamplePage extends WebPage {
 
