@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.markup.html.fields;
+package abid.password.wicket.fields;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,20 +28,20 @@ import org.apache.wicket.model.Model;
 
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.ExtendedPassword;
+import abid.password.types.ShiftPassword;
 
-public class ExtendedPasswordField extends FormComponentPanel<String> {
+public class ShiftPasswordField extends FormComponentPanel<String> {
 
   private static final long serialVersionUID = 1L;
 
   private final FormComponent<String> passwordField;
   private final DropDownChoice<TimeParameter> timeChoice;
 
-  public ExtendedPasswordField(String id) {
+  public ShiftPasswordField(String id) {
     this(id, new Model<String>(""));
   }
 
-  public ExtendedPasswordField(String id, IModel<String> model) {
+  public ShiftPasswordField(String id, IModel<String> model) {
     super(id, model);
     passwordField = new TextField<String>("password", new Model<String>("")) {
       private static final long serialVersionUID = 1L;
@@ -52,7 +52,8 @@ public class ExtendedPasswordField extends FormComponentPanel<String> {
       }
     };
 
-    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.values());
+    // give it some logical shift values
+    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
     timeChoice = new DropDownChoice<TimeParameter>("parameter", new Model<TimeParameter>(), passwordChoices) {
 
       private static final long serialVersionUID = 1L;
@@ -70,7 +71,7 @@ public class ExtendedPasswordField extends FormComponentPanel<String> {
   protected void convertInput() {
     String password = passwordField.getConvertedInput();
     TimeParameter parameter = timeChoice.getConvertedInput();
-    MutablePassword extendedPassword = ExtendedPassword.createPassword(password, parameter);
+    MutablePassword extendedPassword = ShiftPassword.createPassword(password, parameter);
     setConvertedInput(extendedPassword.getPassword());
   }
 
