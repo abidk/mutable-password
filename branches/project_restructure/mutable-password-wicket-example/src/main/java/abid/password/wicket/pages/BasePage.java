@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package abid.password.wicket.dao;
+package abid.password.wicket.pages;
 
-import java.util.List;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
-import abid.password.wicket.model.User;
+public abstract class BasePage extends WebPage {
 
-public interface UserDao {
-
-  public void saveUser(User user);
-
-  public User getUser(String username);
-
-  public List<User> getUsers();
-
+  public BasePage() {
+    FeedbackPanel feedbackPanel = new FeedbackPanel("feedbackPanel");
+    add(feedbackPanel);
+  }
 }
