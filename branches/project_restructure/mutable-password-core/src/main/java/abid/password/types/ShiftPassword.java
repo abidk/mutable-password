@@ -20,7 +20,6 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
@@ -72,15 +71,19 @@ public class ShiftPassword extends MutablePassword {
   }
 
   @Override
+  public String getEvaluatedPassword() throws ParseException {
+    Evaluator evaluator = getEvaluator();
+    String evaluation = evaluator.evaluateExpression(getExpression(), TimeParameter.getValues());
+    int shiftBy = Integer.valueOf(evaluation);
+    String shiftedPassword = getShiftedPassword(shiftBy);
+    return shiftedPassword;
+  }
+
+  @Override
   public boolean confirmPassword(String confirmPassword) throws PasswordException {
-    // parser needs to be customisable
-    Evaluator parsable = new JavascriptEvaluator();
     try {
-      String evaluation = parsable.evaluateExpression(getExpression(), TimeParameter.getValues());
-      
-      int shiftBy = Integer.valueOf(evaluation);
-      String shiftedPassword = getShiftedPassword(shiftBy);
-      return shiftedPassword.equals(confirmPassword);
+      String evaluatedPassword = getEvaluatedPassword();
+      return evaluatedPassword.equals(confirmPassword);
     } catch (ParseException e) {
       throw new PasswordException(e);
     }
@@ -109,4 +112,5 @@ public class ShiftPassword extends MutablePassword {
     MutableBlock block = createMutableBlock(shiftValue);
     return new ShiftPassword(text, block);
   }
+
 }

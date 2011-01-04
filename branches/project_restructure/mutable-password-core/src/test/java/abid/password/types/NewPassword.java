@@ -18,6 +18,8 @@ package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
+import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
 
 public class NewPassword extends MutablePassword {
 
@@ -37,8 +39,19 @@ public class NewPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) {
-    return confirmPassword.equals(getText() + "1");
+  public String getEvaluatedPassword() throws ParseException {
+    String evaluatedPassword = getText() + "1";
+    return evaluatedPassword;
+  }
+
+  @Override
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
+    try {
+      String evaluatedPassword = getEvaluatedPassword();
+      return confirmPassword.equals(evaluatedPassword);
+    } catch (ParseException e) {
+      throw new PasswordException(e);
+    }
   }
 
   public static MutablePassword createPassword(String text) {

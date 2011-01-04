@@ -20,7 +20,6 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
@@ -46,14 +45,21 @@ public class TimeLockPassword extends MutablePassword {
   }
 
   @Override
+  public String getEvaluatedPassword() throws ParseException {
+    // password does not need evaluating
+    String passwordText = getText();
+    return passwordText;
+  }
+
+  @Override
   public boolean confirmPassword(String confirmPassword) throws PasswordException {
     String passwordText = getText();
     // check if passwords match first
     if (confirmPassword.equals(passwordText)) {
-      Evaluator parsable = new JavascriptEvaluator();
       try {
-        String evaluation = parsable.evaluateExpression(getExpression(), TimeParameter.getValues());
-        return evaluation.equalsIgnoreCase("true");
+        Evaluator evaluator = getEvaluator();
+        String evaluatedPassword = evaluator.evaluateExpression(getExpression(), TimeParameter.getValues());
+        return "true".equalsIgnoreCase(evaluatedPassword);
       } catch (ParseException e) {
         throw new PasswordException(e);
       }

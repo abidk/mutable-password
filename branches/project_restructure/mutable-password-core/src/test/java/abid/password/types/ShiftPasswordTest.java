@@ -23,6 +23,7 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.PasswordFactory;
 import abid.password.types.ShiftPassword;
@@ -45,6 +46,15 @@ public class ShiftPasswordTest extends TestCase {
 
     String wrongPassword = "abid";
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
+  public void testEvaluatedPassword() throws ParseException, PasswordException {
+    TimeParameter timeType = TimeParameter.YEAR;
+    String passwordText = "abid";
+    MutablePassword password = ShiftPassword.createPassword(passwordText, timeType);
+
+    // test the evaluated password
+    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testLowerCasePassword() throws PasswordException {
@@ -116,7 +126,7 @@ public class ShiftPasswordTest extends TestCase {
     String wrongPassword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
-  
+
   public void testLowercasePassword() throws PasswordException {
     MutablePassword dynamicPassword = ShiftPassword.createPassword("az", 1);
 
@@ -136,7 +146,7 @@ public class ShiftPasswordTest extends TestCase {
     String wrongPassword = "6z6";
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
-  
+
   public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
     MutablePassword dynamicPassword = ShiftPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^", 1);
 

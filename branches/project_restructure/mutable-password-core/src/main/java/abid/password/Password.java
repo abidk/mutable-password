@@ -36,8 +36,4 @@ public abstract class Password {
   public String getPassword() {
     return password;
   }
-
-  public String toString() {
-    return getPassword();
-  }
 }

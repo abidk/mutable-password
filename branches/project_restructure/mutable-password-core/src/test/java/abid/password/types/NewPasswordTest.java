@@ -18,7 +18,11 @@ package abid.password.types;
 
 import java.lang.reflect.InvocationTargetException;
 
+import abid.password.MutablePassword;
 import abid.password.Password;
+import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
+import abid.password.parameters.TimeParameter;
 import abid.password.types.PasswordFactory;
 import abid.password.types.SimplePassword;
 import junit.framework.TestCase;
@@ -39,6 +43,13 @@ public class NewPasswordTest extends TestCase {
     assertEquals(SimplePassword.class, m1.getClass());
 
     // System.out.println(m1.getPassword());
+  }
+
+  public void testEvaluatedPassword() throws ParseException, PasswordException {
+    String passwordText = "abid";
+    MutablePassword password = NewPassword.createPassword(passwordText);
+    // test the evaluated password
+    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testRegisteredNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,

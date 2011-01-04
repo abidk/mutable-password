@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.TimeLockPassword;
 
@@ -40,6 +41,14 @@ public class TimeLockPasswordTest extends TestCase {
     assertEquals(false, mutatingPassword3.confirmPassword(wrongPassword));
   }
 
+  public void testEvaluatedPassword() throws ParseException, PasswordException {
+    String passwordText = "abid";
+    MutablePassword password = TimeLockPassword.createPassword(passwordText, TimeParameter.HOUR, 0, 24);
+
+    // test the evaluated password
+    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
+  }
+  
   public void testDayOfWeekPassword() throws PasswordException {
     // Calendar.SUNDAY = 1
     // Calendar.MONDAY = 2

@@ -17,14 +17,19 @@
 package abid.password;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
+import abid.password.evaluator.Evaluator;
+import abid.password.evaluator.JavascriptEvaluator;
+import abid.password.evaluator.ParseException;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.ShiftPassword;
 
 public class MutablePasswordTest extends TestCase {
+
   public void testNullBlock() {
     String passwordText = "pass";
     MutablePassword password = new ShiftPassword(passwordText, null);
@@ -38,4 +43,23 @@ public class MutablePasswordTest extends TestCase {
       InvocationTargetException, NoSuchMethodException {
     Password pass = new ExtendedTimeLockPassword("abidextendedTimeLock{year}]");
   }
+
+  public void testNewEvaluator() {
+    String passwordText = "pass";
+    MutablePassword password = new ShiftPassword(passwordText, null);
+    // check the default evaluator
+    assertEquals(JavascriptEvaluator.class, password.getEvaluator().getClass());
+    // set new evaluator
+    password.setEvaluator(new NewEvalutator());
+    assertEquals(NewEvalutator.class, password.getEvaluator().getClass());
+  }
+
+  public class NewEvalutator implements Evaluator {
+
+    @Override
+    public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
+      return null;
+    }
+  }
+
 }

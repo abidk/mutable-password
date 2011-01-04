@@ -23,6 +23,7 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.PasswordFactory;
@@ -39,9 +40,16 @@ public class ExtendedTimeLockPasswordTest extends TestCase {
   }
 
   public void testPassword() throws PasswordException {
+    Password password = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
+    assertEquals(true, password.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
+  }
 
-    Password comboPassword = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
-    assertEquals(true, comboPassword.confirmPassword("abid" + (TimeParameter.YEAR).getCalendarValue()));
+  public void testEvaluatedPassword() throws ParseException, PasswordException {
+    TimeParameter timeType = TimeParameter.YEAR;
+    String passwordText = "abid";
+    MutablePassword password = ExtendedTimeLockPassword.createPassword(passwordText, timeType, TimeParameter.HOUR, 0, 24);
+    // test the evaluated password
+    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testExpressionLength() {
