@@ -18,6 +18,7 @@ package abid.password.wicket.fields;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 public class MutablePasswordField extends FormComponentPanel<String> {
@@ -26,11 +27,11 @@ public class MutablePasswordField extends FormComponentPanel<String> {
   private FormComponent<String> selectedForm;
 
   public MutablePasswordField(String id) {
-    this(id, null);
+    this(id, new Model<String>(""), null);
   }
 
-  public MutablePasswordField(String id, String currentSelection) {
-    super(id, new Model<String>(""));
+  public MutablePasswordField(String id, IModel<String> model, String currentSelection) {
+    super(id, model);
 
     if (currentSelection == null) {
       currentSelection = "Simple";

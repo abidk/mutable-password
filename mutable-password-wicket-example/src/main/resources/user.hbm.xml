@@ -3,10 +3,9 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="abid.password.wicket.model.User" table="USERS">
-		<id name="id">
-			<generator class="native" />
-		</id>
-		<property generated="never" lazy="false" name="username" type="string" />
-		<property generated="never" lazy="false" name="password" type="string" />
+      <composite-id>
+        <key-property name="username" type="string" />
+      </composite-id>
+      <property name="password" type="string" />
 	</class>
 </hibernate-mapping>

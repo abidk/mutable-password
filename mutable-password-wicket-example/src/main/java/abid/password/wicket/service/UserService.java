@@ -16,10 +16,16 @@
 
 package abid.password.wicket.service;
 
+import java.util.List;
+
 import abid.password.wicket.model.User;
 
 public interface UserService {
 
+  public void saveUser(String username, String password);
+
   public User authenticate(String username, String password) throws UserException;
+
+  public List<User> getUsers();
 
 }

@@ -16,7 +16,12 @@
 
 package abid.password.wicket.service.impl;
 
+import java.util.List;
+
+import com.google.inject.Inject;
+
 import abid.password.Password;
+import abid.password.PasswordException;
 import abid.password.types.PasswordFactory;
 import abid.password.wicket.dao.UserDao;
 import abid.password.wicket.model.User;
@@ -25,6 +30,7 @@ import abid.password.wicket.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
+  @Inject
   private UserDao userDao;
 
   public UserDao getUserDao() {
@@ -35,21 +41,48 @@ public class UserServiceImpl implements UserService {
     this.userDao = userDao;
   }
 
+  /**
+   * Err clean this mess.
+   */
   public User authenticate(String username, String password) throws UserException {
-    try {
-      User user = userDao.getUser(username);
-      if (user == null) {
-        throw new UserException("User does not exist.");
-      }
+    User user = userDao.getUser(username);
+    if (user == null) {
+      throw new UserException("User does not exist.");
+    }
 
-      Password userPass = PasswordFactory.getInstance(user.getPassword());
-      boolean result = userPass.confirmPassword(password);
+    Password userPass = null;
+    try {
+      userPass = PasswordFactory.getInstance(user.getPassword());
+    } catch (Exception e) {
+      throw new UserException("An error occurred whilst parsing the password.", e);
+    }
+
+    if (userPass == null) {
+      throw new UserException("Password is wrong.");
+    }
+
+    boolean result;
+    try {
+      result = userPass.confirmPassword(password);
       if (!result) {
         throw new UserException("Password is wrong.");
       }
-      return user;
-    } catch (Exception e) {
-      throw new UserException("An error occurred whilst authenticating.", e);
+    } catch (PasswordException e) {
+      throw new UserException("An error occurred whilst parsing the password.", e);
     }
+
+    return user;
+  }
+
+  public void saveUser(String username, String password) {
+    User user = new User();
+    user.setUsername(username);
+    user.setPassword(password);
+    userDao.saveUser(user);
+  }
+
+  public List<User> getUsers() {
+    List<User> users = userDao.getUsers();
+    return users;
   }
 }
