@@ -23,6 +23,7 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
@@ -52,6 +53,15 @@ public class ExtendedPasswordTest extends TestCase {
 
     String wrongPassword = "abida" + timeType.getCalendarValue();
     assertEquals(false, password.confirmPassword(wrongPassword));
+  }
+
+  public void testEvaluatedPassword() throws ParseException, PasswordException {
+    TimeParameter timeType = TimeParameter.YEAR;
+    String passwordText = "abid";
+    MutablePassword password = ExtendedPassword.createPassword(passwordText, timeType);
+
+    // test the evaluated password
+    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testExtendedPassword2() throws PasswordException {

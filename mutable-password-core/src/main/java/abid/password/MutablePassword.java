@@ -16,6 +16,10 @@
 
 package abid.password;
 
+import abid.password.evaluator.Evaluator;
+import abid.password.evaluator.JavascriptEvaluator;
+import abid.password.evaluator.ParseException;
+
 /**
  * Allows this abstract class to be extended to allow the extension of further
  * mutable passwords.
@@ -27,8 +31,20 @@ public abstract class MutablePassword extends Password {
 
   public abstract String getPasswordType();
 
+  public abstract String getEvaluatedPassword() throws ParseException;
+
   private MutableBlock mutableBlock;
   private String text;
+  // hmm should make this injectable
+  private Evaluator evaluator = new JavascriptEvaluator();
+
+  public Evaluator getEvaluator() {
+    return evaluator;
+  }
+
+  public void setEvaluator(Evaluator evaluator) {
+    this.evaluator = evaluator;
+  }
 
   public MutablePassword(String text, MutableBlock mutableBlock) {
     super(text + mutableBlock);

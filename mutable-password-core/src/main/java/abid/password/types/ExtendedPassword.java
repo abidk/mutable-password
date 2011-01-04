@@ -20,7 +20,6 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
@@ -46,14 +45,18 @@ public class ExtendedPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) throws PasswordException {
-    // parser needs to be customisable
-    Evaluator parsable = new JavascriptEvaluator();
-    try {
-      String evaluation = parsable.evaluateExpression(getExpression(), ParameterFactory.getAllParamterData());
+  public String getEvaluatedPassword() throws ParseException {
+    Evaluator evaluator = getEvaluator();
+    String evaluation = evaluator.evaluateExpression(getExpression(), ParameterFactory.getAllParamterData());
+    String evaluatedPassword = getText() + evaluation;
+    // System.out.println( "==>" + evaluatedPassword);
+    return evaluatedPassword;
+  }
 
-      String evaluatedPassword = getText() + evaluation;
-      // System.out.println( "==>" + evaluatedPassword);
+  @Override
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
+    try {
+      String evaluatedPassword = getEvaluatedPassword();
       return evaluatedPassword.equals(confirmPassword);
     } catch (ParseException e) {
       throw new PasswordException(e);
@@ -83,5 +86,4 @@ public class ExtendedPassword extends MutablePassword {
     String mutablePassword = text + block;
     return new ExtendedPassword(mutablePassword);
   }
-
 }

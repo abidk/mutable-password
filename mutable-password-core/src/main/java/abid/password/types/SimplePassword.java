@@ -32,6 +32,7 @@ public class SimplePassword extends Password {
 
   @Override
   public boolean confirmPassword(String confirmPassword) {
-    return getPassword().equals(confirmPassword);
+    String password = getPassword();
+    return password.equals(confirmPassword);
   }
 }

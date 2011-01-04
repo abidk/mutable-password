@@ -20,7 +20,6 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
@@ -39,35 +38,39 @@ public class ExtendedTimeLockPassword extends MutablePassword {
   public ExtendedTimeLockPassword(String password) {
     super(password);
   }
-  
+
   public ExtendedTimeLockPassword(String text, MutableBlock block) {
     super(text, block);
   }
 
   @Override
+  public String getEvaluatedPassword() throws ParseException {
+    String[] expressions = getExpression().split(",");
+    String extendTimeExpression = expressions[0];
+    Evaluator evaluator = getEvaluator();
+    String extendEvaluation = evaluator.evaluateExpression(extendTimeExpression, ParameterFactory.getAllParamterData());
+    String evaluatedPassword = getText() + extendEvaluation;
+    return evaluatedPassword;
+  }
+
+  @Override
   public boolean confirmPassword(String confirmPassword) throws PasswordException {
     String[] expressions = getExpression().split(",");
-
     if (expressions.length < 2) {
       throw new PasswordException("The expression for 'ExtendTimeLockPassword' is incorrect.");
     }
 
-    String extendTimeExpression = expressions[0];
-    String lockExpression = expressions[1];
-
     try {
+      String evaluatedPassword = getEvaluatedPassword();
       // check if passwords match first
-      Evaluator parsable = new JavascriptEvaluator();
-
-      // check the extend bit is correct
-      String extendEvaluation = parsable.evaluateExpression(extendTimeExpression, ParameterFactory.getAllParamterData());
-      String evaluatedPassword = getText() + extendEvaluation;
       if (!evaluatedPassword.equals(confirmPassword)) {
         return false;
       }
 
       // check the time expression is correct
-      String timeEvaluation = parsable.evaluateExpression(lockExpression, ParameterFactory.getAllParamterData());
+      String lockExpression = expressions[1];
+      Evaluator evaluator = getEvaluator();
+      String timeEvaluation = evaluator.evaluateExpression(lockExpression, ParameterFactory.getAllParamterData());
       if (!timeEvaluation.equalsIgnoreCase("true")) {
         return false;
       }
