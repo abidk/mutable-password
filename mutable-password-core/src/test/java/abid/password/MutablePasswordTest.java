@@ -20,8 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import junit.framework.TestCase;
-import abid.password.MutablePassword;
-import abid.password.Password;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
@@ -41,7 +39,7 @@ public class MutablePasswordTest extends TestCase {
 
   public void testStartOfExpression() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
-    Password pass = new ExtendedTimeLockPassword("abidextendedTimeLock{year}]");
+    new ExtendedTimeLockPassword("abidextendedTimeLock{year}]");
   }
 
   public void testNewEvaluator() {

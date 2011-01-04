@@ -18,14 +18,11 @@ package abid.password.types;
 
 import java.lang.reflect.InvocationTargetException;
 
+import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
-import abid.password.parameters.TimeParameter;
-import abid.password.types.PasswordFactory;
-import abid.password.types.SimplePassword;
-import junit.framework.TestCase;
 
 public class NewPasswordTest extends TestCase {
 

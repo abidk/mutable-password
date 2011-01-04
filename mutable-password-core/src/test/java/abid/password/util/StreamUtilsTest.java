@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package abid.password.util;
 
 import java.io.ByteArrayInputStream;
@@ -36,13 +35,13 @@ public class StreamUtilsTest extends TestCase {
   }
 
   /*
-   * Workaround to get 100% coverage on a private constructor.
+   * Workaround to get coverage on a private constructor.
    */
   public void testStream() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
     final Class<?> cls = StreamUtils.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
-    final Object n = c.newInstance((Object[]) null);
+    c.newInstance((Object[]) null);
   }
 
 }
