@@ -25,7 +25,6 @@ import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
 /**
- * 
  * Makes it possible to combine extended mutable password with the timelock.
  * 
  * @author Abid
