@@ -3,19 +3,28 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>abid.password</groupId>
-	<artifactId>mutable-password</artifactId>
+	<artifactId>mutable-password-parent</artifactId>
 	<version>1.6-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
 	<name>Mutable Password</name>
 	<description>Mutable passwords allows you to create expressions as a
 		password which can change based on time or any other factor.</description>
 	<url>http://code.google.com/p/mutable-password/</url>
 	<inceptionYear>2009</inceptionYear>
 
+	<modules>
+		<module>mutable-password-core</module>
+		<module>mutable-password-wicket-example</module>
+		<module>mutable-password-swing-example</module>
+	</modules>
+
 	<!-- mvn versions:display-dependency-updates -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.6</jdk.version>
-		<slf4j.version>1.6.0</slf4j.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<hibernate.version>3.3.1.GA</hibernate.version>
+		<h2.version>1.2.147</h2.version>
 	</properties>
 
 	<licenses>
@@ -75,7 +84,7 @@
 				<configuration>
 					<header>src/main/resources/META-INF/license-header.txt</header>
 					<properties>
-						<year>2010</year>
+						<year>2011</year>
 					</properties>
 					<excludes>
 						<exclude>LICENSE.txt</exclude>
@@ -94,15 +103,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -126,57 +126,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>assembly</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass />
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<check>
-						<branchRate>90</branchRate>
-						<lineRate>90</lineRate>
-						<totalBranchRate>95</totalBranchRate>
-						<totalLineRate>95</totalLineRate>
-						<haltOnFailure>true</haltOnFailure>
-					</check>
-					<instrumentation>
-						<ignores>
-							<ignore>abid.password.parameters.StockMarketParameter</ignore>
-						</ignores>
-						<!-- <excludes> <exclude>abid/password/parameters/StockMarketParameter.class</exclude> 
-							</excludes> -->
-					</instrumentation>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.0-beta-2</version>
 				<executions>
@@ -189,148 +138,55 @@
 				</executions>
 			</plugin>
 		</plugins>
-
 	</build>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.6</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.2</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<linkJavadoc>true</linkJavadoc>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<quiet>true</quiet>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>javadoc</report>
-						</reports>
-						<configuration>
-							<links>
-								<link>http://java.sun.com/javase/6/docs/api/</link>
-							</links>
-						</configuration>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<plugin>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<linkXref>true</linkXref>
-					<targetJdk>${jdk.version}</targetJdk>
-					<minimumTokens>100</minimumTokens>
-					<rulesets>
-						<ruleset>/rulesets/basic.xml</ruleset>
-						<ruleset>/rulesets/braces.xml</ruleset>
-						<ruleset>/rulesets/finalizers.xml</ruleset>
-						<ruleset>/rulesets/imports.xml</ruleset>
-						<ruleset>/rulesets/migrating.xml</ruleset>
-						<ruleset>/rulesets/strings.xml</ruleset>
-						<ruleset>/rulesets/unusedcode.xml</ruleset>
-					</rulesets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-				<version>2.0-beta-2</version>
-			</plugin>
-			<!-- http://mojo.codehaus.org/javancss-maven-plugin/usage.html -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>javancss-maven-plugin</artifactId>
-				<version>2.0</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>taglist-maven-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<tagListOptions>
-						<tagClasses>
-							<tagClass>
-								<displayName>Todo Work</displayName>
-								<tags>
-									<tag>
-										<matchString>todo</matchString>
-										<matchType>ignoreCase</matchType>
-									</tag>
-									<tag>
-										<matchString>deprecated</matchString>
-										<matchType>ignoreCase</matchType>
-									</tag>
-								</tags>
-							</tagClass>
-						</tagClasses>
-					</tagListOptions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<instrumentation>
-						<ignores>
-							<ignore>abid.password.parameters.StockMarketParameter</ignore>
-						</ignores>
-						<!-- <excludes> <exclude>abid/password/parameters/StockMarketParameter.class</exclude> 
-							</excludes> -->
-					</instrumentation>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<xmlOutput>true</xmlOutput>
-					<effort>Max</effort>
-					<threshold>Low</threshold>
-				</configuration>
-			</plugin>
-			<!-- Ignore this plugin atm. <plugin> <groupId>org.apache.maven.plugins</groupId> 
-				<artifactId>maven-checkstyle-plugin</artifactId> <version>2.5</version> <configuration> 
-				<configLocation>checkstyle.xml</configLocation> </configuration> </plugin> -->
-		</plugins>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>abid.password</groupId>
+				<artifactId>mutable-password-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>3.8.0.GA</version>
+			</dependency>
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.7</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-	</reporting>
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 
 	<repositories>
 		<repository>
