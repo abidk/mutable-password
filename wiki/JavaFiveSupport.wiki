@@ -1,6 +1,6 @@
 The project only supports Java 1.6, due to use of the built-in Javascript to evaluate expressions.
 
-Java 1.5 support can be added by using BeanShell instead. If there is a requirement, then I can make the required change.
+Java 1.5 support can be added by using [http://www.beanshell.org/ BeanShell] instead. If there is a requirement, then I can make the required change.
 
 
  
