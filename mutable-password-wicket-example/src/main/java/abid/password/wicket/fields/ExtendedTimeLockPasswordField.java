@@ -19,7 +19,6 @@ package abid.password.wicket.fields;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
