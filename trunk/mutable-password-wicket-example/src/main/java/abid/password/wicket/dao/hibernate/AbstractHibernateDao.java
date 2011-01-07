@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,6 +31,11 @@ import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Could have used wasp for transaction handling. But, left it out as this is
+ * just an example project.
+ * 
+ */
 public abstract class AbstractHibernateDao<T extends Serializable> {
 
   private static final Logger log = LoggerFactory.getLogger(AbstractHibernateDao.class);
