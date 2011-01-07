@@ -16,9 +16,6 @@
 
 package abid.password.wicket.fields;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
@@ -52,16 +49,15 @@ public class ExtendedPasswordField extends FormComponentPanel<String> {
       }
     };
 
-    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.values());
-    timeChoice = new DropDownChoice<TimeParameter>("parameter", new Model<TimeParameter>(), passwordChoices) {
-
+    // give it some logical shift values
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), null) {
       private static final long serialVersionUID = 1L;
 
       public boolean isRequired() {
         return true;
       };
-
     };
+
     add(passwordField);
     add(timeChoice);
   }
