@@ -53,16 +53,15 @@ public class ShiftPasswordField extends FormComponentPanel<String> {
     };
 
     // give it some logical shift values
-    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new DropDownChoice<TimeParameter>("parameter", new Model<TimeParameter>(), passwordChoices) {
-
+    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices) {
       private static final long serialVersionUID = 1L;
 
       public boolean isRequired() {
         return true;
       };
-
     };
+
     add(passwordField);
     add(timeChoice);
   }

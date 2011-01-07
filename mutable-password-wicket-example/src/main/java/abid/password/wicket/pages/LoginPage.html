@@ -24,45 +24,46 @@
 <body>
 <wicket:extend>
 
+  <div id="heading">
+    <h1>Login</h1>
+  </div>
     
   <form autocomplete="off" wicket:id="loginForm">
-    <table>
-	  <tr>
-	    <td align="right">Username:</td>
-		<td><input wicket:id="usernameField" type="text"></input></td>
-	  </tr>
-	  <tr>
-		<td align="right">Password:</td>
-		<td><input wicket:id="passwordField" type="password"></input></td>
-	  </tr>
-	  <tr>
-		<td></td>
-		<td>
-		  <input type="submit" name="submit" value="Login"/>
-		  <input type="reset" value="Reset"/>
-	    </td>
-	  </tr>
-    </table>
+    <div class="field">
+	  <p>Username *</p>
+	    <input wicket:id="usernameField" type="text" size="35" /> 
+    </div>
+    <div class="field">
+	  <p>Password *</p>
+	    <input wicket:id="passwordField" type="password" size="35" /> 
+    </div>
+    <div class="field">
+      <p>&nbsp;</p>
+      <input type="submit" value="Login" />
+    </div>
   </form>
   
-  <hr/>
-  <table>
-    <thead>
+  <div id="line"></div>
+  <br />
+  <p>User accounts created:</p>
+  <div align="center">
+    <table>
+      <thead>
       <tr>
       <th>Username</th>
       <th>Password</th>
-      <th>Evaluated Password *</th>
+      <th>Evaluated Password (Refresh to update)</th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
 	  <tr wicket:id="usersList">
       <td><span wicket:id="userLabel"></span></td>
       <td><span wicket:id="passLabel"></span></td>
       <td><span wicket:id="evaluatedLabel"></span></td>
       </tr>
-    </tbody>
-  </table>
-  <div><strong>* Refresh the page to see the updates!</strong></div>
+      </tbody>
+    </table>
+  </div>
   
 </wicket:extend>
 </body>

@@ -19,7 +19,6 @@ package abid.password.wicket.fields;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
@@ -54,15 +53,17 @@ public class TimeLockPasswordField extends FormComponentPanel<String> {
       }
     };
 
-    List<TimeParameter> passwordChoices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new DropDownChoice<TimeParameter>("parameter", new Model<TimeParameter>(), passwordChoices) {
-
+    
+    // give it some logical shift values
+    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices) {
       private static final long serialVersionUID = 1L;
 
       public boolean isRequired() {
         return true;
       };
     };
+    
 
     startField = new TextField<Integer>("startField", new Model<Integer>(0)) {
 
