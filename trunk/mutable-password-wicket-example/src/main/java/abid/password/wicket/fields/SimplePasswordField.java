@@ -29,7 +29,6 @@ public class SimplePasswordField extends FormComponentPanel<String> {
   private static final long serialVersionUID = 1L;
 
   private final FormComponent<String> passwordField;
-  private final FormComponent<String> confirmField;
 
   public SimplePasswordField(String id) {
     this(id, new Model<String>(""));
@@ -45,17 +44,8 @@ public class SimplePasswordField extends FormComponentPanel<String> {
         return true;
       }
     };
-    confirmField = new PasswordTextField("confirm", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
 
     add(passwordField);
-    add(confirmField);
   }
 
   @Override
