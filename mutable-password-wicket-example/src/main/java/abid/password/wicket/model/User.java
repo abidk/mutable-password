@@ -40,7 +40,7 @@ public class User implements Serializable {
     this.password = password;
   }
 
-  /*
+  
   @Override
   public int hashCode() {
     return username.hashCode();
@@ -58,6 +58,6 @@ public class User implements Serializable {
 
     User other = (User) obj;
     return username.equals(other.username);
-  }*/
+  }
 
 }
