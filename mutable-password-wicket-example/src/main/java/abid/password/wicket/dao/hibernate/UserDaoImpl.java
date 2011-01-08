@@ -19,39 +19,33 @@ package abid.password.wicket.dao.hibernate;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import abid.password.wicket.dao.UserDao;
 import abid.password.wicket.model.User;
 
+import com.wideplay.warp.persist.TransactionType;
+import com.wideplay.warp.persist.Transactional;
+
 public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
 
   public UserDaoImpl() {
+    super(User.class);
   }
 
   public void saveUser(User user) {
     saveOrUpdate(user);
   }
 
+  @Transactional(type = TransactionType.READ_ONLY)
   public User getUser(String username) {
-    Session session = getSessionFactory().openSession();
-    try {
-      session.beginTransaction();
-      Criteria criteria = session.createCriteria(User.class);
-      criteria.add(Restrictions.eq("username", username));
-      User user = (User) criteria.uniqueResult();
-      // Query query = session.createQuery("from User u where u.username = ?");
-      // query.setString(0, username);
-      // User user = (User) query.uniqueResult();
-      return user;
-    } catch (HibernateException e) {
-      e.printStackTrace();
-    } finally {
-      session.close();
-    }
-    return null;
+    Criteria criteria = getSession().get().createCriteria(User.class);
+    criteria.add(Restrictions.eq("username", username));
+    User user = (User) criteria.uniqueResult();
+    // Query query = session.createQuery("from User u where u.username = ?");
+    // query.setString(0, username);
+    // User user = (User) query.uniqueResult();
+    return user;
   }
 
   public List<User> getUsers() {

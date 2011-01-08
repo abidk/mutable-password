@@ -200,6 +200,11 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>mutable-password-release</id>
+			<name>Mutable password repository</name>
+			<url>http://mutable-password.googlecode.com/svn/maven2/releases/</url>
+		</repository>
 	</repositories>
 
 </project>
