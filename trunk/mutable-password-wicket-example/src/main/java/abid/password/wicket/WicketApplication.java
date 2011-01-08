@@ -21,15 +21,8 @@ import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
-import abid.password.wicket.dao.UserDao;
-import abid.password.wicket.dao.hibernate.UserDaoImpl;
 import abid.password.wicket.pages.CreateUserPage;
 import abid.password.wicket.pages.LoginPage;
-import abid.password.wicket.service.UserService;
-import abid.password.wicket.service.impl.UserServiceImpl;
-
-import com.google.inject.Binder;
-import com.google.inject.Module;
 
 public class WicketApplication extends WebApplication {
 
@@ -38,16 +31,7 @@ public class WicketApplication extends WebApplication {
     mountBookmarkablePage("login", LoginPage.class);
     mountBookmarkablePage("createUser", CreateUserPage.class);
     // Could use InjectionFlagCachingGuiceComponentInjector
-    addComponentInstantiationListener(new GuiceComponentInjector(this, getModule()));
-  }
-
-  private Module getModule() {
-    return new Module() {
-      public void configure(Binder binder) {
-        binder.bind(UserService.class).to(UserServiceImpl.class);
-        binder.bind(UserDao.class).to(UserDaoImpl.class);
-      }
-    };
+    addComponentInstantiationListener(new GuiceComponentInjector(this, new GuiceModule()));
   }
 
   public Class<? extends WebPage> getHomePage() {
