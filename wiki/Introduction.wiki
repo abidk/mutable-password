@@ -1,6 +1,4 @@
-#summary One-sentence summary of this page.
 #labels Featured
-
 = Introduction =
 Mutable passwords gives you the extra layer of security that a static password cannot provide. That is a password which is contantly changing, making it difficult for someone to guess your password. 
 
