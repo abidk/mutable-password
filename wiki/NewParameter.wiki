@@ -1,13 +1,13 @@
-*I have implemented the obvious parameters such as Time and Stock. If you come up with any other parameters, please feel free to contribute your code.*
+*I have implemented the obvious parameters such as Time and Stock market data. If you come up with any other parameters, please feel free to contribute your code.*
 
 ----
 1. Retrieves the stock market value from Yahoo
 {{{
 public enum StockMarketParameter {
 
-  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
+  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), 
+  DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
 
-  // Get stock data from Yahoo
   public static final String YAHOO_FINANCE_URL = "http://uk.old.finance.yahoo.com/d/quotes.csv";
 
   private String market;
