@@ -6,6 +6,6 @@
       * [ExtendedTimeLockPassword Extended Time Lock Password]
       * [ShiftPassword Shift Password]
       * [TimeLockPassword Time Lock Password]
-    * Adding new mutable passwords
+    * Creating a new mutable password
     * Adding new parameters
     * [JavaFiveSupport Java 1.5 Support]
