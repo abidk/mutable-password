@@ -1,7 +1,7 @@
 *I have implemented the obvious parameters such as Time and Stock. If you come up with any other parameters, please feel free to contribute your code.*
 
 ----
-1. This takes a stock market value from Yahoo's service
+1. Retrieves the stock market value from Yahoo
 {{{
 public enum StockMarketParameter {
 
@@ -49,3 +49,5 @@ public enum StockMarketParameter {
     ParameterFactory.addParameter(stock.getMarket(), stock.getIndexValue());
   }
 }}}
+
+3. This can now be used in any password implementation.
