@@ -1,6 +1,6 @@
   * User's Guide
     * [Introduction Introduction]
-    * [PasswordTypes Password Types]
+    * Password Types
       * [SimplePassword Simple Password]
       * [ExtendedPassword Extended Password]
       * [ExtendedTimeLockPassword Extended Time Lock Password]
