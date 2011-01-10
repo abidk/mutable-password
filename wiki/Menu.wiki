@@ -1,11 +1,11 @@
 =Contents=
   * [Introduction Introduction]
-  * Password types
+  * Passwords
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
     * [ExtendedTimeLockPassword Extended Time Lock Password]
     * [ShiftPassword Shift Password]
     * [TimeLockPassword Time Lock Password]
-  * Creating a new mutable password
-  * Adding new parameters
+  * [NewPassword Create a new password type]
+  * [NewParameter Add new parameter]
   * [JavaFiveSupport Java 1.5 Support]
