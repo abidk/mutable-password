@@ -1,9 +1,11 @@
   * User's Guide
     * [Introduction Introduction]
-    * Password Types
+    * Password types
       * [SimplePassword Simple Password]
       * [ExtendedPassword Extended Password]
       * [ExtendedTimeLockPassword Extended Time Lock Password]
       * [ShiftPassword Shift Password]
       * [TimeLockPassword Time Lock Password]
+    * Adding new mutable passwords
+    * Adding new parameters
     * [JavaFiveSupport Java 1.5 Support]
