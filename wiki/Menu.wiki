@@ -7,5 +7,5 @@
     * [ShiftPassword Shift Password]
     * [TimeLockPassword Time Lock Password]
   * [NewPassword Create a new password type]
-  * [NewParameter Add new parameter]
+  * [NewParameter Add a new parameter]
   * [JavaFiveSupport Java 1.5 Support]
