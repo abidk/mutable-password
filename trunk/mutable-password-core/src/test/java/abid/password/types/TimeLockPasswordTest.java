@@ -24,7 +24,6 @@ import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.TimeLockPassword;
 
 public class TimeLockPasswordTest extends TestCase {
 

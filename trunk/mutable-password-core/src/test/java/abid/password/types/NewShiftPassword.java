@@ -18,7 +18,6 @@ package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
-import abid.password.types.ShiftPassword;
 
 public class NewShiftPassword extends ShiftPassword {
 

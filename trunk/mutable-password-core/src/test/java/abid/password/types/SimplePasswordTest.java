@@ -18,11 +18,9 @@ package abid.password.types;
 
 import java.lang.reflect.InvocationTargetException;
 
+import junit.framework.TestCase;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.types.PasswordFactory;
-
-import junit.framework.TestCase;
 
 public class SimplePasswordTest extends TestCase {
 
