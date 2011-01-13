@@ -25,8 +25,6 @@ import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.PasswordFactory;
-import abid.password.types.ShiftPassword;
 
 public class ShiftPasswordTest extends TestCase {
 

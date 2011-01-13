@@ -22,7 +22,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import abid.password.MutablePassword;
-import abid.password.types.PasswordFactory;
 
 public class PasswordFactoryTest extends TestCase {
 

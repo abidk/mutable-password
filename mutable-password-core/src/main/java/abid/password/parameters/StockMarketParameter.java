@@ -23,6 +23,9 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import abid.password.util.StreamUtils;
 
 /**
@@ -40,6 +43,8 @@ public enum StockMarketParameter {
 
   FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
 
+  private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
+
   // hmm, use Yahoo to get stock data
   public static final String YAHOO_FINANCE_URL = "http://uk.old.finance.yahoo.com/d/quotes.csv";
 
@@ -55,7 +60,7 @@ public enum StockMarketParameter {
     return market;
   }
 
-  public Number getIndexValue() throws IOException{
+  public Number getIndexValue() throws IOException {
     URL dataUrl = new URL(YAHOO_FINANCE_URL + url);
     URLConnection connection = dataUrl.openConnection();
     InputStream inputStream = connection.getInputStream();
@@ -64,7 +69,7 @@ public enum StockMarketParameter {
     try {
       inputStream.close();
     } catch (IOException e) {
-      
+      log.warn("Could not close stream.", e);
     }
 
     String[] splitData = csvData.split(",");

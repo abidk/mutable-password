@@ -33,6 +33,7 @@ public class JavascriptEvaluatorTest extends TestCase {
     try {
       result = evaluator.evaluateExpression("2009(2009.2", TimeParameter.getValues());
     } catch (ParseException e) {
+      e.printStackTrace();
     }
     assertNull(result);
   }

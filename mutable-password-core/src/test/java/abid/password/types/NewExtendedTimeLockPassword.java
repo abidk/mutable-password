@@ -18,7 +18,6 @@ package abid.password.types;
 
 import abid.password.MutableBlock;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.ExtendedTimeLockPassword;
 
 public class NewExtendedTimeLockPassword extends ExtendedTimeLockPassword {
 

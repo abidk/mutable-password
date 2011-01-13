@@ -19,7 +19,6 @@ package abid.password.types;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.TimeLockPassword;
 
 public class NewTimeLockPassword extends TimeLockPassword {
 
