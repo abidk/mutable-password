@@ -16,6 +16,8 @@
 package abid.password.parameters;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum ZodiacParameter {
 
@@ -69,18 +71,27 @@ public enum ZodiacParameter {
     if( date == null ) {
       return null;
     }
+    ZodiacParameter result = null;
     for (ZodiacParameter zodiac : ZodiacParameter.values()) {
       int todayDay = date.get(Calendar.DAY_OF_MONTH);
       int todayMonth = date.get(Calendar.MONTH) + 1;
 
       if (((todayMonth == zodiac.getEndDate().getMonth()) && (todayDay <= zodiac.getEndDate().getDay()))
           || ((todayMonth == zodiac.getStartDate().getMonth()) && (todayDay >= zodiac.getStartDate().getDay()))) {
-        return zodiac;
+        result = zodiac;
+        break;
       }
     }
-    return null;
+    return result;
   }
 
+  public static Map<String, Parameter> getParameters() {
+    Map<String, Parameter> map = new HashMap<String, Parameter>();
+    ZodiacParameter parameter = getTodaysSign();
+    map.put("ZodiacSign", new Parameter(parameter.getSign()) );
+    return map;
+  }
+  
   public static class DayMonth {
 
     private int day;
@@ -99,4 +110,6 @@ public enum ZodiacParameter {
       return month;
     }
   }
+
+
 }

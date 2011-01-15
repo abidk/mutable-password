@@ -64,10 +64,10 @@ public enum TimeParameter {
     return -1;
   }
 
-  public static Map<String, Number> getValues() {
-    Map<String, Number> map = new HashMap<String, Number>();
+  public static Map<String, Parameter> getParameters() {
+    Map<String, Parameter> map = new HashMap<String, Parameter>();
     for (TimeParameter timeType : TimeParameter.values()) {
-      map.put(timeType.getTextField(), timeType.getCalendarValue());
+      map.put(timeType.getTextField(), new Parameter(timeType.getCalendarValue()));
     }
     return map;
   }
@@ -75,4 +75,5 @@ public enum TimeParameter {
   public String toString() {
     return textField + ":" + getCalendarValue();
   }
+
 }

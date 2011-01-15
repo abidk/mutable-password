@@ -32,7 +32,7 @@ public class ParameterFactory {
   private ParameterFactory() {
   }
 
-  private static Map<String, Number> parameters = new HashMap<String, Number>();
+  private static Map<String, Parameter> parameters = new HashMap<String, Parameter>();
 
   /**
    * This method returns the latest parameter values for time, stock market, and
@@ -40,26 +40,27 @@ public class ParameterFactory {
    * 
    * @return latest parameters
    */
-  public synchronized static Map<String, Number> getAllParamterData() {
-    Map<String, Number> params = new HashMap<String, Number>();
+  public synchronized static Map<String, Parameter> getAllParamterData() {
+    Map<String, Parameter> params = new HashMap<String, Parameter>();
     // get the latest time parameter values
-    params.putAll(TimeParameter.getValues());
-
+    params.putAll(TimeParameter.getParameters());
+    params.putAll(ZodiacParameter.getParameters());
 
     // add any parameters the user may have added
     params.putAll(parameters);
     return params;
   }
 
-  public static boolean addParameter(String key, Number value) {
+  public static boolean addParameter(String key, Parameter parameter) {
     if (!parameters.containsKey(key)) {
-      parameters.put(key, value);
+      parameters.put(key, parameter);
       return true;
     }
     return false;
   }
 
-  public static void addAllParameters(Map<String, Number> newParams) {
+  public static void addAllParameters(Map<String, Parameter> newParams) {
+    // hmm, will override existing values
     parameters.putAll(newParams);
   }
 

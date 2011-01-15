@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
+import abid.password.parameters.Parameter;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.ShiftPassword;
 
@@ -55,7 +56,7 @@ public class MutablePasswordTest extends TestCase {
   public class NewEvalutator implements Evaluator {
 
     @Override
-    public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
+    public String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException {
       return null;
     }
   }

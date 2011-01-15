@@ -22,6 +22,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import abid.password.parameters.Parameter;
+
 /**
  * This will take a expression and evaluate it.
  * 
@@ -39,12 +41,12 @@ public class JavascriptEvaluator implements Evaluator {
   }
 
   @Override
-  public String evaluateExpression(String expression, Map<String, Number> map) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException {
     try {
-      for (Map.Entry<String, Number> e : map.entrySet()) {
+      for (Map.Entry<String, Parameter> e : map.entrySet()) {
         String key = e.getKey();
-        Number value = e.getValue();
-        engine.put(key, value);
+        Parameter parameter = e.getValue();
+        engine.put(key, parameter.getValue());
       }
 
       // evaluate and get result

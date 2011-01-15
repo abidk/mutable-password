@@ -16,11 +16,14 @@
 
 package abid.password.types;
 
+import java.util.Map;
+
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.ParseException;
+import abid.password.parameters.Parameter;
 import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
@@ -47,7 +50,8 @@ public class ExtendedTimeLockPassword extends MutablePassword {
     String[] expressions = getExpression().split(",");
     String extendTimeExpression = expressions[0];
     Evaluator evaluator = getEvaluator();
-    String extendEvaluation = evaluator.evaluateExpression(extendTimeExpression, ParameterFactory.getAllParamterData());
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    String extendEvaluation = evaluator.evaluateExpression(extendTimeExpression, parameters);
     String evaluatedPassword = getText() + extendEvaluation;
     return evaluatedPassword;
   }

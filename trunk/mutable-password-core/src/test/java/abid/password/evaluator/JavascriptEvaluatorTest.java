@@ -16,14 +16,18 @@
 
 package abid.password.evaluator;
 
+import java.util.Map;
+
 import junit.framework.TestCase;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.Parameter;
+import abid.password.parameters.ParameterFactory;
 
 public class JavascriptEvaluatorTest extends TestCase {
 
   public void testScript() throws ParseException {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    String result = evaluator.evaluateExpression("2009+2009.2", TimeParameter.getValues());
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    String result = evaluator.evaluateExpression("2009+2009.2", parameters);
     System.out.println(result);
   }
   
@@ -31,9 +35,10 @@ public class JavascriptEvaluatorTest extends TestCase {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     String result = null;
     try {
-      result = evaluator.evaluateExpression("2009(2009.2", TimeParameter.getValues());
+      Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+      result = evaluator.evaluateExpression("2009(2009.2", parameters);
     } catch (ParseException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     }
     assertNull(result);
   }

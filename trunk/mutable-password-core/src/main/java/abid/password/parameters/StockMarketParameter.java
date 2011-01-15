@@ -81,12 +81,12 @@ public enum StockMarketParameter {
 
   }
 
-  public static Map<String, Number> getValues() throws IOException {
-    Map<String, Number> map = new HashMap<String, Number>();
+  public static Map<String, Parameter> getParameters() throws IOException {
+    Map<String, Parameter> map = new HashMap<String, Parameter>();
     for (StockMarketParameter stock : StockMarketParameter.values()) {
-      map.put(stock.getMarket(), stock.getIndexValue());
+      map.put(stock.getMarket(), new Parameter(stock.getIndexValue()));
+
     }
     return map;
   }
-
 }

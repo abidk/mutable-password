@@ -29,34 +29,34 @@ public class ParameterFactoryTest extends TestCase {
   private Integer value = 1;
 
   public void testAddParameter() {
-    boolean added = ParameterFactory.addParameter(key, value);
+    boolean added = ParameterFactory.addParameter(key, new Parameter(value));
     assertEquals(true, added);
 
-    Map<String, Number> params = ParameterFactory.getAllParamterData();
-    Integer paramValue = (Integer) params.get(key);
-    assertEquals(value, paramValue);
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    Parameter param = (Parameter) parameters.get(key);
+    assertEquals(value, param.getValue());
 
     boolean removed = ParameterFactory.removeParameter(key);
     assertEquals(true, removed);
   }
 
   public void testAlreadyExistsParameter() {
-    boolean added = ParameterFactory.addParameter(key, value);
+    boolean added = ParameterFactory.addParameter(key, new Parameter(value));
     assertEquals(true, added);
 
-    boolean newAdded = ParameterFactory.addParameter(key, value);
+    boolean newAdded = ParameterFactory.addParameter(key, new Parameter(value));
     assertEquals(false, newAdded);
   }
 
   public void testAddAllParameters() {
     int value = 99;
-    Map<String, Number> newParams = new HashMap<String, Number>();
-    newParams.put("newKey", value);
+    Map<String, Parameter> newParams = new HashMap<String, Parameter>();
+    newParams.put("newKey", new Parameter(value));
     ParameterFactory.addAllParameters(newParams);
 
-    Map<String, Number> params = ParameterFactory.getAllParamterData();
-    int paramValue = (Integer) params.get("newKey");
-    assertEquals(value, paramValue);
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    Parameter param = (Parameter) parameters.get("newKey");
+    assertEquals(value, param.getValue());
   }
 
   public void testRemoveNonExistentParameter() {
