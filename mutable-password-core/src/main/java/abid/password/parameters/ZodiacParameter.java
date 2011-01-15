@@ -41,7 +41,7 @@ public enum ZodiacParameter {
    * Java month calendar value starts with 0, so it will be incremented by one.
    * 
    * @param date
-   * @return ZodiacParameter
+   * @return Zodiac
    */
   public static Zodiac getZodiac(Calendar date) {
     if( date == null ) {
