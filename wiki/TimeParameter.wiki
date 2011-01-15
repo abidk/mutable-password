@@ -8,6 +8,14 @@ Parameter Values:
   * dayOfWeek (2)
   * second
 
+Usage:
+{{{
+    TimeParameter timeType = TimeParameter.YEAR;
+    Password password = ExtendedPassword.createPassword("PASS", timeType);
+    String storePass = password.getPassword());
+}}}
+
+
 ----
 
 1.
@@ -33,4 +41,3 @@ Parameter Values:
   * Calendar.THURSDAY = 5
   * Calendar.FRIDAY = 6
   * Calendar.SATURDAY = 7
-
