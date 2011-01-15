@@ -1,11 +1,15 @@
 =Contents=
   * [Introduction Introduction]
   * Passwords
+    * [NewPassword Create a new password]
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
     * [ExtendedTimeLockPassword Extended Time Lock Password]
     * [ShiftPassword Shift Password]
     * [TimeLockPassword Time Lock Password]
-  * [NewPassword Create a new password type]
-  * [NewParameter Add a new parameter]
+  * Parameters
+    * [NewParameter Create a new parameter]
+    * [TimeParameter Time Parameter]
+    * [ZodiacParameter Zodiac Parameter]
+    * [StockMarketParameter Stock Market Parameter]
   * [JavaFiveSupport Java 1.5 Support]
