@@ -33,6 +33,8 @@ public enum ZodiacParameter {
   LIBRA("Libra", new DayMonth(23,9), new DayMonth(22,10)),
   SCORPIO("Scorpio", new DayMonth(23,10), new DayMonth(22,11)),
   SAGITTARIUS("Sagittarius", new DayMonth(23,11), new DayMonth(21,12));
+
+  public static String PARAMETER_KEY = "ZodiacSign";
   
   private String sign;
   private DayMonth startDate;
@@ -88,7 +90,7 @@ public enum ZodiacParameter {
   public static Map<String, Parameter> getParameters() {
     Map<String, Parameter> map = new HashMap<String, Parameter>();
     ZodiacParameter parameter = getTodaysSign();
-    map.put("ZodiacSign", new Parameter(parameter.getSign()) );
+    map.put(PARAMETER_KEY, new Parameter(parameter.getSign()) );
     return map;
   }
   
