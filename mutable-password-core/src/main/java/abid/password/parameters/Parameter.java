@@ -13,22 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package abid.password.parameters;
 
-package abid.password.evaluator;
+import java.io.Serializable;
 
-import java.util.Map;
+public class Parameter implements Serializable {
 
-import abid.password.parameters.Parameter;
+  private static final long serialVersionUID = 1L;
 
-/**
- * Allows you to implement this interface to create other evaluators e.g.
- * beanshell
- * 
- * @author Abid
- * 
- */
-public interface Evaluator {
+  private Object value;
 
-  public abstract String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException;
+  public Parameter(Object value) {
+    this.value = value;
+  }
 
+  public Object getValue() {
+    return value;
+  }
+
+  public void setValue(Object value) {
+    this.value = value;
+  }
 }

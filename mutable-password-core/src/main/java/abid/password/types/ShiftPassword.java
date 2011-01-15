@@ -16,11 +16,15 @@
 
 package abid.password.types;
 
+import java.util.Map;
+
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.ParseException;
+import abid.password.parameters.Parameter;
+import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
 /**
@@ -73,7 +77,8 @@ public class ShiftPassword extends MutablePassword {
   @Override
   public String getEvaluatedPassword() throws ParseException {
     Evaluator evaluator = getEvaluator();
-    String evaluation = evaluator.evaluateExpression(getExpression(), TimeParameter.getValues());
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    String evaluation = evaluator.evaluateExpression(getExpression(), parameters);
     int shiftBy = Integer.valueOf(evaluation);
     String shiftedPassword = getShiftedPassword(shiftBy);
     return shiftedPassword;

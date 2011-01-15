@@ -48,8 +48,9 @@ public class StockMarketParameterTest extends TestCase {
   }
 
   public void testStockMarkerParameterValues() {
+    Map<String, Parameter> marketValues;
     try {
-      Map<String, Number> marketValues = StockMarketParameter.getValues();
+      marketValues = StockMarketParameter.getParameters();
       assertNotNull(marketValues);
       for (StockMarketParameter marketParameter : StockMarketParameter.values()) {
         marketValues.containsKey(marketParameter.getMarket());
