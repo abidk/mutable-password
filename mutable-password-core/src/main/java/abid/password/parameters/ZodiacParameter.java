@@ -21,7 +21,7 @@ import java.util.Map;
 
 public enum ZodiacParameter {
 
-  ZODIAC("Zodiac");
+  ZODIAC("zodiac");
 
   private String parameter; 
   private ZodiacParameter( String parameter ) {
