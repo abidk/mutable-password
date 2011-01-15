@@ -21,46 +21,20 @@ import java.util.Map;
 
 public enum ZodiacParameter {
 
-  CAPRICORN("Capricorn", new DayMonth(22,12), new DayMonth(20,1)),
-  AQUARIUS("Aquarius", new DayMonth(21,1), new DayMonth(18,2)),
-  PISCES("Pisces", new DayMonth(19,2), new DayMonth(20,3)),
-  ARIES("Aries", new DayMonth(21,3), new DayMonth(20,4)),
-  TAURUS("Taurus", new DayMonth(21,4), new DayMonth(20,5)),
-  GEMINI("Gemini", new DayMonth(21,5), new DayMonth(21,6)),
-  CANCER("Cancer", new DayMonth(22,6), new DayMonth(22,7)),
-  LEO("Leo", new DayMonth(23,7), new DayMonth(22,8)),
-  VIRGO("Virgo", new DayMonth(23,8), new DayMonth(22,9)),
-  LIBRA("Libra", new DayMonth(23,9), new DayMonth(22,10)),
-  SCORPIO("Scorpio", new DayMonth(23,10), new DayMonth(22,11)),
-  SAGITTARIUS("Sagittarius", new DayMonth(23,11), new DayMonth(21,12));
+  ZODIAC("Zodiac");
 
-  public static String PARAMETER_KEY = "ZodiacSign";
+  private String parameter; 
+  private ZodiacParameter( String parameter ) {
+    this.parameter = parameter;
+  }
+
+  public String getParameter() {
+    return parameter;
+  }
   
-  private String sign;
-  private DayMonth startDate;
-  private DayMonth endDate;
-
-  ZodiacParameter(String sign, DayMonth startDate, DayMonth endDate) {
-    this.sign = sign;
-    this.startDate = startDate;
-    this.endDate = endDate;
-  }
-
-  public String getSign() {
-    return sign;
-  }
-
-  public DayMonth getStartDate() {
-    return startDate;
-  }
-
-  public DayMonth getEndDate() {
-    return endDate;
-  }
-
-  public static ZodiacParameter getTodaysSign() {
+  public static Zodiac getTodaysZodiac() {
     Calendar today = Calendar.getInstance();    
-    return getSign(today);
+    return getZodiac(today);
   }
 
   /**
@@ -69,12 +43,12 @@ public enum ZodiacParameter {
    * @param date
    * @return ZodiacParameter
    */
-  public static ZodiacParameter getSign(Calendar date) {
+  public static Zodiac getZodiac(Calendar date) {
     if( date == null ) {
       return null;
     }
-    ZodiacParameter result = null;
-    for (ZodiacParameter zodiac : ZodiacParameter.values()) {
+    Zodiac result = null;
+    for (Zodiac zodiac : Zodiac.values()) {
       int todayDay = date.get(Calendar.DAY_OF_MONTH);
       int todayMonth = date.get(Calendar.MONTH) + 1;
 
@@ -89,8 +63,10 @@ public enum ZodiacParameter {
 
   public static Map<String, Parameter> getParameters() {
     Map<String, Parameter> map = new HashMap<String, Parameter>();
-    ZodiacParameter parameter = getTodaysSign();
-    map.put(PARAMETER_KEY, new Parameter(parameter.getSign()) );
+    for (ZodiacParameter zodiacParameter : ZodiacParameter.values()) {
+      map.put(zodiacParameter.getParameter(), new Parameter(getTodaysZodiac().getSign()) );
+    }
+
     return map;
   }
   
@@ -113,5 +89,42 @@ public enum ZodiacParameter {
     }
   }
 
+  public static enum Zodiac {
+    CAPRICORN("Capricorn", new DayMonth(22,12), new DayMonth(20,1)),
+    AQUARIUS("Aquarius", new DayMonth(21,1), new DayMonth(18,2)),
+    PISCES("Pisces", new DayMonth(19,2), new DayMonth(20,3)),
+    ARIES("Aries", new DayMonth(21,3), new DayMonth(20,4)),
+    TAURUS("Taurus", new DayMonth(21,4), new DayMonth(20,5)),
+    GEMINI("Gemini", new DayMonth(21,5), new DayMonth(21,6)),
+    CANCER("Cancer", new DayMonth(22,6), new DayMonth(22,7)),
+    LEO("Leo", new DayMonth(23,7), new DayMonth(22,8)),
+    VIRGO("Virgo", new DayMonth(23,8), new DayMonth(22,9)),
+    LIBRA("Libra", new DayMonth(23,9), new DayMonth(22,10)),
+    SCORPIO("Scorpio", new DayMonth(23,10), new DayMonth(22,11)),
+    SAGITTARIUS("Sagittarius", new DayMonth(23,11), new DayMonth(21,12));
+    
+    private String sign;
+    private DayMonth startDate;
+    private DayMonth endDate;
+
+    
+    Zodiac(String sign, DayMonth startDate, DayMonth endDate) {
+      this.sign = sign;
+      this.startDate = startDate;
+      this.endDate = endDate;
+    }
+
+    public String getSign() {
+      return sign;
+    }
+
+    public DayMonth getStartDate() {
+      return startDate;
+    }
+
+    public DayMonth getEndDate() {
+      return endDate;
+    }
+  }
 
 }
