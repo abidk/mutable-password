@@ -42,7 +42,7 @@ public class ParameterFactory {
    */
   public synchronized static Map<String, Parameter> getAllParamterData() {
     Map<String, Parameter> params = new HashMap<String, Parameter>();
-    // get the latest time parameter values
+    // get the latest 'refreshed' parameter values
     params.putAll(TimeParameter.getParameters());
     params.putAll(ZodiacParameter.getParameters());
 
