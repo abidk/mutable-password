@@ -18,6 +18,8 @@ package abid.password.parameters;
 import java.util.Calendar;
 
 import junit.framework.TestCase;
+import abid.password.parameters.ZodiacParameter.DayMonth;
+import abid.password.parameters.ZodiacParameter.Zodiac;
 
 public class ZodiacParameterTest extends TestCase {
 
@@ -35,186 +37,186 @@ public class ZodiacParameterTest extends TestCase {
   public static int DEC = 11;
 
   public void testCapricorn() {
-    assertEquals("Capricorn", ZodiacParameter.CAPRICORN.getSign());
+    assertEquals("Capricorn", Zodiac.CAPRICORN.getSign());
     
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 22);
     startCal.set(Calendar.MONTH, DEC);
-    assertEquals(ZodiacParameter.CAPRICORN, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.CAPRICORN, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 20);
     endCal.set(Calendar.MONTH, JAN);
-    assertEquals(ZodiacParameter.CAPRICORN, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.CAPRICORN, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testAquarius() {
-    assertEquals("Aquarius", ZodiacParameter.AQUARIUS.getSign());
+    assertEquals("Aquarius", Zodiac.AQUARIUS.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 21);
     startCal.set(Calendar.MONTH, JAN);
-    assertEquals(ZodiacParameter.AQUARIUS, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.AQUARIUS, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 18);
     endCal.set(Calendar.MONTH, FEB);
-    assertEquals(ZodiacParameter.AQUARIUS, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.AQUARIUS, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testPisces() {
-    assertEquals("Pisces", ZodiacParameter.PISCES.getSign());
+    assertEquals("Pisces", Zodiac.PISCES.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 19);
     startCal.set(Calendar.MONTH, FEB);
-    assertEquals(ZodiacParameter.PISCES, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.PISCES, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 20);
     endCal.set(Calendar.MONTH, MAR);
-    assertEquals(ZodiacParameter.PISCES, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.PISCES, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testAries() {
-    assertEquals("Aries", ZodiacParameter.ARIES.getSign());
+    assertEquals("Aries", Zodiac.ARIES.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 21);
     startCal.set(Calendar.MONTH, MAR);
-    assertEquals(ZodiacParameter.ARIES, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.ARIES, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 20);
     endCal.set(Calendar.MONTH, APR);
-    assertEquals(ZodiacParameter.ARIES, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.ARIES, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testTaurus() {
-    assertEquals("Taurus", ZodiacParameter.TAURUS.getSign());
+    assertEquals("Taurus", Zodiac.TAURUS.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 21);
     startCal.set(Calendar.MONTH, APR);
-    assertEquals(ZodiacParameter.TAURUS, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.TAURUS, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 20);
     endCal.set(Calendar.MONTH, MAY);
-    assertEquals(ZodiacParameter.TAURUS, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.TAURUS, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testGemini() {
-    assertEquals("Gemini", ZodiacParameter.GEMINI.getSign());
+    assertEquals("Gemini", Zodiac.GEMINI.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 21);
     startCal.set(Calendar.MONTH, MAY);
-    assertEquals(ZodiacParameter.GEMINI, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.GEMINI, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 21);
     endCal.set(Calendar.MONTH, JUN);
-    assertEquals(ZodiacParameter.GEMINI, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.GEMINI, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testCancer() {
-    assertEquals("Cancer", ZodiacParameter.CANCER.getSign());
+    assertEquals("Cancer", Zodiac.CANCER.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 22);
     startCal.set(Calendar.MONTH, JUN);
-    assertEquals(ZodiacParameter.CANCER, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.CANCER, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 22);
     endCal.set(Calendar.MONTH, JUL);
-    assertEquals(ZodiacParameter.CANCER, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.CANCER, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testLeo() {
-    assertEquals("Leo", ZodiacParameter.LEO.getSign());
+    assertEquals("Leo", Zodiac.LEO.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
     startCal.set(Calendar.MONTH, JUL);
-    assertEquals(ZodiacParameter.LEO, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.LEO, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 22);
     endCal.set(Calendar.MONTH, AUG);
-    assertEquals(ZodiacParameter.LEO, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.LEO, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testVirgo() {
-    assertEquals("Virgo", ZodiacParameter.VIRGO.getSign());
+    assertEquals("Virgo", Zodiac.VIRGO.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
     startCal.set(Calendar.MONTH, AUG);
-    assertEquals(ZodiacParameter.VIRGO, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.VIRGO, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 22);
     endCal.set(Calendar.MONTH, SEP);
-    assertEquals(ZodiacParameter.VIRGO, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.VIRGO, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testLibra() {
-    assertEquals("Libra", ZodiacParameter.LIBRA.getSign());
+    assertEquals("Libra", Zodiac.LIBRA.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
     startCal.set(Calendar.MONTH, SEP);
-    assertEquals(ZodiacParameter.LIBRA, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.LIBRA, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 22);
     endCal.set(Calendar.MONTH, OCT);
-    assertEquals(ZodiacParameter.LIBRA, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.LIBRA, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testScorpio() {
-    assertEquals("Scorpio", ZodiacParameter.SCORPIO.getSign());
+    assertEquals("Scorpio", Zodiac.SCORPIO.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
     startCal.set(Calendar.MONTH, OCT);
-    assertEquals(ZodiacParameter.SCORPIO, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.SCORPIO, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 22);
     endCal.set(Calendar.MONTH, NOV);
-    assertEquals(ZodiacParameter.SCORPIO, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.SCORPIO, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testSagittarius() {
-    assertEquals("Sagittarius", ZodiacParameter.SAGITTARIUS.getSign());
+    assertEquals("Sagittarius", Zodiac.SAGITTARIUS.getSign());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
     startCal.set(Calendar.MONTH, NOV);
-    assertEquals(ZodiacParameter.SAGITTARIUS, ZodiacParameter.getSign(startCal));
+    assertEquals(Zodiac.SAGITTARIUS, ZodiacParameter.getZodiac(startCal));
 
     Calendar endCal = Calendar.getInstance();
     endCal.set(Calendar.DAY_OF_MONTH, 21);
     endCal.set(Calendar.MONTH, DEC);
-    assertEquals(ZodiacParameter.SAGITTARIUS, ZodiacParameter.getSign(endCal));
+    assertEquals(Zodiac.SAGITTARIUS, ZodiacParameter.getZodiac(endCal));
   }
 
   public void testDayMonthInnerClass( ) {
-    ZodiacParameter.DayMonth dayMonth = new ZodiacParameter.DayMonth(1, 2);
+    DayMonth dayMonth = new DayMonth(1, 2);
     assertEquals(1, dayMonth.getDay());
     assertEquals(2, dayMonth.getMonth());
   }
   
   public void testTodaysZodiac( ) {
     Calendar today = Calendar.getInstance();
-    ZodiacParameter todayZodiac  = ZodiacParameter.getSign(today);
-    assertEquals(todayZodiac, ZodiacParameter.getTodaysSign());
+    Zodiac todayZodiac  = ZodiacParameter.getZodiac(today);
+    assertEquals(todayZodiac, ZodiacParameter.getTodaysZodiac());
   }
   
   public void testNullValue() {
-    assertEquals(null, ZodiacParameter.getSign(null));
+    assertEquals(null, ZodiacParameter.getZodiac(null));
   }
 } 

@@ -26,6 +26,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 import abid.password.parameters.ZodiacParameter;
+import abid.password.parameters.ZodiacParameter.Zodiac;
 
 public class ExtendedPasswordTest extends TestCase {
 
@@ -74,12 +75,14 @@ public class ExtendedPasswordTest extends TestCase {
     assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
-  public void testPasswordWithZodiacParameter() throws PasswordException {
-    Password password = ExtendedPassword.createPassword("abid", ZodiacParameter.PARAMETER_KEY);
-    //System.out.println( "Password: " + password.getPassword());
-    ZodiacParameter todayZodiac = ZodiacParameter.getTodaysSign();
+  public void testPasswordWithZodiacParameter() throws PasswordException, ParseException {
+    MutablePassword password = ExtendedPassword.createPassword("abid", ZodiacParameter.ZODIAC.getParameter());
+    System.out.println( "Password: " + password.getPassword());
+    System.out.println( "Evaluated: " + password.getEvaluatedPassword());
+
+    Zodiac todayZodiac = ZodiacParameter.getTodaysZodiac();
     String confirmPassword = "abid" + todayZodiac.getSign();
-    //System.out.println( "Confirm: " + confirmPassword);
+    System.out.println( "Confirm: " + confirmPassword);
     assertEquals(true, password.confirmPassword(confirmPassword));
   }
   
