@@ -25,6 +25,7 @@ import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ZodiacParameter;
 
 public class ExtendedPasswordTest extends TestCase {
 
@@ -73,6 +74,15 @@ public class ExtendedPasswordTest extends TestCase {
     assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
+  public void testPasswordWithZodiacParameter() throws PasswordException {
+    Password password = ExtendedPassword.createPassword("abid", ZodiacParameter.PARAMETER_KEY);
+    //System.out.println( "Password: " + password.getPassword());
+    ZodiacParameter todayZodiac = ZodiacParameter.getTodaysSign();
+    String confirmPassword = "abid" + todayZodiac.getSign();
+    //System.out.println( "Confirm: " + confirmPassword);
+    assertEquals(true, password.confirmPassword(confirmPassword));
+  }
+  
   public void testExtendedPassword3() throws PasswordException {
     TimeParameter timeType = TimeParameter.YEAR;
     Password password = ExtendedPassword.createPassword("abid", "year+1.5");
@@ -147,8 +157,28 @@ public class ExtendedPasswordTest extends TestCase {
     assertEquals(false, isAuthenticated);
   }
 
-  public void testStringOutput() {
+  public void testPasswordString() throws ParseException {
+    Password password = ExtendedPassword.createPassword("abid", "year+year");
+    assertNotNull(password.getPassword());
+    
+    MutablePassword mutablePassword = (MutablePassword) password;
+    assertNotNull(mutablePassword.getPassword());
+    assertNotNull(mutablePassword.getEvaluatedPassword());
+  }
+  
+  public void testBrokenPasswordString() {
     Password password = ExtendedPassword.createPassword("abid", "year(year");
-    System.out.println(password.toString());
+    assertNotNull(password.getPassword());
+    
+    MutablePassword mutablePassword = (MutablePassword) password;
+    assertNotNull(mutablePassword.getPassword());
+    
+    try {
+      assertNotNull(mutablePassword.getEvaluatedPassword());
+    } catch (ParseException e) {
+      //e.printStackTrace();
+      return;
+    }
+    assert false;
   }
 }
