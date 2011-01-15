@@ -1,0 +1,10 @@
+Parameter Values:
+  * dow
+  * ftse100
+
+Usage:
+{{{
+   StockMarketParameter stock = StockMarketParameter.FTSE100; 
+   Password password = ExtendedPassword.createPassword("PASS", stock.getMarket());
+   String storePass = password.getPassword());
+}}}
