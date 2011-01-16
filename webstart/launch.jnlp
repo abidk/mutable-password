@@ -1,6 +1,6 @@
 
-<?xml version="1.0" codebase="https://mutable-password.googlecode.com/svn/webstart/" encoding="utf-8"?>
-<jnlp spec="1.0+" href="launch.jnlp">
+<?xml version="1.0" codebase="http://mutable-password.googlecode.com/svn/webstart/" encoding="utf-8"?>
+<jnlp spec="1.0+" href="http://mutable-password.googlecode.com/svn/webstart/launch.jnlp">
  <information>
     <title>Mutable Password</title>
     <vendor>Abid</vendor>
