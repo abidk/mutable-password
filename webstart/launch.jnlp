@@ -1,0 +1,25 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://mutable-password.googlecode.com/svn/webstart/" href="launch.jnlp">
+ <information>
+    <title>Mutable Password</title>
+    <vendor>Abid</vendor>
+    <homepage href="http://mutable-password.googlecode.com/mutable-password-swing-example"/>
+    <description>Mutable passwords allows you to create expressions as a
+		password which can change based on time or any other factor.</description>
+    <offline-allowed/>
+ </information>
+ <security><all-permissions/></security>
+ <resources>
+    <j2se version="1.6+" initial-heap-size="32m" max-heap-size="128m" />
+    <property name=jnlp.packEnabled value=true/>
+    <property name="jnlp.versionEnabled" value="true"/>
+    
+<jar href="mutable-password-swing-example-1.6-SNAPSHOT.jar" main="true"/>
+<jar href="mutable-password-core-1.6-SNAPSHOT.jar"/>
+<jar href="slf4j-api-1.6.1.jar"/>
+<jar href="formsrt-1.0.jar"/>
+
+ </resources>
+ <application-desc main-class="abid.password.swing.Application"></application-desc>
+</jnlp>
