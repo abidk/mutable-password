@@ -18,7 +18,7 @@ package abid.password.swing.form;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
@@ -100,7 +100,7 @@ public class LoginForm extends AbstractForm {
 
   @Override
   public void refreshComponent() {
-    List<User> users = getApplication().getController().getUsers();
+    Set<User> users = getApplication().getController().getUsers();
     DefaultListModel model = new DefaultListModel();
     for( User user : users ) {
       model.addElement(user);

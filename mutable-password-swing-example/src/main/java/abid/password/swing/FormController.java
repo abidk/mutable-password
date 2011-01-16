@@ -15,13 +15,12 @@
  */
 package abid.password.swing;
 
-import java.util.List;
+import java.util.Set;
 
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.parameters.TimeParameter;
-import abid.password.swing.dao.UserDao;
 import abid.password.swing.model.User;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.ExtendedTimeLockPassword;
@@ -45,14 +44,13 @@ public class FormController {
   public void loadLoginUI() {
     application.getForm().loadLoginForm();
   }
-  
+
   public void refreshLoginUI() {
-    application.getForm().refreshLoginForm();    
+    application.getForm().refreshLoginForm();
   }
 
   public User loginUser(String username, char[] password) {
-    UserDao userDao = application.getUserDao();
-    User user = userDao.getUser(username);
+    User user = application.getUser(username);
     if (user == null) {
       return null;
     }
@@ -81,9 +79,8 @@ public class FormController {
     return user;
   }
 
-  public List<User> getUsers() {
-    UserDao userDao = application.getUserDao();
-    List<User> users = userDao.getUsers();
+  public Set<User> getUsers() {
+    Set<User> users = application.getUsers();
     return users;
   }
 
@@ -113,14 +110,10 @@ public class FormController {
   }
 
   private void saveUser(String username, String password) {
-    UserDao userDao = application.getUserDao();
     User user = new User();
     user.setUsername(username);
     user.setPassword(password);
-    userDao.saveUser(user);
+    application.addUser(user);
   }
-
-
-
 
 }
