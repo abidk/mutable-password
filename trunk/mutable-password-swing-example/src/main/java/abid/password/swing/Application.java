@@ -17,11 +17,12 @@
 package abid.password.swing;
 
 import java.awt.EventQueue;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JFrame;
 
-import abid.password.swing.dao.UserDao;
-import abid.password.swing.dao.hibernate.UserDaoImpl;
+import abid.password.swing.model.User;
 
 import com.jeta.forms.gui.common.FormException;
 
@@ -31,15 +32,14 @@ public class Application {
   public static final int APPLICATION_WIDTH = 500;
   public static final int APPLICATION_HEIGHT = 400;
 
+  public Set<User> users = new HashSet<User>();
   public FormUI form;
   public FormController controller;
-  public UserDao userDao;
 
   public Application() {
   }
 
   public void init() throws FormException {
-    userDao = new UserDaoImpl();
     controller = new FormController(this);
     form = new FormUI(this);
     form.init();
@@ -54,8 +54,22 @@ public class Application {
     return controller;
   }
 
-  public UserDao getUserDao() {
-    return userDao;
+  public Set<User> getUsers() {
+    return users;
+  }
+
+  public User getUser(String username) {
+    for (User user : users) {
+      if (user.getUsername().equals(username)) {
+        return user;
+      }
+    }
+    return null;
+  }
+  
+  public void addUser( User user ) {
+    users.remove(user);
+    users.add(user);
   }
 
   public static void main(String[] args) {
