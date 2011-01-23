@@ -1,5 +1,6 @@
 =Contents=
   * [Introduction Introduction]
+  * [Installation Installation]
   * Passwords
     * [NewPassword Create a new password]
     * [SimplePassword Simple Password]
