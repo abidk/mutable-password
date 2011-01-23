@@ -1,6 +1,5 @@
 The project only supports Java 1.6, due to use of the built-in Javascript to evaluate expressions. Java 1.5 support can be added by using [http://www.beanshell.org/ BeanShell] instead. 
 
-*I can make the change, so just let me know*
 
 
  
