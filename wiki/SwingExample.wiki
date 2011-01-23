@@ -1,0 +1,13 @@
+ # Install Maven
+  * (http://maven.apache.org/)
+ # Checkout project
+  * (svn checkout https://mutable-password.googlecode.com/svn/trunk/ mutable-password)
+ # Run the Application.java class
+  * mutable-password-swing-example/src/main/java
+
+----
+
+ * Or try out the Web Start Application [http://mutable-password.googlecode.com/svn/webstart/launch.jnlp http://java.sun.com/products/jfc/tsc/articles/swing2d/webstart.png]
+
+
+
