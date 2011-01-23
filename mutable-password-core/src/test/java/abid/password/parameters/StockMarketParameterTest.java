@@ -59,4 +59,10 @@ public class StockMarketParameterTest extends TestCase {
       // this might occur because it cannot connect to yahoo
     }
   }
+  
+  public void testToString( ) {
+    assertEquals( "ftse100", StockMarketParameter.FTSE100.toString());
+    assertEquals( "dow", StockMarketParameter.DOW.toString());
+
+  }
 }

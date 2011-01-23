@@ -70,6 +70,11 @@ public enum ZodiacParameter {
     return map;
   }
   
+  @Override
+  public String toString() {
+    return getTodaysZodiac().getSign() + " (" + parameter + ")";
+  }
+  
   public static class DayMonth {
 
     private int day;
