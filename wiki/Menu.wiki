@@ -2,7 +2,7 @@
   * [Introduction Introduction]
   * [Installation Installation]
   * Passwords
-    * [AlgebraicPassword Algebraic Password]
+    * [AlgebraicPassword Algebra Expression Password]
     * [NewPassword Create a new password]
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
