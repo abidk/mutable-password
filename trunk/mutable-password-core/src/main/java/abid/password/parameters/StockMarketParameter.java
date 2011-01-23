@@ -41,8 +41,7 @@ import abid.password.util.StreamUtils;
  */
 public enum StockMarketParameter {
 
-  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), 
-  DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
+  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
 
   private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
 
@@ -89,5 +88,10 @@ public enum StockMarketParameter {
 
     }
     return map;
+  }
+
+  @Override
+  public String toString() {
+    return market;
   }
 }

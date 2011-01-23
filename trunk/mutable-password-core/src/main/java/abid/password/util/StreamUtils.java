@@ -29,8 +29,8 @@ public class StreamUtils {
   /**
    * User should close the stream.
    * 
-   * @param is
-   * @return
+   * @param Input stream
+   * @return String value of stream
    * @throws IOException
    */
   public static String convertStreamToString(InputStream is) throws IOException {
