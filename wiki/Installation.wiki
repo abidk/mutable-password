@@ -15,8 +15,8 @@ Add the dependency:
 {{{
 <dependency>
   <groupId>abid.password</groupId>
-  <artifactId>mutable-password</artifactId>
-  <version>1.5</version>
+  <artifactId>mutable-password-core</artifactId>
+  <version>1.6</version>
 </dependency>
 }}}
 
