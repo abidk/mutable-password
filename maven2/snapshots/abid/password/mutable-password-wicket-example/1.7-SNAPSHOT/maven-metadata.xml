@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>abid.password</groupId>
+  <artifactId>mutable-password-wicket-example</artifactId>
+  <version>1.7-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20110124.200658</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20110124200658</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>war</extension>
+        <value>1.7-20110124.200658-1</value>
+        <updated>20110124200658</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.7-20110124.200658-1</value>
+        <updated>20110124200658</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
