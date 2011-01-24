@@ -1,5 +1,3 @@
-* Not released (TRUNK)
-
 Parameter Values:
   * zodiac (1)
 
