@@ -81,7 +81,6 @@ public class Application {
           window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           window.setSize(APPLICATION_WIDTH, APPLICATION_HEIGHT);
           window.setLocationRelativeTo(null);
-          window.setVisible(true);
 
           Application application = new Application();
           application.init();
@@ -89,6 +88,7 @@ public class Application {
           window.setContentPane(mainUI);
           // window.setExtendedState(Frame.MAXIMIZED_BOTH);
           // window.pack();
+          window.setVisible(true);
         } catch (Exception e) {
           e.printStackTrace();
         }
