@@ -15,8 +15,8 @@
     <property name=jnlp.packEnabled value=true/>
     <property name="jnlp.versionEnabled" value="true"/>
     
-<jar href="mutable-password-swing-example-1.6-SNAPSHOT.jar" main="true"/>
-<jar href="mutable-password-core-1.6-SNAPSHOT.jar"/>
+<jar href="mutable-password-swing-example-1.7-SNAPSHOT.jar" main="true"/>
+<jar href="mutable-password-core-1.7-SNAPSHOT.jar"/>
 <jar href="slf4j-api-1.6.1.jar"/>
 <jar href="formsrt-1.0.jar"/>
 
