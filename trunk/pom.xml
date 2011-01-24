@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>abid.password</groupId>
 	<artifactId>mutable-password-parent</artifactId>
-	<version>1.6</version>
+	<version>1.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Mutable Password</name>
@@ -33,9 +33,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://mutable-password.googlecode.com/svn/tags/mutable-password-parent-1.6</connection>
-		<developerConnection>scm:svn:https://mutable-password.googlecode.com/svn/tags/mutable-password-parent-1.6</developerConnection>
-		<url>https://mutable-password.googlecode.com/svn/tags/mutable-password-parent-1.6</url>
+		<connection>scm:svn:http://mutable-password.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://mutable-password.googlecode.com/svn/trunk</developerConnection>
+		<url>https://mutable-password.googlecode.com/svn/trunk</url>
 	</scm>
 
 
