@@ -68,13 +68,23 @@ public class ShiftPasswordTest extends TestCase {
   public void testLowerCasePassword2() throws PasswordException {
     MutablePassword dynamicPassword = ShiftPassword.createPassword("zyxwvutsrqponmlkjihgfedcba", 1);
 
-    String confirmPassword = "yxwvutsrqponmlkjihgfedcbaz";
+    String confirmPassword = "azyxwvutsrqponmlkjihgfedcb";
     assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "zyxwvutsrqponmlkjihgfedcba";
     assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
   }
-  
+
+  public void testLowerCaseOneCharPass() throws PasswordException {
+    MutablePassword dynamicPassword = ShiftPassword.createPassword("f", 1);
+
+    String confirmPassword = "g";
+    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+
+    String wrongPassword = "f";
+    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+  }
+
   public void testLowerCaseNumberCombination() throws PasswordException {
     MutablePassword dynamicPassword = ShiftPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6", 1);
 
