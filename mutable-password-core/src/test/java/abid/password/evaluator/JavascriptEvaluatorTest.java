@@ -27,8 +27,7 @@ public class JavascriptEvaluatorTest extends TestCase {
   public void testScript() throws ParseException {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String result = evaluator.evaluateExpression("2009+2009.2", parameters);
-    System.out.println(result);
+    evaluator.evaluateExpression("2009+2009.2", parameters);
   }
   
   public void testScriptException( ) {
@@ -41,6 +40,27 @@ public class JavascriptEvaluatorTest extends TestCase {
       //e.printStackTrace();
     }
     assertNull(result);
+  }
+  
+  public void testNonEscapedExpression()  {
+    JavascriptEvaluator evaluator = new JavascriptEvaluator();
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    try {
+      evaluator.evaluateExpression("a", parameters);
+    } catch (ParseException e) {
+      return;
+    }
+    assert false;
+  }
+  
+  public void testEscapedExpression()  {
+    JavascriptEvaluator evaluator = new JavascriptEvaluator();
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    try {
+      evaluator.evaluateExpression("'a'", parameters);
+    } catch (ParseException e) {
+      assert false;
+    }
   }
 
 }
