@@ -223,4 +223,10 @@ public class ZodiacParameterTest extends TestCase {
   public void testToStringIsNotNull( ) {
     assertNotNull(Zodiac.SAGITTARIUS.toString());
   }
+  
+  public void testAllZaodiacParameterToString( ) {
+    for( ZodiacParameter parameter : ZodiacParameter.values() ) {
+      assertNotNull(parameter.toString());
+    }
+  }
 } 
