@@ -41,19 +41,19 @@ import abid.password.util.StreamUtils;
  */
 public enum StockMarketParameter {
 
-  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=%5EDJI&f=sl1d1t1c1ohgv&e=.csv");
+  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=DOW&f=sl1d1t1c1ohgv&e=.csv");
 
   private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
 
   // hmm, use Yahoo to get stock data
-  public static final String YAHOO_FINANCE_URL = "http://uk.old.finance.yahoo.com/d/quotes.csv";
+  public static final String YAHOO_FINANCE_URL = "http://download.finance.yahoo.com/d/quotes.csv";
 
   private String market;
-  private String url;
+  private String query;
 
-  private StockMarketParameter(String market, String url) {
+  private StockMarketParameter(String market, String query) {
     this.market = market;
-    this.url = url;
+    this.query = query;
   }
 
   public String getMarket() {
@@ -61,7 +61,7 @@ public enum StockMarketParameter {
   }
 
   public Number getIndexValue() throws IOException {
-    URL dataUrl = new URL(YAHOO_FINANCE_URL + url);
+    URL dataUrl = new URL(YAHOO_FINANCE_URL + query);
     URLConnection connection = dataUrl.openConnection();
     InputStream inputStream = connection.getInputStream();
 
@@ -71,14 +71,12 @@ public enum StockMarketParameter {
     } catch (IOException e) {
       log.warn("Could not close stream.", e);
     }
-
     String[] splitData = csvData.split(",");
 
     // hmm do i want to make it a float, maybe it's best to convert it into an
     // integer and lose the accuracy
     Float value = Float.valueOf(splitData[1]);
     return value;
-
   }
 
   public static Map<String, Parameter> getParameters() throws IOException {
