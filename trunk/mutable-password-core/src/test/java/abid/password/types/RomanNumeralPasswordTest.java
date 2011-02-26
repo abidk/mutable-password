@@ -15,17 +15,27 @@
  */
 package abid.password.types;
 
+import java.lang.reflect.InvocationTargetException;
+
+import junit.framework.TestCase;
 import abid.password.MutablePassword;
+import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
-import junit.framework.TestCase;
 
 public class RomanNumeralPasswordTest extends TestCase {
 
   public void testPasswordType() {
     MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
     assertEquals("romanNumeral", password.getPasswordType());
+  }
+
+  public void testPasswordFactory() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+      InvocationTargetException, NoSuchMethodException {
+    MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
+    Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
+    assertEquals(RomanNumeralPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
   }
 
   public void testPasswordEvaluation() throws ParseException {
@@ -92,12 +102,12 @@ public class RomanNumeralPasswordTest extends TestCase {
     MutablePassword password = RomanNumeralPassword.createPassword("-", "0");
     assertTrue(password.confirmPassword("-"));
   }
-  
+
   public void testPasswordContainsNoRomanNumeral2() throws PasswordException {
     MutablePassword password = RomanNumeralPassword.createPassword("-", "'a'");
     assertTrue(password.confirmPassword("-a"));
   }
-  
+
   public void testUneascapedExpression() {
     MutablePassword password = RomanNumeralPassword.createPassword("-", "a");
     try {

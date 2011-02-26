@@ -28,9 +28,10 @@ import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
 /**
- * Creates a Ceasar cipher type password.
+ * TODO change class to use state aswell.
  * 
- * e.g. pass[shift{1}] or pass[shift{month}]
+ * Creates a Ceasar cipher type password. e.g. pass[shift{1}] or
+ * pass[shift{month}]
  * 
  * @author Abid
  * 
