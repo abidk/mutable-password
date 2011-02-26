@@ -33,18 +33,9 @@ public abstract class MutablePassword extends Password {
 
   public abstract String getEvaluatedPassword() throws ParseException;
 
+  private Evaluator evaluator = new JavascriptEvaluator();
   private MutableBlock mutableBlock;
   private String text;
-  // hmm should make this injectable
-  private Evaluator evaluator = new JavascriptEvaluator();
-
-  public Evaluator getEvaluator() {
-    return evaluator;
-  }
-
-  public void setEvaluator(Evaluator evaluator) {
-    this.evaluator = evaluator;
-  }
 
   public MutablePassword(String text, MutableBlock mutableBlock) {
     super(text + mutableBlock);
@@ -73,6 +64,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
+   * Returns the type of mutable password.
    * 
    * @return password type
    */
@@ -81,6 +73,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
+   * Returns the expression of the mutable block.
    * 
    * @return password expression
    */
@@ -89,10 +82,29 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
+   * Returns the mutable element of the password.
    * 
    * @return mutable block
    */
   public MutableBlock getMutableBlock() {
     return mutableBlock;
+  }
+
+  /**
+   * Returns the object of the evaluator.
+   * 
+   * @return evaluator object
+   */
+  public Evaluator getEvaluator() {
+    return evaluator;
+  }
+
+  /**
+   * Set a new evaluator.
+   * 
+   * @param evaluator
+   */
+  public void setEvaluator(Evaluator evaluator) {
+    this.evaluator = evaluator;
   }
 }

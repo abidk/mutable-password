@@ -42,6 +42,8 @@ public class PasswordFactory {
     mutablePasswords.add(TimeLockPassword.class);
     mutablePasswords.add(ExtendedPassword.class);
     mutablePasswords.add(ExtendedTimeLockPassword.class);
+    mutablePasswords.add(RomanNumeralPassword.class);
+    mutablePasswords.add(RotatingPassword.class);
   }
 
   private PasswordFactory() {
