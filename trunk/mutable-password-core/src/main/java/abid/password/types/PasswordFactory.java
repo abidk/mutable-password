@@ -38,7 +38,7 @@ public class PasswordFactory {
 
   static {
     // add the existing types
-    mutablePasswords.add(ShiftPassword.class);
+    mutablePasswords.add(CaesarCipherPassword.class);
     mutablePasswords.add(TimeLockPassword.class);
     mutablePasswords.add(ExtendedPassword.class);
     mutablePasswords.add(ExtendedTimeLockPassword.class);

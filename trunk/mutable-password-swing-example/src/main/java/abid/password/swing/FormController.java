@@ -25,7 +25,7 @@ import abid.password.swing.model.User;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.PasswordFactory;
-import abid.password.types.ShiftPassword;
+import abid.password.types.CaesarCipherPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
 
@@ -95,7 +95,7 @@ public class FormController {
   }
 
   public void saveShiftUser(String username, String password, TimeParameter parameter) {
-    MutablePassword extendedPassword = ShiftPassword.createPassword(password, parameter);
+    MutablePassword extendedPassword = CaesarCipherPassword.createPassword(password, parameter);
     saveUser(username, extendedPassword.getPassword());
   }
 

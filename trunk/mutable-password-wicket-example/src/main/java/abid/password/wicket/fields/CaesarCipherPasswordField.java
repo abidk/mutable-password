@@ -28,20 +28,20 @@ import org.apache.wicket.model.Model;
 
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.ShiftPassword;
+import abid.password.types.CaesarCipherPassword;
 
-public class ShiftPasswordField extends FormComponentPanel<String> {
+public class CaesarCipherPasswordField extends FormComponentPanel<String> {
 
   private static final long serialVersionUID = 1L;
 
   private final FormComponent<String> passwordField;
   private final DropDownChoice<TimeParameter> timeChoice;
 
-  public ShiftPasswordField(String id) {
+  public CaesarCipherPasswordField(String id) {
     this(id, new Model<String>(""));
   }
 
-  public ShiftPasswordField(String id, IModel<String> model) {
+  public CaesarCipherPasswordField(String id, IModel<String> model) {
     super(id, model);
     passwordField = new TextField<String>("password", new Model<String>("")) {
       private static final long serialVersionUID = 1L;
@@ -70,7 +70,7 @@ public class ShiftPasswordField extends FormComponentPanel<String> {
   protected void convertInput() {
     String password = passwordField.getConvertedInput();
     TimeParameter parameter = timeChoice.getConvertedInput();
-    MutablePassword extendedPassword = ShiftPassword.createPassword(password, parameter);
+    MutablePassword extendedPassword = CaesarCipherPassword.createPassword(password, parameter);
     setConvertedInput(extendedPassword.getPassword());
   }
 

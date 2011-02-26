@@ -121,16 +121,13 @@ public class RomanNumeralPassword extends MutablePassword {
   }
 
   public static MutablePassword createPassword(String text, TimeParameter timeValue) {
-    return createPassword(text, timeValue.getTextField());
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
+    String mutablePassword = text + block;
+    return new RomanNumeralPassword(mutablePassword);
   }
 
-  public static MutableBlock createMutableBlock(String expression) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
-    return block;
-  }
-
-  public static MutablePassword createPassword(String text, String expression) {
-    MutableBlock block = createMutableBlock(expression);
+  public static MutablePassword createPassword(String text, int value) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, String.valueOf(value));
     String mutablePassword = text + block;
     return new RomanNumeralPassword(mutablePassword);
   }

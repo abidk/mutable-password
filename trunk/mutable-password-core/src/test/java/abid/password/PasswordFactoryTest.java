@@ -23,7 +23,9 @@ import junit.framework.TestCase;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
-import abid.password.types.ShiftPassword;
+import abid.password.types.RomanNumeralPassword;
+import abid.password.types.RotatingPassword;
+import abid.password.types.CaesarCipherPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
 
@@ -52,7 +54,7 @@ public class PasswordFactoryTest extends TestCase {
   public void testShiftPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
-    Password p3 = ShiftPassword.createPassword("abid", 1);
+    Password p3 = CaesarCipherPassword.createPassword("abid");
     Password m3 = PasswordFactory.getInstance(p3.getPassword());
     assertEquals(p3.getClass(), m3.getClass());
     assertEquals(p3.getPassword(), m3.getPassword());
@@ -65,6 +67,24 @@ public class PasswordFactoryTest extends TestCase {
     Password m4 = PasswordFactory.getInstance(p4.getPassword());
     assertEquals(p4.getClass(), m4.getClass());
     assertEquals(p4.getPassword(), m4.getPassword());
+  }
+
+  public void testRotatingPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+      InvocationTargetException, NoSuchMethodException {
+
+    Password p3 = RotatingPassword.createPassword("abid", "1234");
+    Password m3 = PasswordFactory.getInstance(p3.getPassword());
+    assertEquals(p3.getClass(), m3.getClass());
+    assertEquals(p3.getPassword(), m3.getPassword());
+  }
+
+  public void testRomanNumeralPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+      InvocationTargetException, NoSuchMethodException {
+
+    Password p3 = RomanNumeralPassword.createPassword("abid", 1234);
+    Password m3 = PasswordFactory.getInstance(p3.getPassword());
+    assertEquals(p3.getClass(), m3.getClass());
+    assertEquals(p3.getPassword(), m3.getPassword());
   }
 
   public void testPasswordFactory() {

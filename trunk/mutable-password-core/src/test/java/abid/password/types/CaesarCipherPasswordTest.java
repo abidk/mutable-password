@@ -20,189 +20,206 @@ import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
 import abid.password.MutableBlock;
-import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.StatefulMutablePassword;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
-public class ShiftPasswordTest extends TestCase {
+public class CaesarCipherPasswordTest extends TestCase {
 
   public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
-    MutablePassword password = ShiftPassword.createPassword("abid", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abid");
+    password.setState(1);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
-    assertEquals(ShiftPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
+    assertEquals(CaesarCipherPassword.PASSWORD_TYPE, ((StatefulMutablePassword) unknownPassword).getType());
   }
 
   public void testShiftPassword() throws PasswordException {
-    Password dynamicPassword = ShiftPassword.createPassword("abid", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abid");
+    password.setState(1);
 
     String confirmPassword = "bcje";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testEvaluatedPassword() throws ParseException, PasswordException {
     TimeParameter timeType = TimeParameter.YEAR;
     String passwordText = "abid";
-    MutablePassword password = ShiftPassword.createPassword(passwordText, timeType);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword(passwordText, timeType);
 
     // test the evaluated password
     assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testLowerCasePassword() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("z", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("z");
+    password.setState(2);
 
-    String confirmPassword = "a";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    String confirmPassword = "b";
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
-    String wrongPassword = "z";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    String wrongPassword = "a";
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCasePassword2() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("zyxwvutsrqponmlkjihgfedcba", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("zyxwvutsrqponmlkjihgfedcba");
+    password.setState(1);
 
     String confirmPassword = "azyxwvutsrqponmlkjihgfedcb";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "zyxwvutsrqponmlkjihgfedcba";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseOneCharPass() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("f", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("f");
+    password.setState(1);
 
     String confirmPassword = "g";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "f";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseNumberCombination() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6");
+    password.setState(1);
 
     String confirmPassword = "6bcdefghijklmn6opqrstuvwxyza6";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6abcdefghijklm6nopqrstuvwxyz6";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseSymbolNumberCombination() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6");
+    password.setState(1);
 
     String confirmPassword = "6bcdefghijklmn^opqrstuvwxyza6";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6abcdefghijklm^nopqrstuvwxyz6";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testUpperCasePassword() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    password.setState(1);
 
     String confirmPassword = "BCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testUpperCaseNumberCombination() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6");
+    password.setState(1);
 
     String confirmPassword = "6BCDEFGHIJKLM6NOPQRSTUVWXYZA6";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseCombo() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz");
+    password.setState(1);
 
     String confirmPassword = "BcDeFgHiJkLmNoPqRsTuVwXyZa";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "AbCdEfGhIjKlMnOpQrStUvWxYz";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowercaseUppercase() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    password.setState(1);
 
     String confirmPassword = "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowercasePassword() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("az", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("az");
+    password.setState(1);
 
     String confirmPassword = "ba";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "az";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testLowercasePassword2() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("6z6", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6z6");
+    password.setState(1);
 
     String confirmPassword = "6a6";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6z6";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^");
+    password.setState(1);
 
     String confirmPassword = "^BcDeFgHiJkLm^NoPqRsTuVwXyZa^";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "^AbCdEfGhIjKl^MnOpQrStUvWxYz^";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseNumberSymbolCombo() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6");
+    password.setState(1);
 
     String confirmPassword = "6BcDeFgHiJkLm^NoPqRsTuVwXyZa6";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6AbCdEfGhIjKl^MnOpQrStUvWxYz6";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testShiftNonAlphabeticalCorrectPassword() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("ab^id", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ab^id");
+    password.setState(1);
 
     String confirmPassword = "bc^je";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertEquals(true, password.confirmPassword(confirmPassword));
   }
 
   public void testShiftNonAlphabeticalWrongPassword() throws PasswordException {
-    MutablePassword dynamicPassword = ShiftPassword.createPassword("ab^id", 1);
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ab^id");
+    password.setState(1);
 
     String wrongPassword = "ab^id";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertEquals(false, password.confirmPassword(wrongPassword));
   }
 
   public void testShiftPasswordUsingTime() throws PasswordException {
     // shift password every hour
     TimeParameter timeType = TimeParameter.DAY_OF_WEEK;
-    ShiftPassword shiftPassword = (ShiftPassword) ShiftPassword.createPassword("abid", timeType);
+    CaesarCipherPassword shiftPassword = (CaesarCipherPassword) CaesarCipherPassword.createPassword("abid", timeType);
 
     String shiftedPassword = shiftPassword.getShiftedPassword(timeType.getCalendarValue());
     // System.out.println("shift by: " + timeType.getCalendarValue() +
@@ -215,8 +232,8 @@ public class ShiftPasswordTest extends TestCase {
 
   public void testPasswordException() {
     String passwordText = "abid";
-    MutableBlock mutableBlock = NewShiftPassword.createMutableBlock("a");
-    MutablePassword password = new ShiftPassword(passwordText, mutableBlock);
+    MutableBlock mutableBlock = NewCaesarCipherPassword.createMutableBlock("a");
+    CaesarCipherPassword password = new CaesarCipherPassword(passwordText + mutableBlock);
 
     String wrongPassword = "abid";
     try {

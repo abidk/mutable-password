@@ -19,8 +19,8 @@ package abid.password.types;
 import java.util.Map;
 
 import abid.password.MutableBlock;
-import abid.password.MutablePassword;
 import abid.password.PasswordException;
+import abid.password.StatefulMutablePassword;
 import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.Parameter;
@@ -28,26 +28,22 @@ import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
 /**
- * TODO change class to use state aswell.
+ * Basically, a Caesar cipher.
  * 
- * Creates a Ceasar cipher type password. e.g. pass[shift{1}] or
- * pass[shift{month}]
+ * You can give it a time value e.g. pass[shift{month}] or you can create a
+ * password with a state, the state can be specified later.
  * 
  * @author Abid
  * 
  */
-public class ShiftPassword extends MutablePassword {
+public class CaesarCipherPassword extends StatefulMutablePassword {
 
   // public String PASSWORD_TYPE = getClass().getSimpleName();
 
-  public static final String PASSWORD_TYPE = "shift";
+  public static final String PASSWORD_TYPE = "caesarCipher";
 
-  public ShiftPassword(String password) {
+  public CaesarCipherPassword(String password) {
     super(password);
-  }
-
-  public ShiftPassword(String text, MutableBlock block) {
-    super(text, block);
   }
 
   /**
@@ -77,12 +73,17 @@ public class ShiftPassword extends MutablePassword {
 
   @Override
   public String getEvaluatedPassword() throws ParseException {
-    Evaluator evaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String evaluation = evaluator.evaluateExpression(getExpression(), parameters);
-    int shiftBy = Integer.valueOf(evaluation);
-    String shiftedPassword = getShiftedPassword(shiftBy);
-    return shiftedPassword;
+    String expression = getExpression();
+    int shiftBy = 0;
+    if (expression.equalsIgnoreCase("state")) {
+      shiftBy = getState();
+    } else {
+      Evaluator evaluator = getEvaluator();
+      Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+      String evaluation = evaluator.evaluateExpression(expression, parameters);
+      shiftBy = Integer.valueOf(evaluation);
+    }
+    return getShiftedPassword(shiftBy);
   }
 
   @Override
@@ -100,23 +101,22 @@ public class ShiftPassword extends MutablePassword {
   }
 
   public static MutableBlock createMutableBlock(TimeParameter timeType) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeType.getTextField());
+    return createMutableBlock(timeType.getTextField());
+  }
+
+  public static MutableBlock createMutableBlock(String expression) {
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
     return block;
   }
 
-  public static MutableBlock createMutableBlock(int shiftValue) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, shiftValue);
-    return block;
-  }
-
-  public static MutablePassword createPassword(String text, TimeParameter timeType) {
+  public static StatefulMutablePassword createPassword(String text, TimeParameter timeType) {
     MutableBlock block = createMutableBlock(timeType);
-    return new ShiftPassword(text, block);
+    return new CaesarCipherPassword(text + block);
   }
 
-  public static MutablePassword createPassword(String text, int shiftValue) {
-    MutableBlock block = createMutableBlock(shiftValue);
-    return new ShiftPassword(text, block);
+  public static StatefulMutablePassword createPassword(String text) {
+    MutableBlock block = createMutableBlock("state");
+    return new CaesarCipherPassword(text + block);
   }
 
 }

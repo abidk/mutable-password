@@ -24,28 +24,31 @@ import abid.password.evaluator.Evaluator;
 import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.Parameter;
-import abid.password.types.ExtendedTimeLockPassword;
-import abid.password.types.ShiftPassword;
+import abid.password.types.ExtendedPassword;
 
 public class MutablePasswordTest extends TestCase {
 
-  public void testNullBlock() {
+  public void testNullMutableBlock() {
     String passwordText = "pass";
-    MutablePassword password = new ShiftPassword(passwordText, null);
+    MutablePassword password = new ExtendedPassword(passwordText, null);
     assertNull(password.getExpression());
     assertNull(password.getType());
-    assertEquals(passwordText, password.getText());
     assertNull(password.getMutableBlock());
+    assertEquals(passwordText, password.getText());
   }
 
-  public void testStartOfExpression() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testBrokenMutableExpression() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
-    new ExtendedTimeLockPassword("abidextendedTimeLock{year}]");
+    ExtendedPassword password = new ExtendedPassword("abidextendedTimeLock{year}]");
+    assertNull(password.getExpression());
+    assertNull(password.getType());
+    assertNull(password.getMutableBlock());
+    assertNull(password.getText());
   }
 
   public void testNewEvaluator() {
     String passwordText = "pass";
-    MutablePassword password = new ShiftPassword(passwordText, null);
+    MutablePassword password = new ExtendedPassword(passwordText, null);
     // check the default evaluator
     assertEquals(JavascriptEvaluator.class, password.getEvaluator().getClass());
     // set new evaluator
