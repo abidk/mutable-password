@@ -9,6 +9,8 @@
     * [ExtendedTimeLockPassword Extended Time Lock Password]
     * [ShiftPassword Shift Password]
     * [TimeLockPassword Time Lock Password]
+    * [RomanNumeralPassword Roman Numeral Password]
+    * [RotatingPassword Rotating Password]
   * Parameters
     * [NewParameter Create a new parameter]
     * [TimeParameter Time Parameter]
