@@ -29,7 +29,7 @@ import org.apache.wicket.model.PropertyModel;
 import abid.password.wicket.fields.ExtendedPasswordField;
 import abid.password.wicket.fields.ExtendedTimeLockPasswordField;
 import abid.password.wicket.fields.MutablePasswordField;
-import abid.password.wicket.fields.ShiftPasswordField;
+import abid.password.wicket.fields.CaesarCipherPasswordField;
 import abid.password.wicket.fields.SimplePasswordField;
 import abid.password.wicket.fields.TimeLockPasswordField;
 import abid.password.wicket.service.UserService;
@@ -52,7 +52,7 @@ public class CreateUserPage extends BasePage {
     MutablePasswordForm mutablePasswordForm = new MutablePasswordForm("mutablePasswordForm");
     SimplePasswordForm simplePasswordForm = new SimplePasswordForm("SimplePasswordForm");
     ExtendedPasswordForm extendedPasswordForm = new ExtendedPasswordForm("extendedPasswordForm");
-    ShiftPasswordForm shiftPasswordForm = new ShiftPasswordForm("shiftPasswordForm");
+    CaesarCipherPasswordForm shiftPasswordForm = new CaesarCipherPasswordForm("caesarCipherPasswordForm");
     TimeLockPasswordForm timeLockPasswordForm = new TimeLockPasswordForm("timeLockPasswordForm");
     ExtendedTimeLockPasswordForm extendedTimeLockPasswordForm = new ExtendedTimeLockPasswordForm("extendedTimeLockPasswordForm");
 
@@ -163,20 +163,20 @@ public class CreateUserPage extends BasePage {
     }
   }
 
-  public class ShiftPasswordForm extends Form<Void> {
+  public class CaesarCipherPasswordForm extends Form<Void> {
 
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
 
-    public ShiftPasswordForm(String id) {
+    public CaesarCipherPasswordForm(String id) {
       super(id);
       PropertyModel<String> usernameModel = new PropertyModel<String>(this, "username");
       TextField<String> userField = new TextField<String>("userField", usernameModel);
       userField.setRequired(true);
 
       PropertyModel<String> passwordModel = new PropertyModel<String>(this, "password");
-      ShiftPasswordField passwordField = new ShiftPasswordField("shiftPasswordField", passwordModel);
+      CaesarCipherPasswordField passwordField = new CaesarCipherPasswordField("caesarCipherField", passwordModel);
       passwordField.setRequired(true);
       add(userField);
       add(passwordField);

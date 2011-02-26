@@ -40,7 +40,7 @@ public class MutablePasswordField extends FormComponentPanel<String> {
     if (currentSelection.equals("Extended")) {
       selectedForm = new ExtendedPasswordField("group");
     } else if (currentSelection.equals("Shift")) {
-      selectedForm = new ShiftPasswordField("group");
+      selectedForm = new CaesarCipherPasswordField("group");
     } else if (currentSelection.equals("Time Lock")) {
       selectedForm = new TimeLockPasswordField("group");
     } else if (currentSelection.equals("Extended Time Lock")) {

@@ -19,10 +19,10 @@ package abid.password.types;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 
-public class NewShiftPassword extends ShiftPassword {
+public class NewCaesarCipherPassword extends CaesarCipherPassword {
 
-  public NewShiftPassword(String text, MutableBlock block) {
-    super(text, block);
+  public NewCaesarCipherPassword(String text) {
+    super(text);
 
   }
 
@@ -33,6 +33,6 @@ public class NewShiftPassword extends ShiftPassword {
 
   public static MutablePassword createPassword(String text, String shiftValue) {
     MutableBlock block = createMutableBlock(shiftValue);
-    return new ShiftPassword(text, block);
+    return new CaesarCipherPassword(text + block);
   }
 }
