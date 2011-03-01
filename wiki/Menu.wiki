@@ -7,7 +7,7 @@
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
     * [ExtendedTimeLockPassword Extended Time Lock Password]
-    * [ShiftPassword Shift Password]
+    * [CaesarCipherPassword Caesar Cipher Password]
     * [TimeLockPassword Time Lock Password]
     * [RomanNumeralPassword Roman Numeral Password]
     * [RotatingPassword Rotating Password]
