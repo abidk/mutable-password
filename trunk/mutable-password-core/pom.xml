@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>abid.password</groupId>
 		<artifactId>mutable-password-parent</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	<groupId>abid.password</groupId>
 	<artifactId>mutable-password-core</artifactId>
