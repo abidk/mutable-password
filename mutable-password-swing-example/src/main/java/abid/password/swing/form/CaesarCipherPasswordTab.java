@@ -31,7 +31,7 @@ import abid.password.swing.Application;
 
 import com.jeta.forms.components.panel.FormPanel;
 
-public class ShiftPasswordTab extends AbstractTab {
+public class CaesarCipherPasswordTab extends AbstractTab {
 
   private JLabel feedbackLabel;
   private JTextField usernameField;
@@ -47,7 +47,7 @@ public class ShiftPasswordTab extends AbstractTab {
         String username = usernameField.getText();
         String password = passwordField.getText();
         TimeParameter parameter = (TimeParameter) parameterField.getSelectedItem();
-        getApplication().getController().saveShiftUser(username, password, parameter);
+        getApplication().getController().saveCaesarCipherUser(username, password, parameter);
         getApplication().getController().loadLoginUI();
       } else if (e.getSource() == cancelButton) {
         getApplication().getController().loadLoginUI();
@@ -55,7 +55,7 @@ public class ShiftPasswordTab extends AbstractTab {
     }
   };
 
-  public ShiftPasswordTab(Application application, FormPanel form) {
+  public CaesarCipherPasswordTab(Application application, FormPanel form) {
     super(application);
     initComponents(form);
   }

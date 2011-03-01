@@ -23,6 +23,7 @@ import javax.swing.ListCellRenderer;
 
 import abid.password.MutablePassword;
 import abid.password.Password;
+import abid.password.StatefulMutablePassword;
 import abid.password.swing.Application;
 import abid.password.swing.model.User;
 import abid.password.types.PasswordFactory;
@@ -34,7 +35,6 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
 
   private JLabel usernameLabel;
   private JLabel passwordLabel;
-  private JLabel evaluatedLabel;
 
   public UserListRenderer(Application application) {
     super(application, "UserListCell.jfrm");
@@ -49,17 +49,21 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
     User user = (User) value;
     usernameLabel.setText(user.getUsername());
     passwordLabel.setText(user.getPassword());
-    String evalatedPassword = "N/A";
     try {
       Password password = PasswordFactory.getInstance(user.getPassword());
-      if (password instanceof MutablePassword) {
+      if (password instanceof StatefulMutablePassword) {
+        StatefulMutablePassword statefulPassword = (StatefulMutablePassword) password;
+        statefulPassword.setState(user.getState());
+        String evalatedPassword = statefulPassword.getEvaluatedPassword();
+        passwordLabel.setText(evalatedPassword);
+      } else if (password instanceof MutablePassword) {
         MutablePassword mutablePassword = (MutablePassword) password;
-        evalatedPassword = mutablePassword.getEvaluatedPassword();
+        String evalatedPassword = mutablePassword.getEvaluatedPassword();
+        passwordLabel.setText(evalatedPassword);
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    evaluatedLabel.setText(evalatedPassword);
 
     FormPanel form = getForm();
     return form;
@@ -68,12 +72,11 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
   public void initComponents(FormPanel form) {
     usernameLabel = form.getLabel("list.username");
     passwordLabel = form.getLabel("list.password");
-    evaluatedLabel = form.getLabel("list.evaluated");
   }
 
   @Override
   public void refreshComponent() {
-   
+
   }
 
 }

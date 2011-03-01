@@ -47,16 +47,20 @@ public class LoginForm extends AbstractForm {
 
     public void actionPerformed(ActionEvent e) {
       if (e.getSource() == loginButton) {
-        if (validateComponents()) {
-          String username = usernameField.getText();
-          char[] password = passwordField.getPassword();
-          User user = getApplication().getController().loginUser(username, password);
-          if (user != null) {
-            setInfo("User '" + user.getUsername() + "' logged in.");
-          } else {
-            setError("Failed to login.");
-          }
+        if (!validateComponents()) {
+          return;
         }
+        String username = usernameField.getText();
+        char[] password = passwordField.getPassword();
+        User user = getApplication().getController().loginUser(username, password);
+        if (user != null) {
+          // Increase the state. This is required mainly for RotatingPassword.
+          user.setState(user.getState() + 1);
+          setInfo("User '" + user.getUsername() + "' logged in.");
+        } else {
+          setError("Failed to login.");
+        }
+        getApplication().getController().refreshLoginUI();
       } else if (e.getSource() == createUserButton) {
         getApplication().getController().loadCreateUserUI();
       } else if (e.getSource() == refreshButton) {
@@ -85,7 +89,7 @@ public class LoginForm extends AbstractForm {
     refreshButton.addActionListener(actionListener);
   }
 
-  public boolean validateComponents() {    
+  public boolean validateComponents() {
     setInfo(null);
     if (usernameField.getText().equals("")) {
       setError("Username field cannot be blank");
@@ -102,7 +106,7 @@ public class LoginForm extends AbstractForm {
   public void refreshComponent() {
     Set<User> users = getApplication().getController().getUsers();
     DefaultListModel model = new DefaultListModel();
-    for( User user : users ) {
+    for (User user : users) {
       model.addElement(user);
     }
     userList.setModel(model);
