@@ -29,7 +29,7 @@ import com.jeta.forms.gui.common.FormException;
 public class Application {
 
   public static final String APPLICATION_TITLE = "Mutable Password Example";
-  public static final int APPLICATION_WIDTH = 600;
+  public static final int APPLICATION_WIDTH = 500;
   public static final int APPLICATION_HEIGHT = 400;
 
   public Set<User> users = new HashSet<User>();
