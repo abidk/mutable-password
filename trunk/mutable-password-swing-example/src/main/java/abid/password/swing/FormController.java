@@ -20,12 +20,15 @@ import java.util.Set;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.StatefulMutablePassword;
 import abid.password.parameters.TimeParameter;
 import abid.password.swing.model.User;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.PasswordFactory;
 import abid.password.types.CaesarCipherPassword;
+import abid.password.types.RomanNumeralPassword;
+import abid.password.types.RotatingPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
 
@@ -66,6 +69,11 @@ public class FormController {
       return null;
     }
 
+    // if it's a stateful password set the state
+    if (userPass instanceof StatefulMutablePassword) {
+      ((StatefulMutablePassword) userPass).setState(user.getState());
+    }
+
     boolean result;
     try {
       result = userPass.confirmPassword(String.valueOf(password));
@@ -85,28 +93,38 @@ public class FormController {
   }
 
   public void saveExtendedUser(String username, String password, TimeParameter parameter) {
-    MutablePassword extendedPassword = ExtendedPassword.createPassword(password, parameter);
-    saveUser(username, extendedPassword.getPassword());
+    MutablePassword mutablePassword = ExtendedPassword.createPassword(password, parameter);
+    saveUser(username, mutablePassword.getPassword());
   }
 
   public void saveExtendedTimeLockUser(String username, String password, TimeParameter extendedParameter, TimeParameter extendedTimelock, int start, int end) {
-    MutablePassword extendedPassword = ExtendedTimeLockPassword.createPassword(password, extendedParameter, extendedTimelock, start, end);
-    saveUser(username, extendedPassword.getPassword());
+    MutablePassword mutablePassword = ExtendedTimeLockPassword.createPassword(password, extendedParameter, extendedTimelock, start, end);
+    saveUser(username, mutablePassword.getPassword());
   }
 
-  public void saveShiftUser(String username, String password, TimeParameter parameter) {
-    MutablePassword extendedPassword = CaesarCipherPassword.createPassword(password, parameter);
-    saveUser(username, extendedPassword.getPassword());
+  public void saveCaesarCipherUser(String username, String password, TimeParameter parameter) {
+    MutablePassword mutablePassword = CaesarCipherPassword.createPassword(password, parameter);
+    saveUser(username, mutablePassword.getPassword());
   }
 
   public void saveTimeLockUser(String username, String password, TimeParameter parameter, int start, int end) {
-    MutablePassword extendedPassword = TimeLockPassword.createPassword(password, parameter, start, end);
-    saveUser(username, extendedPassword.getPassword());
+    MutablePassword mutablePassword = TimeLockPassword.createPassword(password, parameter, start, end);
+    saveUser(username, mutablePassword.getPassword());
   }
 
   public void saveSimpleUser(String username, String password) {
     SimplePassword simplePass = new SimplePassword(password);
     saveUser(username, simplePass.getPassword());
+  }
+
+  public void saveRomanNumeralUser(String username, String password, TimeParameter parameter) {
+    MutablePassword mutablePassword = RomanNumeralPassword.createPassword(password, parameter);
+    saveUser(username, mutablePassword.getPassword());
+  }
+
+  public void saveRotatingPasswordUser(String username, String password, String parameter) {
+    MutablePassword mutablePassword = RotatingPassword.createPassword(password, parameter);
+    saveUser(username, mutablePassword.getPassword());
   }
 
   private void saveUser(String username, String password) {

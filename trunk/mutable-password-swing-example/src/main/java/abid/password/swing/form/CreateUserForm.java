@@ -26,8 +26,10 @@ public class CreateUserForm extends AbstractForm {
   private AbstractTab simplePasswordTab;
   private AbstractTab extendedPasswordTab;
   private AbstractTab extendedTimeLockPasswordTab;
-  private AbstractTab shiftPasswordTab;
+  private AbstractTab caesarPasswordTab;
   private AbstractTab lockPasswordTab;
+  private AbstractTab romanPasswordTab;
+  private AbstractTab rotatingPasswordTab;
 
   public CreateUserForm(Application application) throws FormException {
     super(application, "CreateUser.jfrm");
@@ -39,8 +41,11 @@ public class CreateUserForm extends AbstractForm {
     simplePasswordTab = new SimplePasswordTab(application, form);
     extendedPasswordTab = new ExtendedPasswordTab(application, form);
     extendedTimeLockPasswordTab = new ExtendedTimeLockPasswordTab(application, form);
-    shiftPasswordTab = new ShiftPasswordTab(application, form);
+    caesarPasswordTab = new CaesarCipherPasswordTab(application, form);
     lockPasswordTab = new TimeLockPasswordTab(application, form);
+    romanPasswordTab = new RomanNumeralPasswordTab(application, form);
+    rotatingPasswordTab = new RotatingPasswordTab(application, form);
+
   }
 
   public AbstractTab getSimplePasswordTab() {
@@ -59,12 +64,20 @@ public class CreateUserForm extends AbstractForm {
     return lockPasswordTab;
   }
 
-  public AbstractTab getShiftPasswordTab() {
-    return shiftPasswordTab;
+  public AbstractTab getCaesarPasswordTab() {
+    return caesarPasswordTab;
+  }
+
+  public AbstractTab getRomanPasswordTab() {
+    return romanPasswordTab;
+  }
+
+  public AbstractTab getRotatingPasswordTab() {
+    return rotatingPasswordTab;
   }
 
   @Override
-  public void refreshComponent() {    
+  public void refreshComponent() {
   }
 
 }

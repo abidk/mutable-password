@@ -23,6 +23,7 @@ public class User implements Serializable {
   private static final long serialVersionUID = 1L;
   private String username;
   private String password;
+  private int state;
 
   public String getUsername() {
     return username;
@@ -38,6 +39,14 @@ public class User implements Serializable {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public int getState() {
+    return state;
+  }
+
+  public void setState(int state) {
+    this.state = state;
   }
 
   @Override
