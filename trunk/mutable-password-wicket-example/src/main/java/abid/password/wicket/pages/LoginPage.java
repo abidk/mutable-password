@@ -65,22 +65,20 @@ public class LoginPage extends BasePage {
         final User data = item.getModelObject();
         Label userLabel = new Label("userLabel", data.getUsername());
         Label passLabel = new Label("passLabel", data.getPassword());
-        
-        String evalatedPassword = "N/A";
+
         try {
           Password password = PasswordFactory.getInstance(data.getPassword());
-          if( password instanceof MutablePassword ) {
+          if (password instanceof MutablePassword) {
             MutablePassword mutablePassword = (MutablePassword) password;
-            evalatedPassword = mutablePassword.getEvaluatedPassword();
+            String evalatedPassword = mutablePassword.getEvaluatedPassword();
+            passLabel = new Label("passLabel", evalatedPassword);
           }
         } catch (Exception e) {
           e.printStackTrace();
         }
-        
-        Label evaluatedLabel = new Label("evaluatedLabel", evalatedPassword);
+
         item.add(userLabel);
         item.add(passLabel);
-        item.add(evaluatedLabel);
       }
     };
 
