@@ -29,14 +29,31 @@ import abid.password.evaluator.ParseException;
  */
 public abstract class MutablePassword extends Password {
 
+  /**
+   * Returns the password type.
+   * 
+   * @return password type
+   */
   public abstract String getPasswordType();
 
+  /**
+   * Method will return the evaluation of the mutable block.
+   * 
+   * @return evaluated password
+   * @throws ParseException
+   */
   public abstract String getEvaluatedPassword() throws ParseException;
 
   private Evaluator evaluator = new JavascriptEvaluator();
   private MutableBlock mutableBlock;
   private String text;
 
+  /**
+   * Takes the static password text and mutable block as separate parameters.
+   * 
+   * @param text
+   * @param mutableBlock
+   */
   public MutablePassword(String text, MutableBlock mutableBlock) {
     super(text + mutableBlock);
     // TODO escape the brackets in the text so it does not conflict with
@@ -45,6 +62,12 @@ public abstract class MutablePassword extends Password {
     this.mutableBlock = mutableBlock;
   }
 
+  /**
+   * Takes the password, which will get split as the static element and the
+   * mutable element.
+   * 
+   * @param password
+   */
   public MutablePassword(String password) {
     super(password);
     int startTag = password.indexOf(MutableBlock.MUTABLE_BLOCK_START_TAG);

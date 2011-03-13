@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>abid.password</groupId>
@@ -7,10 +8,13 @@
 	<packaging>pom</packaging>
 
 	<name>Mutable Password</name>
-	<description>Mutable passwords allows you to create expressions as a
-		password which can change based on time or any other factor.</description>
+	<description>Mutable passwords gives you the extra layer of security that a static password cannot provide. That is a password which is constantly changing, making it difficult for someone to guess your password. If someone has seen your password they will not be aware of how the password changes, which will consequently prevent that person from logging into your account.</description>
 	<url>http://mutable-password.googlecode.com</url>
 	<inceptionYear>2009</inceptionYear>
+
+	<!-- ==================================== -->
+	<!-- MAVEN 3.0 MIGHT BE REQUIRED TO BUILD -->
+	<!-- ==================================== -->
 
 	<modules>
 		<module>mutable-password-core</module>
@@ -36,6 +40,13 @@
 		<system>Google Issues</system>
 		<url>http://code.google.com/p/mutable-password/issues/list</url>
 	</issueManagement>
+
+	<mailingLists>
+		<mailingList>
+			<name>Google Groups</name>
+			<archive>http://groups.google.com/group/mutable-passwords</archive>
+		</mailingList>
+	</mailingLists>
 
 	<scm>
 		<connection>scm:svn:http://mutable-password.googlecode.com/svn/trunk</connection>
@@ -83,12 +94,14 @@
 				<artifactId>maven-license-plugin</artifactId>
 				<version>1.9.0</version>
 				<configuration>
+					<strictCheck>true</strictCheck>
 					<header>src/main/resources/META-INF/license-header.txt</header>
 					<properties>
 						<year>2011</year>
 					</properties>
 					<excludes>
 						<exclude>LICENSE.txt</exclude>
+						<exclude>checkstyle.xml</exclude>
 						<exclude>**/src/main/resources/**</exclude>
 						<exclude>**/src/test/resources/**</exclude>
 					</excludes>
@@ -128,7 +141,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0-beta-2</version>
+				<version>3.0-beta-3</version>
 				<executions>
 					<execution>
 						<id>attach-descriptor</id>

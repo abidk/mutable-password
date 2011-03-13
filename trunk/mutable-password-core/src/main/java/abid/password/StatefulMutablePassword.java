@@ -27,6 +27,11 @@ public abstract class StatefulMutablePassword extends MutablePassword {
 
   private int state;
 
+  /**
+   * Takes the mutable password.
+   * 
+   * @param password
+   */
   public StatefulMutablePassword(String password) {
     super(password);
   }

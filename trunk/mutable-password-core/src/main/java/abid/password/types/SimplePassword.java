@@ -19,13 +19,17 @@ package abid.password.types;
 import abid.password.Password;
 
 /**
- * Just a normal password, which has not mutable block e.g. password123
+ * Just a normal password, which has not mutable block e.g. password123.
  * 
  * @author Abid
- * 
  */
 public class SimplePassword extends Password {
 
+  /**
+   * Simply takes the password and does nothing else.
+   * 
+   * @param password
+   */
   public SimplePassword(String password) {
     super(password);
   }

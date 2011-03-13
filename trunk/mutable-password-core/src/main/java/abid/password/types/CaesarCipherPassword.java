@@ -39,9 +39,16 @@ import abid.password.parameters.TimeParameter;
 public class CaesarCipherPassword extends StatefulMutablePassword {
 
   // public String PASSWORD_TYPE = getClass().getSimpleName();
-
+  /** Password type name. */
   public static final String PASSWORD_TYPE = "caesarCipher";
 
+  /**
+   * Takes the String password, which is then separated into the text and
+   * mutable block. The mutable block is split into the password type and
+   * expression.
+   * 
+   * @param password
+   */
   public CaesarCipherPassword(String password) {
     super(password);
   }
@@ -100,20 +107,45 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
     return PASSWORD_TYPE;
   }
 
+  /**
+   * Creates a mutable block based on the input values.
+   * 
+   * @param timeType
+   * @return mutable block
+   */
   public static MutableBlock createMutableBlock(TimeParameter timeType) {
     return createMutableBlock(timeType.getTextField());
   }
 
+  /**
+   * Creates a mutable block based on the input values.
+   * 
+   * @param expression
+   * @return mutable block
+   */
   public static MutableBlock createMutableBlock(String expression) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
     return block;
   }
 
+  /**
+   * Creates a state based mutable password based on the input values.
+   * 
+   * @param text
+   * @param timeType
+   * @return mutable password with state
+   */
   public static StatefulMutablePassword createPassword(String text, TimeParameter timeType) {
     MutableBlock block = createMutableBlock(timeType);
     return new CaesarCipherPassword(text + block);
   }
 
+  /**
+   * Creates a state based mutable password based on the input values.
+   * 
+   * @param text
+   * @return mutable password with state
+   */
   public static StatefulMutablePassword createPassword(String text) {
     MutableBlock block = createMutableBlock("state");
     return new CaesarCipherPassword(text + block);

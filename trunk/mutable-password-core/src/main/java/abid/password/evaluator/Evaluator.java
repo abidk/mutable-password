@@ -22,13 +22,21 @@ import abid.password.parameters.Parameter;
 
 /**
  * Allows you to implement this interface to create other evaluators e.g.
- * beanshell
+ * beanshell.
  * 
  * @author Abid
- * 
  */
 public interface Evaluator {
 
-  public abstract String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException;
+  /**
+   * Takes in the expression and additional paramters and will return the
+   * evaluated value.
+   * 
+   * @param expression
+   * @param map
+   * @return evaluated value
+   * @throws ParseException
+   */
+  String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException;
 
 }

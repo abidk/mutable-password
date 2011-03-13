@@ -25,7 +25,6 @@ import java.util.Map;
  * TODO use reflection to automatically add types.
  * 
  * @author Abid
- * 
  */
 public class ParameterFactory {
 
@@ -38,9 +37,9 @@ public class ParameterFactory {
    * This method returns the latest parameter values for time, stock market, and
    * any parameters added by the user.
    * 
-   * @return latest parameters
+   * @return parameters
    */
-  public synchronized static Map<String, Parameter> getAllParamterData() {
+  public static Map<String, Parameter> getAllParamterData() {
     Map<String, Parameter> params = new HashMap<String, Parameter>();
     // get the latest 'refreshed' parameter values
     params.putAll(TimeParameter.getParameters());
@@ -51,6 +50,13 @@ public class ParameterFactory {
     return params;
   }
 
+  /**
+   * Adds a parameter to be used for password evaluations.
+   * 
+   * @param key
+   * @param parameter
+   * @return parameter added or not
+   */
   public static boolean addParameter(String key, Parameter parameter) {
     if (!parameters.containsKey(key)) {
       parameters.put(key, parameter);
@@ -59,11 +65,22 @@ public class ParameterFactory {
     return false;
   }
 
+  /**
+   * Adds all the parameter to be used for password evaluations.
+   * 
+   * @param newParams
+   */
   public static void addAllParameters(Map<String, Parameter> newParams) {
     // hmm, will override existing values
     parameters.putAll(newParams);
   }
 
+  /**
+   * Removes the parameter.
+   * 
+   * @param key
+   * @return if parameter was removed
+   */
   public static boolean removeParameter(String key) {
     if (parameters.containsKey(key)) {
       parameters.remove(key);

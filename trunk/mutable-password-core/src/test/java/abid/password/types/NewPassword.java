@@ -55,7 +55,7 @@ public class NewPassword extends MutablePassword {
   }
 
   public static MutablePassword createPassword(String text) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, 1);
+    MutableBlock block = new MutableBlock(PASSWORD_TYPE, "1");
     return new NewPassword(text, block);
   }
 

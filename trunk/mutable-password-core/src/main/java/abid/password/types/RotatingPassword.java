@@ -30,9 +30,18 @@ import abid.password.StatefulMutablePassword;
  */
 public class RotatingPassword extends StatefulMutablePassword {
 
+  /** How many characters to rotate. */
   public static final int ROTATING_WIDTH = 1;
+  /** Password type name. */
   public static final String PASSWORD_TYPE = "rotating";
 
+  /**
+   * Takes the String password, which is then separated into the text and
+   * mutable block. The mutable block is split into the password type and
+   * expression.
+   * 
+   * @param password
+   */
   public RotatingPassword(String password) {
     super(password);
   }
@@ -66,11 +75,24 @@ public class RotatingPassword extends StatefulMutablePassword {
     return PASSWORD_TYPE;
   }
 
+  /**
+   * Creates a mutable block based on the input values.
+   * 
+   * @param mutableText
+   * @return mutable block
+   */
   public static MutableBlock createMutableBlock(String mutableText) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, mutableText);
     return block;
   }
 
+  /**
+   * Create the mutable password based on the input values.
+   * 
+   * @param text
+   * @param mutableText
+   * @return mutable password
+   */
   public static StatefulMutablePassword createPassword(String text, String mutableText) {
     MutableBlock block = createMutableBlock(mutableText);
 

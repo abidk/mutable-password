@@ -47,24 +47,23 @@ public class PasswordFactory {
   }
 
   private PasswordFactory() {
-
   }
 
   /**
-   * Takes a password string and returns a suitable mutable password type
-   * object.
+   * Takes a password string and returns a mutable password object.
    * 
    * @param password
-   * @return The password type object
+   * @return password object
+   * @throws SecurityException
+   * @throws NoSuchMethodException
    * @throws IllegalArgumentException
    * @throws InstantiationException
    * @throws IllegalAccessException
    * @throws InvocationTargetException
-   * @throws SecurityException
-   * @throws NoSuchMethodException
    */
-  public static Password getInstance(String password) throws IllegalArgumentException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, SecurityException, NoSuchMethodException {
+  public static Password getInstance(String password) throws SecurityException,
+      NoSuchMethodException, IllegalArgumentException, InstantiationException,
+      IllegalAccessException, InvocationTargetException {
     MutableBlock block = new MutableBlock(password);
 
     Class<?>[] argTypes = { String.class };
@@ -73,7 +72,8 @@ public class PasswordFactory {
     if (block.getType() != null) {
       for (Class<?> cls : mutablePasswords) {
         Constructor<?> ct = cls.getConstructor(argTypes);
-        MutablePassword mutatingPassword = (MutablePassword) ct.newInstance(arglist);
+        MutablePassword mutatingPassword = (MutablePassword) ct
+            .newInstance(arglist);
         if (block.getType().equals(mutatingPassword.getPasswordType())) {
           return mutatingPassword;
         }
@@ -86,8 +86,10 @@ public class PasswordFactory {
    * Allows you to insert other mutable password types.
    * 
    * @param passwordClass
+   * @return password added or not
    */
-  public static boolean addMutablePassword(Class<? extends MutablePassword> passwordClass) {
+  public static boolean addMutablePassword(
+      Class<? extends MutablePassword> passwordClass) {
     if (!mutablePasswords.contains(passwordClass)) {
       return mutablePasswords.add(passwordClass);
     }
@@ -98,15 +100,17 @@ public class PasswordFactory {
    * Allows you to remove mutable password types.
    * 
    * @param passwordClass
+   * @return password removed or not
    */
-  public static boolean removeMutablePassword(Class<? extends MutablePassword> passwordClass) {
+  public static boolean removeMutablePassword(
+      Class<? extends MutablePassword> passwordClass) {
     return mutablePasswords.remove(passwordClass);
   }
 
   /**
-   * Returns a list of all the mutable passwords.
+   * Returns a list of all the mutable passwords types.
    * 
-   * @return list of mutable password classes.
+   * @return mutable password types.
    */
   public static List<Class<? extends MutablePassword>> getMutablePasswordList() {
     return mutablePasswords;

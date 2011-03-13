@@ -24,10 +24,8 @@ import java.util.Map;
  * Time parameters which can be used in the password expressions.
  * 
  * @author Abid
- * 
  */
 public enum TimeParameter {
-
   YEAR("year", Calendar.YEAR), 
   WEEKOFYEAR("weekOfYear", Calendar.WEEK_OF_YEAR), 
   MONTH("month", Calendar.MONTH), 
@@ -35,8 +33,8 @@ public enum TimeParameter {
   HOUR("hour", Calendar.HOUR_OF_DAY), 
   MINUTE("minute", Calendar.MINUTE), 
   DAY_OF_WEEK("dayOfWeek", Calendar.DAY_OF_WEEK), 
-  SECOND( "second", Calendar.SECOND);
-
+  SECOND("second", Calendar.SECOND);
+  
   private String textField;
   private int calendarField;
 
@@ -49,29 +47,46 @@ public enum TimeParameter {
     return textField;
   }
 
+  /**
+   * Returns the calendar value for the specified enum.
+   * 
+   * @return calendar value
+   */
   public int getCalendarValue() {
     Calendar calendar = Calendar.getInstance();
     return calendar.get(calendarField);
   }
 
+  /**
+   * Gets the calendar value based in the calendar constant. 
+   * 
+   * @param type
+   * @return calendar value
+   */
   public static int getCalendarValue(String type) {
     for (TimeParameter timeType : TimeParameter.values()) {
       if (timeType.getTextField().equals(type)) {
         return timeType.getCalendarValue();
       }
     }
-
     return -1;
   }
 
+  /**
+   * Returns parameter values.
+   * 
+   * @return parameter values
+   */
   public static Map<String, Parameter> getParameters() {
     Map<String, Parameter> map = new HashMap<String, Parameter>();
     for (TimeParameter timeType : TimeParameter.values()) {
-      map.put(timeType.getTextField(), new Parameter(timeType.getCalendarValue()));
+      map.put(timeType.getTextField(),
+          new Parameter(timeType.getCalendarValue()));
     }
     return map;
   }
 
+  @Override
   public String toString() {
     return getCalendarValue() + " (" + textField + ")";
   }

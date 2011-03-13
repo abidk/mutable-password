@@ -23,9 +23,13 @@ package abid.password;
  * 
  */
 public class MutableBlock {
+  /** Mutable block start identifier. */
   public static final char MUTABLE_BLOCK_START_TAG = '[';
+  /** Mutable block end identifier. */
   public static final char MUTABLE_BLOCK_END_TAG = ']';
+  /** Expression start identifier. */
   public static final char EXPRESSION_START_TAG = '{';
+  /** Expression end identifier. */
   public static final char EXPRESSION_END_TAG = '}';
 
   // password type
@@ -34,37 +38,34 @@ public class MutableBlock {
   // expression for password
   private String expression;
 
-  public MutableBlock(String type, int value) {
-    this(type, String.valueOf(value));
-  }
-
+  /**
+   * Takes the password type and the expression as separate entities.
+   * 
+   * @param type
+   * @param expression
+   */
   public MutableBlock(String type, String expression) {
     this.type = type;
     this.expression = expression;
   }
 
   /**
-   * Parses the password into static text, type, and expression.
+   * Takes the password and separates it into the password type and expression.
    * 
    * @param password
    */
   public MutableBlock(String password) {
-    // check to see if we have an mutable block
     int startTag = password.indexOf(MUTABLE_BLOCK_START_TAG);
     int endTag = password.lastIndexOf(MUTABLE_BLOCK_END_TAG);
+    // check to see if we have an mutable block
     if (startTag != -1 && endTag != -1) {
       String mutateBlock = password.substring(startTag + 1, endTag);
       int expressionStartTag = mutateBlock.indexOf(EXPRESSION_START_TAG);
       int expressionEndTag = mutateBlock.lastIndexOf(EXPRESSION_END_TAG);
 
       if (expressionStartTag != -1 && expressionEndTag != -1) {
-
-        // get the static password
-        // this.text = password.substring(0, startTag);
-
         // get the type of password e.g. time
         this.type = mutateBlock.substring(0, expressionStartTag);
-
         // get the expression e.g. year
         this.expression = mutateBlock.substring(expressionStartTag + 1, expressionEndTag);
       }
@@ -72,26 +73,29 @@ public class MutableBlock {
   }
 
   /**
+   * Returns the password type from the mutable block.
    * 
-   * @return the password type e.g. shift
+   * @return password type
    */
   public String getType() {
     return type;
   }
 
   /**
+   * Returns the expression from the mutable password block.
    * 
-   * @return the password expression
+   * @return password expression
    */
   public String getExpression() {
     return expression;
   }
 
   /**
-   * Returns the mutable block as String.
+   * Returns the combined password type and expression as the mutable block.
+   * 
+   * @return mutable block e.g. [time{year+1}]
    */
   public String toString() {
-    // [time{year}]
     String mutableBlock = MUTABLE_BLOCK_START_TAG + type + EXPRESSION_START_TAG + expression + EXPRESSION_END_TAG + MUTABLE_BLOCK_END_TAG;
     return mutableBlock;
   }
