@@ -23,29 +23,25 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import abid.password.util.StreamUtils;
+import abid.password.util.StringUtils;
 
 /**
  * This is an example of the types of parameters that can be used to change your
  * passwords.
  * 
  * Please be advised this could stop working at any time and is just an
- * experimental class. Use at your own risk!
- * 
+ * experimental class. Use it at your own risk!
  * 
  * @author Abid
- * 
  */
 public enum StockMarketParameter {
 
-  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"), DOW("dow", "?s=DOW&f=sl1d1t1c1ohgv&e=.csv");
+  /** FTSE 100 market and query URL. */
+  FTSE100("ftse100", "?s=%5EFTSE&f=sl1d1t1c1ohgv&e=.csv"),
+  /** DOW market and query URL. */
+  DOW("dow", "?s=DOW&f=sl1d1t1c1ohgv&e=.csv");
 
-  private static final Logger log = LoggerFactory.getLogger(StockMarketParameter.class);
-
-  // hmm, use Yahoo to get stock data
+  /** URL to Yahoo's finance API. */
   public static final String YAHOO_FINANCE_URL = "http://download.finance.yahoo.com/d/quotes.csv";
 
   private String market;
@@ -60,17 +56,20 @@ public enum StockMarketParameter {
     return market;
   }
 
+  /**
+   * A request is carried out to the Yahoo service and returns the index value.
+   * We may get an error either from requesting or parsing the response, so
+   * we're throwing the exception.
+   * 
+   * @return index value
+   * @throws IOException
+   */
   public Number getIndexValue() throws IOException {
     URL dataUrl = new URL(YAHOO_FINANCE_URL + query);
     URLConnection connection = dataUrl.openConnection();
     InputStream inputStream = connection.getInputStream();
-
-    String csvData = StreamUtils.convertStreamToString(inputStream);
-    try {
-      inputStream.close();
-    } catch (IOException e) {
-      log.warn("Could not close stream.", e);
-    }
+    String csvData = StringUtils.convertStreamToString(inputStream);
+    inputStream.close();
     String[] splitData = csvData.split(",");
 
     // hmm do i want to make it a float, maybe it's best to convert it into an
@@ -79,6 +78,12 @@ public enum StockMarketParameter {
     return value;
   }
 
+  /**
+   * Loops through the enum values and creates a map of all the parameters.
+   * 
+   * @return market parameters
+   * @throws IOException
+   */
   public static Map<String, Parameter> getParameters() throws IOException {
     Map<String, Parameter> map = new HashMap<String, Parameter>();
     for (StockMarketParameter stock : StockMarketParameter.values()) {

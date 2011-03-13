@@ -16,18 +16,40 @@
 
 package abid.password;
 
+/**
+ * Generic wrapper to capture any exceptions thrown whilst executing the mutable
+ * password.
+ * 
+ * @author Abid
+ */
 public class PasswordException extends Exception {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Input any useful message with the exception.
+   * 
+   * @param message
+   */
   public PasswordException(String message) {
     super(message);
   }
 
+  /**
+   * Wrap any exception.
+   * 
+   * @param cause
+   */
   public PasswordException(Throwable cause) {
     super(cause);
   }
 
+  /**
+   * Wrap message and exceptions.
+   * 
+   * @param message
+   * @param cause
+   */
   public PasswordException(String message, Throwable cause) {
     super(message, cause);
   }

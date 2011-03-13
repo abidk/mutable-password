@@ -17,7 +17,8 @@
 package abid.password;
 
 /**
- * Basic password
+ * This the most simplistic password object and allows you to confirm a
+ * password.
  * 
  * @author Abid
  * 
@@ -26,13 +27,30 @@ public abstract class Password {
 
   private String password;
 
+  /**
+   * Allows you to confirm a password.
+   * 
+   * @param confirmPassword
+   * @return if the password matches the confirm password parameter
+   * @throws PasswordException
+   */
   public abstract boolean confirmPassword(String confirmPassword) throws PasswordException;
 
+  /**
+   * Stores the password and provides the ability to confirm a password.
+   * 
+   * @param password
+   */
   public Password(String password) {
     // set this as the original password
     this.password = password;
   }
 
+  /**
+   * Returns the password.
+   * 
+   * @return password
+   */
   public String getPassword() {
     return password;
   }

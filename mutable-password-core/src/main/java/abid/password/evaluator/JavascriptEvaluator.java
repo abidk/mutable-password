@@ -30,18 +30,23 @@ import abid.password.parameters.Parameter;
  * This uses Java version 6 JavaScript features, to make this compatible with
  * Java version 5, remove this class and use beanshell instead.
  * 
+ * @author Abid
  */
 public class JavascriptEvaluator implements Evaluator {
 
   private ScriptEngine engine;
 
+  /**
+   * Initiates the built-in Javascript engine.
+   */
   public JavascriptEvaluator() {
     ScriptEngineManager manager = new ScriptEngineManager();
     engine = manager.getEngineByName("js");
   }
 
   @Override
-  public String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException {
+  public String evaluateExpression(String expression, Map<String, Parameter> map)
+      throws ParseException {
     try {
       for (Map.Entry<String, Parameter> e : map.entrySet()) {
         String key = e.getKey();
@@ -58,9 +63,12 @@ public class JavascriptEvaluator implements Evaluator {
     }
   }
 
-  /*
+  /**
    * This fixes the problem where you add two integers and you get a float which
-   * ends with '.0'
+   * ends with '.0'.
+   * 
+   * @param evaluation
+   * @return replaced evaluation string
    */
   private String fixDecimalOutput(String evaluation) {
     return evaluation.replace(".0", "");

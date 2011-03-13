@@ -17,20 +17,41 @@ package abid.password.parameters;
 
 import java.io.Serializable;
 
+/**
+ * Wrapper to hold Object, this can then be used in a specific way by the
+ * evaluator.
+ * 
+ * @author Abid
+ */
 public class Parameter implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   private Object value;
 
+  /**
+   * Object to be wrapped.
+   * 
+   * @param value
+   */
   public Parameter(Object value) {
     this.value = value;
   }
 
+  /**
+   * Get the parameter object.
+   * 
+   * @return parameter
+   */
   public Object getValue() {
     return value;
   }
 
+  /**
+   * Set the new parameter object.
+   * 
+   * @param value
+   */
   public void setValue(Object value) {
     this.value = value;
   }

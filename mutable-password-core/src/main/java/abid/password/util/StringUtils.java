@@ -15,11 +15,27 @@
  */
 package abid.password.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+/**
+ * Additional String manipulation methods.
+ * 
+ * @author Abid
+ */
 public class StringUtils {
 
   private StringUtils() {
   }
 
+  /**
+   * Checks the string input to see if it contains numbers only.
+   * 
+   * @param str
+   * @return true if it input contains numerals only
+   */
   public static boolean containsOnlyNumbers(String str) {
     if (str == null || str.trim().length() == 0) {
       return false;
@@ -30,5 +46,23 @@ public class StringUtils {
       }
     }
     return true;
+  }
+
+  /**
+   * Takes an InputStream and converts into into a String value.
+   * 
+   * @param is
+   * @return string value of stream
+   * @throws IOException
+   */
+  public static String convertStreamToString(InputStream is) throws IOException {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    StringBuilder sb = new StringBuilder();
+
+    String line;
+    while ((line = reader.readLine()) != null) {
+      sb.append(line);
+    }
+    return sb.toString();
   }
 }

@@ -16,10 +16,21 @@
 
 package abid.password.evaluator;
 
+/**
+ * Wrapper for any generic evaluation exceptions that are thrown by the
+ * evaluator.
+ * 
+ * @author Abid
+ */
 public class ParseException extends Exception {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Wraps the generic exception.
+   * 
+   * @param e
+   */
   public ParseException(Exception e) {
     super(e);
   }

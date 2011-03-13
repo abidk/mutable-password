@@ -29,15 +29,22 @@ import abid.password.parameters.TimeParameter;
 import abid.password.util.StringUtils;
 
 /**
- * Replaces the number value with roman numerals
+ * Replaces the number value with Roman numerals.
  * 
  * @author Abid
- * 
  */
 public class RomanNumeralPassword extends MutablePassword {
 
+  /** Password type name. */
   public static final String PASSWORD_TYPE = "romanNumeral";
 
+  /**
+   * Takes the String password, which is then separated into the text and
+   * mutable block. The mutable block is split into the password type and
+   * expression.
+   * 
+   * @param password
+   */
   public RomanNumeralPassword(String password) {
     super(password);
   }
@@ -120,12 +127,26 @@ public class RomanNumeralPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
+  /**
+   * Create the mutable password based on the input values.
+   * 
+   * @param text
+   * @param timeValue
+   * @return mutable password
+   */
   public static MutablePassword createPassword(String text, TimeParameter timeValue) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
     String mutablePassword = text + block;
     return new RomanNumeralPassword(mutablePassword);
   }
 
+  /**
+   * Create the mutable password based on the input values.
+   * 
+   * @param text
+   * @param value
+   * @return mutable password
+   */
   public static MutablePassword createPassword(String text, int value) {
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, String.valueOf(value));
     String mutablePassword = text + block;
