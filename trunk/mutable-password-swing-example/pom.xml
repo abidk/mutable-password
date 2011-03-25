@@ -31,6 +31,8 @@
 					</execution>
 				</executions>
 				<configuration>
+				    <!-- If your going to use a keystore then you'll need to use the full location -->
+				    <!-- e.g. <keystore>src/main/keystore</keystore> -->
 					<pack200>true</pack200>
 					<gzip>true</gzip>
 					<verbose>true</verbose>
