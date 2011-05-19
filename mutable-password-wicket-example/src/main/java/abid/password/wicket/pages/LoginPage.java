@@ -18,6 +18,8 @@ package abid.password.wicket.pages;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -26,6 +28,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +49,8 @@ public class LoginPage extends BasePage {
   private UserService userService;
 
   public LoginPage() {
+    LoginForm loginForm = new LoginForm("loginForm");
+
     LoadableDetachableModel<List<User>> usersModel = new LoadableDetachableModel<List<User>>() {
 
       private static final long serialVersionUID = 1L;
@@ -82,10 +87,13 @@ public class LoginPage extends BasePage {
       }
     };
 
-    LoginForm loginForm = new LoginForm("loginForm");
+    final WebMarkupContainer dataContainer = new WebMarkupContainer("dataContainer");
+    dataContainer.setOutputMarkupId(true);
+    dataContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(4)));
+    dataContainer.add(dataList);
 
-    add(dataList);
     add(loginForm);
+    add(dataContainer);
   }
 
   public class LoginForm extends Form<Void> {

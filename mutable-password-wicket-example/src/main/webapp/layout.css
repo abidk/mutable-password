@@ -170,6 +170,131 @@ body {
 	font-size: 12px;
 }
 
+/* TABS */
+ul.tabs,div.tabpanel div.tab-row ul {
+	list-style-type: none;
+	margin: -30px 0 0 0;
+	padding: 0 0 0 80px;
+	height: 29px;
+	position: relative;
+	z-index: 3;
+}
+
+ul.tabs li,div.tabpanel div.tab-row ul li {
+	float: left;
+	display: block;
+	padding: 0;
+	margin: 0 3px 0 0;
+	border: 1px solid #727274;
+	border-bottom: 1px solid #688dcb;
+}
+
+ul.tabs li a,div.tabpanel div.tab-row ul li a {
+	display: block;
+	padding: 0 10px;
+	font: 1.1em/28px "Museo Sans 500", sans-serif;
+	background: #688dcb;
+	color: #fff;
+}
+
+ul.tabs li a:hover,div.tabpanel div.tab-row ul li a:hover {
+	background: #727274;
+}
+
+ul.tabs li.active,div.tabpanel div.tab-row ul li.selected {
+	border: 1px solid #688dcb;
+	border-bottom: 1px solid #fff;
+	margin-top: -2px;
+}
+
+ul.tabs li.active a,div.tabpanel div.tab-row ul li.selected a {
+	color: #688dcb;
+	background: #fff;
+	padding-bottom: 2px;
+}
+
+ul.tabs li.active a:hover,div.tabpanel div.tab-row ul li.selected a:hover
+	{
+	text-decoration: none;
+	background: #fff;
+}
+
+div.tabpanel div.tab-row ul li.selected {
+	margin-top: -1px;
+}
+
+div.tabpanel div.tab-row ul li.selected a {
+	padding-bottom: 1px;
+}
+
+div.tabpanel div.tab-row ul {
+	margin: 0 0 1em 0;
+	padding: 0 1em;
+	border-bottom: 1px solid #688dcb;
+}
+
+div.tabcontent div.tabpanel div.tab-row ul li a {
+	background-color: #fff3e9;
+	color: #688dcb;
+}
+
+div.tabcontent div.tabpanel div.tab-row ul li.selected a {
+	background-color: #fff;
+}
+
+div.tight div.tab-row ul {
+	margin-bottom: 0 !important;
+}
+
+div.tabcontent {
+	padding: 0.25em 1.2em 0;
+	margin-bottom: 0;
+	background: #fff;
+	min-height: 180px;
+	position: relative;
+}
+
+div.tabcontent div.rule {
+	border-bottom: 1px solid #facba7;
+}
+
+div.tabcontent>*:first-child {
+	margin-top: 0.5em;
+}
+
+div.tabcontent>*:last-child {
+	margin-bottom: 0;
+}
+
+/* MESSAGES */
+div.errorMessages {
+	font-size: 16px;
+	color: #fff;
+	background: #727274;
+	padding: 0.5em 1em;
+}
+
+div.errorMessages ul {
+	padding: 0 0 0 34px;
+	margin: 2px;
+	list-style: none;
+	color: #fff;
+}
+
+div.infoMessages {
+	font-size: 16px;
+	color: #fff;
+	background: #727274;
+	padding: 0.5em 1em;
+}
+
+div.infoMessages ul {
+	padding: 0 0 0 34px;
+	margin: 2px;
+	list-style: none;
+	color: #fff;
+}
+
 /* GENERAL */
 h1 {
 	font-size: 14px;

@@ -17,12 +17,13 @@
 package abid.password.wicket.pages;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
+
+import abid.password.wicket.components.ErrorInfoFeedbackPanel;
 
 public abstract class BasePage extends WebPage {
 
   public BasePage() {
-    FeedbackPanel feedbackPanel = new FeedbackPanel("feedbackPanel");
+    ErrorInfoFeedbackPanel feedbackPanel = new ErrorInfoFeedbackPanel("feedbackPanel");
     add(feedbackPanel);
   }
 }
