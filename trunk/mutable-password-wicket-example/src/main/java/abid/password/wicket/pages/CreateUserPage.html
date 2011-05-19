@@ -22,72 +22,8 @@
       xml:lang="en"  
       lang="en"> 
 <body>
-<wicket:extend>
-  <div id="heading">
-    <h1>Create User</h1>
-  </div>
-    
-
-  <form autocomplete="off" wicket:id="mutablePasswordForm">
-    <fieldset>
-      <legend>All Passwords</legend>
-      <div>Username: <input type="text" wicket:id="userField" /></div>
-      <div>Password Type: <select wicket:id="passwordType"></select></div>
-      <div><span wicket:id="mutablePasswordField"></span></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
-
-
-  <form autocomplete="off" wicket:id="SimplePasswordForm">
-    <fieldset>
-      <legend>Simple Password</legend>
-      <div>Username: <input type="text" wicket:id="userField" /></div>
-      <div wicket:id="simplePasswordField"></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
-
-
-  <form autocomplete="off" wicket:id="extendedPasswordForm">
-    <fieldset>
-      <legend>Extended Password</legend>
-      <div><strong>e.g. Set the extended field to seconds, save the user and check the results in the Login page.</strong></div>
-      <div>Username: <input type="text" wicket:id="userField" /></div>    
-      <div wicket:id="extendedPasswordField"></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
-  
-  
-  <form autocomplete="off" wicket:id="caesarCipherPasswordForm">
-    <fieldset>
-      <legend>Caesar Cipher Password</legend>
-      <div>Username: <input type="text" wicket:id="userField" /></div>
-      <div wicket:id="caesarCipherField"></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
-  
-
-  <form autocomplete="off" wicket:id="timeLockPasswordForm">
-    <fieldset>
-      <legend>Time Lock Password</legend>
-      <div>Username: <input type="text" wicket:id="userField" /></div>
-      <div wicket:id="timeLockPasswordField"></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
-
-  
-  <form autocomplete="off" wicket:id="extendedTimeLockPasswordForm">
-    <fieldset>
-      <legend>Extended Time Lock Password</legend>
-      <div>Username: <input type="text" wicket:id="userField" /></div>
-      <div wicket:id="extendedTimeLockPasswordField"></div>
-      <div><input type="submit" value="Save User"></input></div>
-    </fieldset>
-  </form>
+<wicket:extend>   
+  <div class="tabpanel tight" wicket:id="tabsPanel"></div>	  
 </wicket:extend>
 </body>
 </html>
