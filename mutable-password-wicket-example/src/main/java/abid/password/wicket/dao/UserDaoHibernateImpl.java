@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package abid.password.wicket.dao.hibernate;
+package abid.password.wicket.dao;
 
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
-import abid.password.wicket.dao.UserDao;
 import abid.password.wicket.model.User;
 
 import com.wideplay.warp.persist.TransactionType;
 import com.wideplay.warp.persist.Transactional;
 
-public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
+public class UserDaoHibernateImpl extends AbstractHibernateDao<User> implements UserDao {
 
-  public UserDaoImpl() {
+  public UserDaoHibernateImpl() {
     super(User.class);
   }
 

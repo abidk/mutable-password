@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.wicket.service.impl;
+package abid.password.wicket.service;
 
 import java.util.List;
 
@@ -25,8 +25,6 @@ import abid.password.PasswordException;
 import abid.password.types.PasswordFactory;
 import abid.password.wicket.dao.UserDao;
 import abid.password.wicket.model.User;
-import abid.password.wicket.service.UserException;
-import abid.password.wicket.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
@@ -41,9 +39,6 @@ public class UserServiceImpl implements UserService {
     this.userDao = userDao;
   }
 
-  /**
-   * Err clean this mess.
-   */
   public User authenticate(String username, String password) throws UserException {
     User user = userDao.getUser(username);
     if (user == null) {

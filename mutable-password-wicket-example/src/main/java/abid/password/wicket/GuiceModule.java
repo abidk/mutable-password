@@ -19,9 +19,9 @@ package abid.password.wicket;
 import org.hibernate.cfg.Configuration;
 
 import abid.password.wicket.dao.UserDao;
-import abid.password.wicket.dao.hibernate.UserDaoImpl;
+import abid.password.wicket.dao.UserDaoHibernateImpl;
 import abid.password.wicket.service.UserService;
-import abid.password.wicket.service.impl.UserServiceImpl;
+import abid.password.wicket.service.UserServiceImpl;
 
 import com.google.inject.AbstractModule;
 import com.wideplay.warp.persist.PersistenceService;
@@ -38,7 +38,7 @@ public class GuiceModule extends AbstractModule {
     
     bind(Configuration.class).toInstance(configuration);
     bind(UserService.class).to(UserServiceImpl.class);
-    bind(UserDao.class).to(UserDaoImpl.class);
+    bind(UserDao.class).to(UserDaoHibernateImpl.class);
   }
 
 }

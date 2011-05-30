@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.wicket.dao.hibernate;
+package abid.password.wicket.dao;
 
 import java.io.Serializable;
 import java.util.List;
