@@ -24,7 +24,9 @@ import javax.swing.JFrame;
 
 import abid.password.parameters.TimeParameter;
 import abid.password.swing.model.User;
+import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
+import abid.password.types.RomanNumeralPassword;
 
 import com.jeta.forms.gui.common.FormException;
 
@@ -44,7 +46,7 @@ public class Application {
   public void init() throws FormException {
     // add some example data
     createExampleUsers();
-    
+
     // init gui
     controller = new FormController(this);
     form = new FormUI(this);
@@ -54,17 +56,30 @@ public class Application {
 
   private void createExampleUsers() {
     users.clear();
+    User user3 = new User();
+    user3.setUsername("Example1");
+    String password3 = RomanNumeralPassword.createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
+    user3.setPassword(password3);
+    users.add(user3);
+
+    User user4 = new User();
+    user4.setUsername("Example2");
+    String password4 = CaesarCipherPassword.createPassword("caesar", TimeParameter.MINUTE).getPassword();
+    user4.setPassword(password4);
+    users.add(user4);
+
     User user1 = new User();
-    user1.setUsername("Example1");
+    user1.setUsername("Example3");
     String password1 = ExtendedPassword.createPassword("second", TimeParameter.SECOND).getPassword();
     user1.setPassword(password1);
     users.add(user1);
 
     User user2 = new User();
-    user2.setUsername("Example2");
+    user2.setUsername("Example4");
     String password2 = ExtendedPassword.createPassword("minute", TimeParameter.MINUTE).getPassword();
     user2.setPassword(password2);
     users.add(user2);
+
   }
 
   public FormUI getForm() {
