@@ -6,7 +6,6 @@
 		<artifactId>mutable-password-parent</artifactId>
 		<version>1.8-SNAPSHOT</version>
 	</parent>
-	<groupId>abid.password</groupId>
 	<artifactId>mutable-password-core</artifactId>
 
 	<properties>

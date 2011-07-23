@@ -5,7 +5,6 @@
 		<groupId>abid.password</groupId>
 		<version>1.8-SNAPSHOT</version>
 	</parent>
-	<groupId>abid.password</groupId>
 	<artifactId>mutable-password-swing-example</artifactId>
 
 	<build>
