@@ -19,6 +19,8 @@ package abid.password.swing.form;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
@@ -60,11 +62,10 @@ public class LoginForm extends AbstractForm {
         } else {
           setError("Failed to login.");
         }
-        getApplication().getController().refreshLoginUI();
       } else if (e.getSource() == createUserButton) {
         getApplication().getController().loadCreateUserUI();
       } else if (e.getSource() == refreshButton) {
-        getApplication().getController().refreshLoginUI();
+        userList.repaint();
       }
     }
   };
@@ -87,6 +88,16 @@ public class LoginForm extends AbstractForm {
     userList.setCellRenderer(new UserListRenderer(getApplication()));
     refreshButton = form.getButton("form.refreshButton");
     refreshButton.addActionListener(actionListener);
+
+    TimerTask task = new TimerTask() {
+      @Override
+      public void run() {
+        userList.repaint();
+      }
+    };
+
+    Timer timer = new Timer();
+    timer.schedule(task, 1000, 1000);
   }
 
   public boolean validateComponents() {

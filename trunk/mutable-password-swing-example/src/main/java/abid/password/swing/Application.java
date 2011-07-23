@@ -22,7 +22,9 @@ import java.util.Set;
 
 import javax.swing.JFrame;
 
+import abid.password.parameters.TimeParameter;
 import abid.password.swing.model.User;
+import abid.password.types.ExtendedPassword;
 
 import com.jeta.forms.gui.common.FormException;
 
@@ -40,10 +42,29 @@ public class Application {
   }
 
   public void init() throws FormException {
+    // add some example data
+    createExampleUsers();
+    
+    // init gui
     controller = new FormController(this);
     form = new FormUI(this);
     form.init();
     form.loadLoginForm();
+  }
+
+  private void createExampleUsers() {
+    users.clear();
+    User user1 = new User();
+    user1.setUsername("Example1");
+    String password1 = ExtendedPassword.createPassword("second", TimeParameter.SECOND).getPassword();
+    user1.setPassword(password1);
+    users.add(user1);
+
+    User user2 = new User();
+    user2.setUsername("Example2");
+    String password2 = ExtendedPassword.createPassword("minute", TimeParameter.MINUTE).getPassword();
+    user2.setPassword(password2);
+    users.add(user2);
   }
 
   public FormUI getForm() {
@@ -66,8 +87,8 @@ public class Application {
     }
     return null;
   }
-  
-  public void addUser( User user ) {
+
+  public void addUser(User user) {
     users.remove(user);
     users.add(user);
   }
