@@ -16,6 +16,7 @@
 
 package abid.password.wicket;
 
+import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.cfg.Configuration;
 
 import abid.password.wicket.dao.UserDao;
@@ -35,10 +36,11 @@ public class GuiceModule extends AbstractModule {
 
     Configuration configuration = new Configuration();
     configuration.configure();
-    
+
     bind(Configuration.class).toInstance(configuration);
     bind(UserService.class).to(UserServiceImpl.class);
     bind(UserDao.class).to(UserDaoHibernateImpl.class);
+    bind(WebApplication.class).to(WicketApplication.class);
   }
 
 }

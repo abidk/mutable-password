@@ -33,6 +33,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+<!-- 
 	<filter>
 		<filter-name>mutable.password.app</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
@@ -41,7 +42,24 @@
 			<param-value>abid.password.wicket.WicketApplication</param-value>
 		</init-param>
 	</filter>
+ -->
+ 
 
+
+  <filter>
+    <filter-name>mutable.password.app</filter-name>
+    <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+    <init-param>
+      <param-name>applicationFactoryClassName</param-name>
+      <param-value>org.apache.wicket.guice.GuiceWebApplicationFactory</param-value>
+    </init-param>
+    <init-param>
+      <param-name>module</param-name>
+      <param-value>abid.password.wicket.GuiceModule</param-value>
+    </init-param>
+  </filter>
+
+ 
 	<filter-mapping>
 		<filter-name>mutable.password.app</filter-name>
 		<url-pattern>/*</url-pattern>

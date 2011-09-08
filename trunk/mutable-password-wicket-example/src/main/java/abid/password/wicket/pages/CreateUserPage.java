@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
@@ -30,6 +29,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import abid.password.wicket.fields.CaesarCipherPasswordField;
 import abid.password.wicket.fields.ExtendedPasswordField;
@@ -43,6 +43,8 @@ import com.google.inject.Inject;
 
 public class CreateUserPage extends BasePage {
 
+  private static final long serialVersionUID = 1L;
+
   @Inject
   private UserService userService;
 
@@ -50,8 +52,8 @@ public class CreateUserPage extends BasePage {
   private String currentSelection = "Simple";
 
   public CreateUserPage(PageParameters pageParameter) {
-    if (pageParameter.getString(CURRENT_SELECTION) != null) {
-      currentSelection = pageParameter.getString(CURRENT_SELECTION);
+    if (pageParameter.get(CURRENT_SELECTION) != null) {
+      currentSelection = pageParameter.get(CURRENT_SELECTION).toString();
     }
 
     List<ITab> tabs = new ArrayList<ITab>();

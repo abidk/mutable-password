@@ -43,6 +43,7 @@ import com.google.inject.Inject;
 
 public class LoginPage extends BasePage {
 
+  private static final long serialVersionUID = 1L;
   private static final Logger log = LoggerFactory.getLogger(LoginPage.class);
 
   @Inject
@@ -79,7 +80,7 @@ public class LoginPage extends BasePage {
             passLabel = new Label("passLabel", evalatedPassword);
           }
         } catch (Exception e) {
-          e.printStackTrace();
+          log.error("Could not create the mutable password", e);
         }
 
         item.add(userLabel);
@@ -87,13 +88,17 @@ public class LoginPage extends BasePage {
       }
     };
 
+    int refreshTime = 3;
     final WebMarkupContainer dataContainer = new WebMarkupContainer("dataContainer");
     dataContainer.setOutputMarkupId(true);
-    dataContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(4)));
+    dataContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(refreshTime)));
     dataContainer.add(dataList);
+
+    Label refereshTimeLabel = new Label("refreshTime", String.valueOf(refreshTime));
 
     add(loginForm);
     add(dataContainer);
+    add(refereshTimeLabel);
   }
 
   public class LoginForm extends Form<Void> {
@@ -122,7 +127,7 @@ public class LoginPage extends BasePage {
         User user = userService.authenticate(username, password);
         info("Logged in as user: " + user.getUsername());
       } catch (UserException e) {
-        log.error("Error occurred whilst authenicating user", e);
+        log.error("Error occurred whilst authenticating the user", e);
         error(e.getMessage());
       }
     }
