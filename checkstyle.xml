@@ -33,6 +33,8 @@
 	</module>
 
 	<module name="TreeWalker">
+	    <property name="cacheFile" value="target/cachefile"/>
+	    
 		<!-- Checks for Javadoc comments. -->
 		<module name="JavadocMethod">
 			<property name="logLoadErrors" value="true" />
@@ -111,6 +113,8 @@
 
 
 		<!-- Checks for common coding problems -->
+        <module name="UnnecessaryParentheses"/>
+        <module name="MultipleVariableDeclarations"/>
 		<module name="AvoidInlineConditionals">
 			<property name="severity" value="ignore" />
 		</module>
@@ -151,8 +155,10 @@
 		<module name="FinalParameters">
 			<property name="severity" value="ignore" />
 		</module>
-		<module name="TodoComment" />
-		<module name="UpperEll" />
+        <module name="TodoComment">
+            <property name="format" value="WARNING"/>
+        </module>
+        <module name="UpperEll" />
 	</module>
 
 </module>
