@@ -50,7 +50,7 @@ public class RotatingPassword extends StatefulMutablePassword {
   public String getEvaluatedPassword() {
     String expression = getExpression();
     int normalisedState = normaliseState(expression.length(), getState());
-    String subString = expression.substring(normalisedState, (normalisedState + ROTATING_WIDTH));
+    String subString = expression.substring(normalisedState, normalisedState + ROTATING_WIDTH);
     String evaluatedPassword = getText() + subString;
     return evaluatedPassword;
   }

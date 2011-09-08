@@ -52,7 +52,7 @@
     <thead>
       <tr>
         <th>Username</th>
-        <th>Password (Refresh to update)</th>
+        <th>Password *</th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +62,9 @@
       </tr>
     </tbody>
   </table>
-  
+  <div>
+  * Password refreshes every <span wicket:id="refreshTime"></span> seconds using AJAX. If Javascript is turned off then you will need to manually refresh the page.
+  </div>
 </wicket:extend>
 </body>
 </html>

@@ -22,6 +22,8 @@ import abid.password.wicket.components.ErrorInfoFeedbackPanel;
 
 public abstract class BasePage extends WebPage {
 
+  private static final long serialVersionUID = 1L;
+
   public BasePage() {
     ErrorInfoFeedbackPanel feedbackPanel = new ErrorInfoFeedbackPanel("feedbackPanel");
     add(feedbackPanel);
