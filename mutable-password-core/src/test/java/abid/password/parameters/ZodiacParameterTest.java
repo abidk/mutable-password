@@ -23,18 +23,18 @@ import abid.password.parameters.ZodiacParameter.Zodiac;
 
 public class ZodiacParameterTest extends TestCase {
 
-  public static int JAN = 0;
-  public static int FEB = 1;
-  public static int MAR = 2;
-  public static int APR = 3;
-  public static int MAY = 4;
-  public static int JUN = 5;
-  public static int JUL = 6;
-  public static int AUG = 7;
-  public static int SEP = 8;
-  public static int OCT = 9;
-  public static int NOV = 10;
-  public static int DEC = 11;
+  public static final int JAN = 0;
+  public static final int FEB = 1;
+  public static final int MAR = 2;
+  public static final int APR = 3;
+  public static final int MAY = 4;
+  public static final int JUN = 5;
+  public static final int JUL = 6;
+  public static final int AUG = 7;
+  public static final int SEP = 8;
+  public static final int OCT = 9;
+  public static final int NOV = 10;
+  public static final int DEC = 11;
 
   public void testCapricorn() {
     assertEquals("Capricorn", Zodiac.CAPRICORN.getSign());
@@ -217,7 +217,7 @@ public class ZodiacParameterTest extends TestCase {
   }
   
   public void testNullValue() {
-    assertEquals(null, ZodiacParameter.getZodiac(null));
+    assertNull(ZodiacParameter.getZodiac(null));
   }
   
   public void testToStringIsNotNull( ) {

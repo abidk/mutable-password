@@ -92,18 +92,18 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(false, added);
 
     List<Class<? extends MutablePassword>> list = PasswordFactory.getMutablePasswordList();
-    assertEquals(true, list.contains(ExtendedPassword.class));
+    assertTrue(list.contains(ExtendedPassword.class));
 
     boolean removed = PasswordFactory.removeMutablePassword(ExtendedPassword.class);
-    assertEquals(true, removed);
+    assertTrue(removed);
 
     list = PasswordFactory.getMutablePasswordList();
-    assertEquals(false, list.contains(ExtendedPassword.class));
+    assertFalse(list.contains(ExtendedPassword.class));
 
     boolean addedAgain = PasswordFactory.addMutablePassword(ExtendedPassword.class);
-    assertEquals(true, addedAgain);
+    assertTrue(addedAgain);
 
     list = PasswordFactory.getMutablePasswordList();
-    assertEquals(true, list.contains(ExtendedPassword.class));
+    assertTrue(list.contains(ExtendedPassword.class));
   }
 }
