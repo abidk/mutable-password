@@ -42,25 +42,22 @@ public class JavascriptEvaluatorTest extends TestCase {
     assertNull(result);
   }
   
-  public void testNonEscapedExpression()  {
+  public void testNonEscapedExpressionThrowsException()  {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
     try {
+      // this should fail to parse
       evaluator.evaluateExpression("a", parameters);
     } catch (ParseException e) {
       return;
     }
-    assert false;
+    fail("Should not reach here");
   }
   
-  public void testEscapedExpression()  {
+  public void testEscapedExpression() throws ParseException  {
     JavascriptEvaluator evaluator = new JavascriptEvaluator();
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    try {
-      evaluator.evaluateExpression("'a'", parameters);
-    } catch (ParseException e) {
-      assert false;
-    }
+    evaluator.evaluateExpression("'a'", parameters);
   }
 
 }

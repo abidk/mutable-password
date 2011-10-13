@@ -30,14 +30,14 @@ public class TimeLockPasswordTest extends TestCase {
   public void testTimeLockPassword() throws PasswordException {
     String confirmPassword = "abid";
     MutablePassword mutatingPassword = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
-    assertEquals(true, mutatingPassword.confirmPassword(confirmPassword));
+    assertTrue(mutatingPassword.confirmPassword(confirmPassword));
 
     MutablePassword mutatingPassword2 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, -2, -1);
-    assertEquals(false, mutatingPassword2.confirmPassword(confirmPassword));
+    assertFalse(mutatingPassword2.confirmPassword(confirmPassword));
 
     String wrongPassword = "diba";
     MutablePassword mutatingPassword3 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
-    assertEquals(false, mutatingPassword3.confirmPassword(wrongPassword));
+    assertFalse(mutatingPassword3.confirmPassword(wrongPassword));
   }
 
   public void testEvaluatedPassword() throws ParseException, PasswordException {
@@ -45,7 +45,7 @@ public class TimeLockPasswordTest extends TestCase {
     MutablePassword password = TimeLockPassword.createPassword(passwordText, TimeParameter.HOUR, 0, 24);
 
     // test the evaluated password
-    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
+    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
   }
   
   public void testDayOfWeekPassword() throws PasswordException {
@@ -59,8 +59,8 @@ public class TimeLockPasswordTest extends TestCase {
     String confirmPassword = "a";
     String wrongPassword = "wrongDayOfWeek";
     MutablePassword mutatingPassword = TimeLockPassword.createPassword(confirmPassword, TimeParameter.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.SATURDAY);
-    assertEquals(true, mutatingPassword.confirmPassword(confirmPassword));
-    assertEquals(false, mutatingPassword.confirmPassword(wrongPassword));
+    assertTrue(mutatingPassword.confirmPassword(confirmPassword));
+    assertFalse(mutatingPassword.confirmPassword(wrongPassword));
   }
 
   public void testPasswordException() {
@@ -74,6 +74,6 @@ public class TimeLockPasswordTest extends TestCase {
     } catch (PasswordException e) {
       return;
     }
-    fail("Should not read this!");
+    fail("Should not reach this!");
   }
 }

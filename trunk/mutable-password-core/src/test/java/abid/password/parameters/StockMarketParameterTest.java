@@ -61,7 +61,7 @@ public class StockMarketParameterTest extends TestCase {
   }
   
   public void testToString( ) {
-    assertEquals( "ftse100", StockMarketParameter.FTSE100.toString());
-    assertEquals( "dow", StockMarketParameter.DOW.toString());
+    assertEquals("ftse100", StockMarketParameter.FTSE100.toString());
+    assertEquals("dow", StockMarketParameter.DOW.toString());
   }
 }

@@ -49,10 +49,10 @@ public class ExtendedPasswordTest extends TestCase {
     Password password = ExtendedPassword.createPassword("abid", timeType);
 
     String confirmPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abida" + timeType.getCalendarValue();
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testEvaluatedPassword() throws ParseException, PasswordException {
@@ -61,7 +61,7 @@ public class ExtendedPasswordTest extends TestCase {
     MutablePassword password = ExtendedPassword.createPassword(passwordText, timeType);
 
     // test the evaluated password
-    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
+    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testExtendedPassword2() throws PasswordException {
@@ -69,10 +69,10 @@ public class ExtendedPasswordTest extends TestCase {
     Password password = ExtendedPassword.createPassword("abid", "year+year");
 
     String confirmPassword = "abid" + (timeType.getCalendarValue() + timeType.getCalendarValue());
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testAlgebraExtendedPassword() throws ParseException {
@@ -100,13 +100,13 @@ public class ExtendedPasswordTest extends TestCase {
 
   public void testPasswordWithZodiacParameter() throws PasswordException, ParseException {
     MutablePassword password = ExtendedPassword.createPassword("abid", ZodiacParameter.ZODIAC.getParameter());
-    System.out.println("Password: " + password.getPassword());
-    System.out.println("Evaluated: " + password.getEvaluatedPassword());
+    //System.out.println("Password: " + password.getPassword());
+    //System.out.println("Evaluated: " + password.getEvaluatedPassword());
 
     Zodiac todayZodiac = ZodiacParameter.getTodaysZodiac();
     String confirmPassword = "abid" + todayZodiac.getSign();
-    System.out.println("Confirm: " + confirmPassword);
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    //System.out.println("Confirm: " + confirmPassword);
+    assertTrue(password.confirmPassword(confirmPassword));
   }
 
   public void testExtendedPassword3() throws PasswordException {
@@ -114,10 +114,10 @@ public class ExtendedPasswordTest extends TestCase {
     Password password = ExtendedPassword.createPassword("abid", "year+1.5");
 
     String confirmPassword = "abid" + (timeType.getCalendarValue() + 1.5);
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   /*
@@ -151,7 +151,7 @@ public class ExtendedPasswordTest extends TestCase {
     ExtendedPassword extendedPassword = new ExtendedPassword("abid", mutableBlock);
 
     String confirmPassword = "abid" + TimeParameter.HOUR.getCalendarValue();
-    assertEquals(true, extendedPassword.confirmPassword(confirmPassword));
+    assertTrue(extendedPassword.confirmPassword(confirmPassword));
   }
 
   public void testNonAlphbecticalWrongPassword() throws PasswordException {
@@ -159,7 +159,7 @@ public class ExtendedPasswordTest extends TestCase {
     Password password = ExtendedPassword.createPassword("ab^id", timeType);
 
     String confirmPassword = "abid" + timeType.getCalendarValue();
-    assertEquals(false, password.confirmPassword(confirmPassword));
+    assertFalse(password.confirmPassword(confirmPassword));
   }
 
   public void testNonAlphbecticalCorrectPassword() throws PasswordException {
@@ -167,7 +167,7 @@ public class ExtendedPasswordTest extends TestCase {
     Password password = ExtendedPassword.createPassword("ab^id", timeType);
 
     String confirmPassword = "ab^id" + timeType.getCalendarValue();
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
   }
 
   public void testPasswordException() {
@@ -180,7 +180,7 @@ public class ExtendedPasswordTest extends TestCase {
       isAuthenticated = password.confirmPassword(confirmPassword);
     } catch (PasswordException e) {
     }
-    assertEquals(false, isAuthenticated);
+    assertFalse(isAuthenticated);
   }
 
   public void testPasswordString() throws ParseException {
@@ -192,7 +192,7 @@ public class ExtendedPasswordTest extends TestCase {
     assertNotNull(mutablePassword.getEvaluatedPassword());
   }
 
-  public void testBrokenPasswordString() {
+  public void testBrokenPasswordStringThrowsException() {
     Password password = ExtendedPassword.createPassword("abid", "year(year");
     assertNotNull(password.getPassword());
 
@@ -205,6 +205,6 @@ public class ExtendedPasswordTest extends TestCase {
       // e.printStackTrace();
       return;
     }
-    assert false;
+    fail("Should not reach here");
   }
 }

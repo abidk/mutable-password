@@ -42,10 +42,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "bcje";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abid";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testEvaluatedPassword() throws ParseException, PasswordException {
@@ -54,7 +54,7 @@ public class CaesarCipherPasswordTest extends TestCase {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword(passwordText, timeType);
 
     // test the evaluated password
-    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
+    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testLowerCasePassword() throws PasswordException {
@@ -62,10 +62,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(2);
 
     String confirmPassword = "b";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "a";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCasePassword2() throws PasswordException {
@@ -73,10 +73,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "azyxwvutsrqponmlkjihgfedcb";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "zyxwvutsrqponmlkjihgfedcba";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseOneCharPass() throws PasswordException {
@@ -84,10 +84,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "g";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "f";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseNumberCombination() throws PasswordException {
@@ -95,10 +95,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "6bcdefghijklmn6opqrstuvwxyza6";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6abcdefghijklm6nopqrstuvwxyz6";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowerCaseSymbolNumberCombination() throws PasswordException {
@@ -106,10 +106,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "6bcdefghijklmn^opqrstuvwxyza6";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6abcdefghijklm^nopqrstuvwxyz6";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testUpperCasePassword() throws PasswordException {
@@ -117,10 +117,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "BCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testUpperCaseNumberCombination() throws PasswordException {
@@ -128,10 +128,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "6BCDEFGHIJKLM6NOPQRSTUVWXYZA6";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseCombo() throws PasswordException {
@@ -139,10 +139,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "BcDeFgHiJkLmNoPqRsTuVwXyZa";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "AbCdEfGhIjKlMnOpQrStUvWxYz";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowercaseUppercase() throws PasswordException {
@@ -150,10 +150,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowercasePassword() throws PasswordException {
@@ -161,10 +161,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "ba";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "az";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testLowercasePassword2() throws PasswordException {
@@ -172,10 +172,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "6a6";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6z6";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
@@ -183,10 +183,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "^BcDeFgHiJkLm^NoPqRsTuVwXyZa^";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "^AbCdEfGhIjKl^MnOpQrStUvWxYz^";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testUppercaseLowercaseNumberSymbolCombo() throws PasswordException {
@@ -194,10 +194,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "6BcDeFgHiJkLm^NoPqRsTuVwXyZa6";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
 
     String wrongPassword = "6AbCdEfGhIjKl^MnOpQrStUvWxYz6";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testShiftNonAlphabeticalCorrectPassword() throws PasswordException {
@@ -205,7 +205,7 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String confirmPassword = "bc^je";
-    assertEquals(true, password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword(confirmPassword));
   }
 
   public void testShiftNonAlphabeticalWrongPassword() throws PasswordException {
@@ -213,7 +213,7 @@ public class CaesarCipherPasswordTest extends TestCase {
     password.setState(1);
 
     String wrongPassword = "ab^id";
-    assertEquals(false, password.confirmPassword(wrongPassword));
+    assertFalse(password.confirmPassword(wrongPassword));
   }
 
   public void testShiftPasswordUsingTime() throws PasswordException {
@@ -224,10 +224,10 @@ public class CaesarCipherPasswordTest extends TestCase {
     String shiftedPassword = shiftPassword.getShiftedPassword(timeType.getCalendarValue());
     // System.out.println("shift by: " + timeType.getCalendarValue() +
     // " shifted value: " + shiftedPassword);
-    assertEquals(true, shiftPassword.confirmPassword(shiftedPassword));
+    assertTrue(shiftPassword.confirmPassword(shiftedPassword));
 
     String wrongPassword = "abid";
-    assertEquals(false, shiftPassword.confirmPassword(wrongPassword));
+    assertFalse(shiftPassword.confirmPassword(wrongPassword));
   }
 
   public void testPasswordException() {
@@ -241,7 +241,7 @@ public class CaesarCipherPasswordTest extends TestCase {
     } catch (PasswordException e) {
       return;
     }
-    fail("Should not read this!");
+    fail("Should not reach here");
   }
 
 }

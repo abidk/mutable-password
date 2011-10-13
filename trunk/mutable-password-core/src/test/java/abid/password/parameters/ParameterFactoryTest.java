@@ -30,22 +30,22 @@ public class ParameterFactoryTest extends TestCase {
 
   public void testAddParameter() {
     boolean added = ParameterFactory.addParameter(key, new Parameter(value));
-    assertEquals(true, added);
+    assertTrue(added);
 
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
     Parameter param = (Parameter) parameters.get(key);
     assertEquals(value, param.getValue());
 
     boolean removed = ParameterFactory.removeParameter(key);
-    assertEquals(true, removed);
+    assertTrue(removed);
   }
 
   public void testAlreadyExistsParameter() {
     boolean added = ParameterFactory.addParameter(key, new Parameter(value));
-    assertEquals(true, added);
+    assertTrue(added);
 
     boolean newAdded = ParameterFactory.addParameter(key, new Parameter(value));
-    assertEquals(false, newAdded);
+    assertFalse(newAdded);
   }
 
   public void testAddAllParameters() {
@@ -61,7 +61,7 @@ public class ParameterFactoryTest extends TestCase {
 
   public void testRemoveNonExistentParameter() {
     boolean removed = ParameterFactory.removeParameter("madeUp");
-    assertEquals(false, removed);
+    assertFalse(removed);
   }
   
   @SuppressWarnings("unused")

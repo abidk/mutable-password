@@ -46,7 +46,7 @@ public class NewPasswordTest extends TestCase {
     String passwordText = "abid";
     MutablePassword password = NewPassword.createPassword(passwordText);
     // test the evaluated password
-    assertEquals(true, password.confirmPassword(password.getEvaluatedPassword()));
+    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
   }
 
   public void testRegisteredNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,

@@ -30,10 +30,10 @@ public class SimplePasswordTest extends TestCase {
     Password dynamicPassword = PasswordFactory.getInstance(password);
 
     String confirmPassword = "abid";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "bcje";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
   public void testSimplePassword2() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
@@ -42,10 +42,10 @@ public class SimplePasswordTest extends TestCase {
     Password dynamicPassword = PasswordFactory.getInstance(password);
 
     String confirmPassword = "abid[";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "bcje";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
   public void testSimplePassword3() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
@@ -53,10 +53,10 @@ public class SimplePasswordTest extends TestCase {
     Password dynamicPassword = PasswordFactory.getInstance("abid[]");
 
     String confirmPassword = "abid[]";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "bcje";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
   public void testSimplePassword4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
@@ -64,10 +64,10 @@ public class SimplePasswordTest extends TestCase {
     Password dynamicPassword = PasswordFactory.getInstance("abid[{]");
 
     String confirmPassword = "abid[{]";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "bcje";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
   public void testSimplePassword5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
@@ -75,9 +75,9 @@ public class SimplePasswordTest extends TestCase {
     Password dynamicPassword = PasswordFactory.getInstance("ab[id}]");
 
     String confirmPassword = "ab[id}]";
-    assertEquals(true, dynamicPassword.confirmPassword(confirmPassword));
+    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
 
     String wrongPassword = "bcje";
-    assertEquals(false, dynamicPassword.confirmPassword(wrongPassword));
+    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 }
