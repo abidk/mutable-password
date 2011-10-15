@@ -40,7 +40,7 @@ public class GuiceModule extends AbstractModule {
     bind(Configuration.class).toInstance(configuration);
     bind(UserService.class).to(UserServiceImpl.class);
     bind(UserDao.class).to(UserDaoHibernateImpl.class);
-    bind(WebApplication.class).to(WicketApplication.class);
+    bind(WebApplication.class).to(MutablePasswordApplication.class);
   }
 
 }

@@ -17,7 +17,10 @@
 package abid.password.wicket.pages;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 
+import abid.password.wicket.MutablePasswordSession;
 import abid.password.wicket.components.ErrorInfoFeedbackPanel;
 
 public abstract class BasePage extends WebPage {
@@ -26,6 +29,17 @@ public abstract class BasePage extends WebPage {
 
   public BasePage() {
     ErrorInfoFeedbackPanel feedbackPanel = new ErrorInfoFeedbackPanel("feedbackPanel");
+
+    Link<String> usersLink = new BookmarkablePageLink<String>("usersLink", UsersPage.class);
+    usersLink.setVisible(MutablePasswordSession.get().isSignedIn());
+    Link<String> createUserLink = new BookmarkablePageLink<String>("createUserLink", CreateUserPage.class);
+    createUserLink.setVisible(MutablePasswordSession.get().isSignedIn());
+    Link<String> logoutLink = new BookmarkablePageLink<String>("logoutLink", LogoutPage.class);
+    logoutLink.setVisible(MutablePasswordSession.get().isSignedIn());
+
     add(feedbackPanel);
+    add(usersLink);
+    add(createUserLink);
+    add(logoutLink);
   }
 }
