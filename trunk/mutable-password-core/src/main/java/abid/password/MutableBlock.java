@@ -67,7 +67,8 @@ public class MutableBlock {
         // get the type of password e.g. time
         this.type = mutateBlock.substring(0, expressionStartTag);
         // get the expression e.g. year
-        this.expression = mutateBlock.substring(expressionStartTag + 1, expressionEndTag);
+        this.expression = mutateBlock.substring(expressionStartTag + 1,
+            expressionEndTag);
       }
     }
   }
@@ -96,7 +97,13 @@ public class MutableBlock {
    * @return mutable block e.g. [time{year+1}]
    */
   public String toString() {
-    String mutableBlock = MUTABLE_BLOCK_START_TAG + type + EXPRESSION_START_TAG + expression + EXPRESSION_END_TAG + MUTABLE_BLOCK_END_TAG;
-    return mutableBlock;
+    StringBuilder mutableBlock = new StringBuilder();
+    mutableBlock.append(MUTABLE_BLOCK_START_TAG);
+    mutableBlock.append(type);
+    mutableBlock.append(EXPRESSION_START_TAG);
+    mutableBlock.append(expression);
+    mutableBlock.append(EXPRESSION_END_TAG);
+    mutableBlock.append(MUTABLE_BLOCK_END_TAG);
+    return mutableBlock.toString();
   }
 }
