@@ -37,7 +37,7 @@ import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.types.PasswordFactory;
 import abid.password.wicket.MutablePasswordSession;
-import abid.password.wicket.components.AjaxLabel;
+import abid.password.wicket.components.AjaxFallbackLabel;
 import abid.password.wicket.model.User;
 import abid.password.wicket.service.UserService;
 
@@ -98,7 +98,7 @@ public class LoginPage extends BasePage {
 
     String refreshInformation = String.format("Password refreshes every %s seconds.", refreshTime);
     String javascriptDisabledMsg = "Javascript is disabled you will need to refresh the page manually.";
-    AjaxLabel refreshLabel = new AjaxLabel("refreshInformation", refreshInformation, javascriptDisabledMsg);
+    AjaxFallbackLabel refreshLabel = new AjaxFallbackLabel("refreshInformation", refreshInformation, javascriptDisabledMsg);
 
     add(loginForm);
     add(dataContainer);
