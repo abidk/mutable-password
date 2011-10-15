@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
@@ -41,6 +43,7 @@ import abid.password.wicket.service.UserService;
 
 import com.google.inject.Inject;
 
+@AuthorizeInstantiation(Roles.ADMIN)
 public class CreateUserPage extends BasePage {
 
   private static final long serialVersionUID = 1L;
@@ -126,7 +129,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 
@@ -178,7 +181,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 
@@ -211,7 +214,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 
@@ -244,7 +247,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 
@@ -277,7 +280,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 
@@ -311,7 +314,7 @@ public class CreateUserPage extends BasePage {
         @Override
         protected void onSubmit() {
           userService.saveUser(username, password);
-          info("Saved user!");
+          setResponsePage(UsersPage.class);
         }
       };
 

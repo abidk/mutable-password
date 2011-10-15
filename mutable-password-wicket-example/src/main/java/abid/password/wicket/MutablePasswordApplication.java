@@ -17,21 +17,24 @@
 package abid.password.wicket;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
 
 import abid.password.parameters.TimeParameter;
-import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
-import abid.password.types.RomanNumeralPassword;
 import abid.password.wicket.pages.CreateUserPage;
 import abid.password.wicket.pages.LoginPage;
+import abid.password.wicket.pages.LogoutPage;
+import abid.password.wicket.pages.UsersPage;
 import abid.password.wicket.service.UserService;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.wideplay.warp.persist.WorkManager;
 
-public class WicketApplication extends WebApplication {
+@Singleton
+public class MutablePasswordApplication extends AuthenticatedWebApplication {
 
   @Inject
   private WorkManager unitOfWork;
@@ -40,33 +43,50 @@ public class WicketApplication extends WebApplication {
 
   @Override
   protected void init() {
+    super.init();
     mountPage("login", LoginPage.class);
+    mountPage("logout", LogoutPage.class);
+    mountPage("users", UsersPage.class);
     mountPage("createUser", CreateUserPage.class);
     createExampleUsers();
   }
 
   public Class<? extends WebPage> getHomePage() {
+    return CreateUserPage.class;
+  }
+
+  protected Class<? extends WebPage> getSignInPageClass() {
     return LoginPage.class;
   }
 
-  public static WicketApplication get() {
-    return (WicketApplication) Application.get();
+  protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
+    return MutablePasswordSession.class;
+  }
+
+  public static MutablePasswordApplication get() {
+    return (MutablePasswordApplication) Application.get();
   }
 
   private void createExampleUsers() {
     unitOfWork.beginWork();
     try {
-      String user = "Example1";
-      String password = RomanNumeralPassword.createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
-      userService.saveUser(user, password);
-      user = "Example2";
-      password = CaesarCipherPassword.createPassword("caesar", TimeParameter.MINUTE).getPassword();
-      userService.saveUser(user, password);
-      user = "Example3";
-      password = ExtendedPassword.createPassword("second", TimeParameter.SECOND).getPassword();
+      //String user = "Example1";
+      //String password = RomanNumeralPassword.createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
+      //userService.saveUser(user, password);
+      //user = "Example2";
+      //password = CaesarCipherPassword.createPassword("caesar", TimeParameter.MINUTE).getPassword();
+      //userService.saveUser(user, password);
+      String user = "Example3";
+      String password = ExtendedPassword.createPassword("second_", TimeParameter.SECOND).getPassword();
       userService.saveUser(user, password);
       user = "Example4";
-      password = ExtendedPassword.createPassword("minute", TimeParameter.MINUTE).getPassword();
+      password = ExtendedPassword.createPassword("minute_", TimeParameter.MINUTE).getPassword();
+      userService.saveUser(user, password);
+      user = "Example5";
+      password = ExtendedPassword.createPassword("hourly_", TimeParameter.HOUR).getPassword();
+      userService.saveUser(user, password);
+      user = "Example6";
+      password = ExtendedPassword.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
       userService.saveUser(user, password);
     } finally {
       unitOfWork.endWork();

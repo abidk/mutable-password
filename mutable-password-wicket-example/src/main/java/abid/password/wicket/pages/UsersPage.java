@@ -19,16 +19,13 @@ package abid.password.wicket.pages;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,23 +33,22 @@ import org.slf4j.LoggerFactory;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.types.PasswordFactory;
-import abid.password.wicket.MutablePasswordSession;
 import abid.password.wicket.components.AjaxLabel;
 import abid.password.wicket.model.User;
 import abid.password.wicket.service.UserService;
 
 import com.google.inject.Inject;
 
-public class LoginPage extends BasePage {
+@AuthorizeInstantiation(Roles.ADMIN)
+public class UsersPage extends BasePage {
 
   private static final long serialVersionUID = 1L;
-  private static final Logger log = LoggerFactory.getLogger(LoginPage.class);
+  private static final Logger log = LoggerFactory.getLogger(UsersPage.class);
 
   @Inject
   private UserService userService;
 
-  public LoginPage() {
-    LoginForm loginForm = new LoginForm("loginForm");
+  public UsersPage() {
 
     LoadableDetachableModel<List<User>> usersModel = new LoadableDetachableModel<List<User>>() {
 
@@ -98,41 +94,10 @@ public class LoginPage extends BasePage {
 
     String refreshInformation = String.format("Password refreshes every %s seconds.", refreshTime);
     String javascriptDisabledMsg = "Javascript is disabled you will need to refresh the page manually.";
-    AjaxLabel refreshLabel = new AjaxLabel("refreshInformation", refreshInformation, javascriptDisabledMsg);
+    AjaxLabel refreshInfoLabel = new AjaxLabel("refreshInformation", refreshInformation, javascriptDisabledMsg);
 
-    add(loginForm);
     add(dataContainer);
-    add(refreshLabel);
-  }
-
-  public class LoginForm extends Form<Void> {
-
-    private static final long serialVersionUID = 1L;
-    private String username;
-    private String password;
-
-    public LoginForm(final String id) {
-      super(id);
-      PropertyModel<String> usernameModel = new PropertyModel<String>(this, "username");
-      TextField<String> usernameField = new TextField<String>("usernameField", usernameModel);
-      usernameField.setRequired(true);
-
-      PropertyModel<String> passwordModel = new PropertyModel<String>(this, "password");
-      PasswordTextField passwordField = new PasswordTextField("passwordField", passwordModel);
-      passwordField.setRequired(true);
-
-      add(usernameField);
-      add(passwordField);
-    }
-
-    @Override
-    public final void onSubmit() {
-      MutablePasswordSession session = MutablePasswordSession.get();
-      // Sign the user in
-      if (session.signIn(username, password)) {
-        setResponsePage(WebApplication.get().getHomePage());
-      }
-    }
+    add(refreshInfoLabel);
   }
 
   public UserService getUserService() {

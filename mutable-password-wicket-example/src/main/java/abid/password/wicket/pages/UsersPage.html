@@ -25,29 +25,9 @@
 <wicket:extend>
 
   <div id="heading">
-    <h1>Login</h1>
-  </div>
-    
-  <form autocomplete="off" wicket:id="loginForm">
-    <div class="field">
-	  <p>Username</p>
-	  <input wicket:id="usernameField" type="text" size="35" /> 
-    </div>
-    <div class="field">
-	  <p>Password</p>
-	  <input wicket:id="passwordField" type="password" size="35" /> 
-    </div>
-    <div class="field">
-      <p>&nbsp;</p>
-      <input type="submit" value="Login" />
-    </div>
-  </form>
-    
-
-  <div id="heading">
     <h1>Users</h1>
   </div>
-  
+      
   <table wicket:id="dataContainer">  
     <thead>
       <tr>
@@ -62,9 +42,8 @@
       </tr>
     </tbody>
   </table>
-  <div>
-    *<span wicket:id="refreshInformation"></span>
-  </div>
+  
+  <div>*<span wicket:id="refreshInformation"></span></div>
 </wicket:extend>
 </body>
 </html>
