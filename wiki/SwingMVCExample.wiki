@@ -1,3 +1,0 @@
-  # Install Maven
-  # Checkout project (svn checkout https://mutable-password.googlecode.com/svn/trunk/ mutable-password)
-  # Run the Start.java class in mutable-password-springmvc-example/src/test/java
