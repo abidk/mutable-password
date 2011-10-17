@@ -1,0 +1,101 @@
+package abid.password.springmvc.service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import abid.password.springmvc.model.User;
+import abid.password.springmvc.util.StringUtils;
+
+public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+
+  private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
+
+  @Autowired
+  private UserService userService;
+
+  public UserService getUserService() {
+    return userService;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
+  }
+
+  @Override
+  protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+  }
+
+  @Override
+  protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+    if (StringUtils.isEmpty(username)) {
+      throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.usernameMissing", "Username missing"));
+    }
+    String password = String.valueOf(authentication.getCredentials());
+    if (StringUtils.isEmpty(password)) {
+      throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.passwordMissing", "Password missing"));
+    }
+
+    try {
+      User authenticatedUser = userService.authenticate(username, password);
+      if (authenticatedUser != null) {
+        return new CustomUserDetails(authenticatedUser);
+      }
+    } catch (UserException e) {
+      log.error("Error occurred authentication user", e);
+    }
+
+    throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.badCredentials", "Bad credentials"));
+  }
+
+  public class CustomUserDetails implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+    private User user;
+
+    public CustomUserDetails(User user) {
+      this.user = user;
+    }
+
+    public Collection<GrantedAuthority> getAuthorities() {
+      List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+      authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+      return authorities;
+    }
+
+    public String getPassword() {
+      return user.getPassword();
+    }
+
+    public String getUsername() {
+      return user.getUsername();
+    }
+
+    public boolean isAccountNonExpired() {
+      return true;
+    }
+
+    public boolean isAccountNonLocked() {
+      return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+      return true;
+    }
+
+    public boolean isEnabled() {
+      return true;
+    }
+  }
+}

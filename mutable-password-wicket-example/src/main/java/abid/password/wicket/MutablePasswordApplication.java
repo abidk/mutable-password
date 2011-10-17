@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.WebPage;
 
 import abid.password.parameters.TimeParameter;
 import abid.password.types.ExtendedPassword;
+import abid.password.types.SimplePassword;
 import abid.password.wicket.pages.CreateUserPage;
 import abid.password.wicket.pages.LoginPage;
 import abid.password.wicket.pages.LogoutPage;
@@ -87,6 +88,9 @@ public class MutablePasswordApplication extends AuthenticatedWebApplication {
       userService.saveUser(user, password);
       user = "Example6";
       password = ExtendedPassword.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
+      userService.saveUser(user, password);
+      user = "admin";
+      password = new SimplePassword("admin").getPassword();
       userService.saveUser(user, password);
     } finally {
       unitOfWork.endWork();

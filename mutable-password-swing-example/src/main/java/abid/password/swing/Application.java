@@ -27,6 +27,7 @@ import abid.password.swing.model.User;
 import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.RomanNumeralPassword;
+import abid.password.types.SimplePassword;
 
 import com.jeta.forms.gui.common.FormException;
 
@@ -80,6 +81,10 @@ public class Application {
     user2.setPassword(password2);
     users.add(user2);
 
+    User user5 = new User();
+    user5.setUsername("admin");
+    user5.setPassword(new SimplePassword("admin").getPassword());
+    users.add(user5);
   }
 
   public FormUI getForm() {
