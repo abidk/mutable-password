@@ -18,5 +18,6 @@
     * [StockMarketParameter Stock Market Parameter]
   * [JavaFiveSupport Java 1.5 Support]
   * Examples
+    * [SwingMVCExample Swing MVC Example]
     * [WicketExample Wicket Example]
     * [SwingExample Swing Example]
