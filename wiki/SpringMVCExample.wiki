@@ -1,3 +1,4 @@
   # Install Maven
   # Checkout project (svn checkout https://mutable-password.googlecode.com/svn/trunk/ mutable-password)
   # Run the Start.java class in mutable-password-springmvc-example/src/test/java
+  # Type in the address 'http://127.0.0.1:8080/' into a browser
