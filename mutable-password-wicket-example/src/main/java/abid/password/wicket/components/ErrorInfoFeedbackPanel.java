@@ -18,12 +18,13 @@ package abid.password.wicket.components;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedback;
 import org.apache.wicket.feedback.IFeedbackMessageFilter;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Splits the error and info messages to allow for different stylings
+ * Splits the error and info messages so different stylings can be applied
+ * 
+ * @author Abid Khalil
  * 
  */
 public class ErrorInfoFeedbackPanel extends Panel implements IFeedback {
@@ -33,45 +34,31 @@ public class ErrorInfoFeedbackPanel extends Panel implements IFeedback {
   public ErrorInfoFeedbackPanel(String id) {
     super(id);
 
-    final FeedbackPanel infoFeedbackPanel = new FeedbackPanel("infoMessages", new IFeedbackMessageFilter() {
-      private static final long serialVersionUID = 1L;
+    FeedbackPanel infoFeedbackPanel = createFeedBackFilter("infoMessages", FeedbackMessage.INFO);
+    FeedbackPanel errorFeedbackPanel = createFeedBackFilter("errorMessages", FeedbackMessage.ERROR);
 
-      public boolean accept(FeedbackMessage message) {
-        return message.getLevel() == FeedbackMessage.INFO;
-      }
-    });
-    infoFeedbackPanel.setEscapeModelStrings(false);
+    add(infoFeedbackPanel);
+    add(errorFeedbackPanel);
+  }
 
-    WebMarkupContainer infoMessagesContainer = new WebMarkupContainer("infoContainer") {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isVisible() {
-        return infoFeedbackPanel.anyMessage(FeedbackMessage.INFO);
-      }
-    };
-    infoMessagesContainer.add(infoFeedbackPanel);
-
-    final FeedbackPanel errorFeedbackPanel = new FeedbackPanel("errorMessages", new IFeedbackMessageFilter() {
-      private static final long serialVersionUID = 1L;
-
-      public boolean accept(FeedbackMessage message) {
-        return message.getLevel() == FeedbackMessage.ERROR;
-      }
-    });
-    errorFeedbackPanel.setEscapeModelStrings(false);
-
-    WebMarkupContainer errorMessagesContainer = new WebMarkupContainer("errorContainer") {
+  private FeedbackPanel createFeedBackFilter(String id, final int filterLevel) {
+    FeedbackPanel feedbackPanel = new FeedbackPanel(id) {
       private static final long serialVersionUID = 1L;
 
       @Override
       public boolean isVisible() {
-        return errorFeedbackPanel.anyMessage(FeedbackMessage.ERROR);
+        return anyMessage(filterLevel);
+
       }
     };
-    errorMessagesContainer.add(errorFeedbackPanel);
+    feedbackPanel.setFilter(new IFeedbackMessageFilter() {
+      private static final long serialVersionUID = 1L;
 
-    add(infoMessagesContainer);
-    add(errorMessagesContainer);
+      public boolean accept(FeedbackMessage message) {
+        return message.getLevel() == filterLevel;
+      }
+    });
+    feedbackPanel.setEscapeModelStrings(false);
+    return feedbackPanel;
   }
 }
