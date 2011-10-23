@@ -52,7 +52,7 @@ public class NewPasswordTest extends TestCase {
   public void testRegisteredNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
     // add the password to the factory
-    PasswordFactory.addMutablePassword(NewPassword.class);
+    PasswordFactory.registerPasswordType(NewPassword.class);
 
     NewPassword password = (NewPassword) NewPassword.createPassword("something");
 
