@@ -26,34 +26,33 @@ import abid.password.MutablePassword;
 import abid.password.Password;
 
 /**
- * Method which allows you to select the password type object by passing it a
- * password.
+ * Factory class to convert a password String into a password object.
  * 
  * @author Abid
  * 
  */
 public class PasswordFactory {
 
-  private static List<Class<? extends MutablePassword>> mutablePasswords = new ArrayList<Class<? extends MutablePassword>>();
+  private static List<Class<? extends MutablePassword>> passwordTypes = new ArrayList<Class<? extends MutablePassword>>();
 
   static {
-    // add the existing types
-    mutablePasswords.add(CaesarCipherPassword.class);
-    mutablePasswords.add(TimeLockPassword.class);
-    mutablePasswords.add(ExtendedPassword.class);
-    mutablePasswords.add(ExtendedTimeLockPassword.class);
-    mutablePasswords.add(RomanNumeralPassword.class);
-    mutablePasswords.add(RotatingPassword.class);
+    // register internal types
+    passwordTypes.add(CaesarCipherPassword.class);
+    passwordTypes.add(TimeLockPassword.class);
+    passwordTypes.add(ExtendedPassword.class);
+    passwordTypes.add(ExtendedTimeLockPassword.class);
+    passwordTypes.add(RomanNumeralPassword.class);
+    passwordTypes.add(RotatingPassword.class);
   }
 
   private PasswordFactory() {
   }
 
   /**
-   * Takes a password string and returns a mutable password object.
+   * Input password String and return a password object.
    * 
    * @param password
-   * @return password object
+   * @return Password object
    * @throws SecurityException
    * @throws NoSuchMethodException
    * @throws IllegalArgumentException
@@ -64,55 +63,58 @@ public class PasswordFactory {
   public static Password getInstance(String password) throws SecurityException,
       NoSuchMethodException, IllegalArgumentException, InstantiationException,
       IllegalAccessException, InvocationTargetException {
+
     MutableBlock block = new MutableBlock(password);
-
-    Class<?>[] argTypes = { String.class };
-    Object[] arglist = { password };
-
     if (block.getType() != null) {
-      for (Class<?> cls : mutablePasswords) {
+      Class<?>[] argTypes = { String.class };
+      Object[] argObjects = { password };
+
+      // loop through the mutable types constructing a password object and then
+      // check the types for a match
+      for (Class<?> cls : passwordTypes) {
         Constructor<?> ct = cls.getConstructor(argTypes);
         MutablePassword mutatingPassword = (MutablePassword) ct
-            .newInstance(arglist);
+            .newInstance(argObjects);
         if (block.getType().equals(mutatingPassword.getPasswordType())) {
           return mutatingPassword;
         }
       }
     }
+    // if a type cannot be found then it must be a simple password
     return new SimplePassword(password);
   }
 
   /**
-   * Allows you to insert other mutable password types.
+   * Register a new mutable password type.
    * 
    * @param passwordClass
    * @return password added or not
    */
-  public static boolean addMutablePassword(
+  public static boolean registerPasswordType(
       Class<? extends MutablePassword> passwordClass) {
-    if (!mutablePasswords.contains(passwordClass)) {
-      return mutablePasswords.add(passwordClass);
+    if (!passwordTypes.contains(passwordClass)) {
+      return passwordTypes.add(passwordClass);
     }
     return false;
   }
 
   /**
-   * Allows you to remove mutable password types.
+   * Remove mutable password type.
    * 
    * @param passwordClass
    * @return password removed or not
    */
-  public static boolean removeMutablePassword(
+  public static boolean unregisterPasswordType(
       Class<? extends MutablePassword> passwordClass) {
-    return mutablePasswords.remove(passwordClass);
+    return passwordTypes.remove(passwordClass);
   }
 
   /**
-   * Returns a list of all the mutable passwords types.
+   * Returns registered mutable passwords types.
    * 
-   * @return mutable password types.
+   * @return mutable password type list
    */
-  public static List<Class<? extends MutablePassword>> getMutablePasswordList() {
-    return mutablePasswords;
+  public static List<Class<? extends MutablePassword>> getPasswordTypes() {
+    return passwordTypes;
   }
 }

@@ -26,12 +26,14 @@ import abid.password.MutablePassword;
 public class PasswordFactoryTest extends TestCase {
 
   public void testPasswordList() {
-    List<Class<? extends MutablePassword>> passwordLst = PasswordFactory.getMutablePasswordList();
+    List<Class<? extends MutablePassword>> passwordLst = PasswordFactory
+        .getPasswordTypes();
     assertNotNull(passwordLst);
   }
 
   @SuppressWarnings("unused")
-  public void testParameterConstruct() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+  public void testParameterConstruct() throws IllegalArgumentException,
+      InstantiationException, IllegalAccessException, InvocationTargetException {
     final Class<?> cls = PasswordFactory.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);

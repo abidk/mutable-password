@@ -33,8 +33,8 @@
 	</module>
 
 	<module name="TreeWalker">
-	    <property name="cacheFile" value="target/cachefile"/>
-	    
+		<property name="cacheFile" value="target/cachefile" />
+
 		<!-- Checks for Javadoc comments. -->
 		<module name="JavadocMethod">
 			<property name="logLoadErrors" value="true" />
@@ -51,7 +51,7 @@
 		</module>
 		<module name="JavadocVariable">
 			<property name="scope" value="public" />
-            <property name="excludeScope" value="protected"/>
+			<property name="excludeScope" value="protected" />
 		</module>
 		<module name="JavadocStyle" />
 
@@ -88,8 +88,7 @@
 		<module name="EmptyForIteratorPad" />
 		<module name="MethodParamPad" />
 		<module name="NoWhitespaceAfter">
-			<property name="tokens"
-				value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS" />
+			<property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS" />
 		</module>
 		<module name="NoWhitespaceBefore" />
 		<module name="OperatorWrap" />
@@ -113,8 +112,8 @@
 
 
 		<!-- Checks for common coding problems -->
-        <module name="UnnecessaryParentheses"/>
-        <module name="MultipleVariableDeclarations"/>
+		<module name="UnnecessaryParentheses" />
+		<module name="MultipleVariableDeclarations" />
 		<module name="AvoidInlineConditionals">
 			<property name="severity" value="ignore" />
 		</module>
@@ -155,10 +154,10 @@
 		<module name="FinalParameters">
 			<property name="severity" value="ignore" />
 		</module>
-        <module name="TodoComment">
-            <property name="format" value="WARNING"/>
-        </module>
-        <module name="UpperEll" />
+		<module name="TodoComment">
+			<property name="format" value="WARNING" />
+		</module>
+		<module name="UpperEll" />
 	</module>
 
 </module>

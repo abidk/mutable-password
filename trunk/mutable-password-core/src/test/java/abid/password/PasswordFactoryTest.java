@@ -21,20 +21,22 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import abid.password.parameters.TimeParameter;
+import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
 import abid.password.types.RomanNumeralPassword;
 import abid.password.types.RotatingPassword;
-import abid.password.types.CaesarCipherPassword;
 import abid.password.types.SimplePassword;
 import abid.password.types.TimeLockPassword;
 
 public class PasswordFactoryTest extends TestCase {
 
-  public void testTimeLockPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testTimeLockPasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
-    Password p1 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
+    Password p1 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR,
+        0, 24);
     Password m1 = PasswordFactory.getInstance(p1.getPassword());
 
     // check if the correct class is found
@@ -42,7 +44,8 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p1.getPassword(), m1.getPassword());
   }
 
-  public void testExtendedPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testExtendedPasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
     Password p2 = ExtendedPassword.createPassword("abid", TimeParameter.HOUR);
@@ -51,7 +54,8 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p2.getPassword(), m2.getPassword());
   }
 
-  public void testShiftPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testShiftPasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
     Password p3 = CaesarCipherPassword.createPassword("abid");
@@ -60,7 +64,8 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p3.getPassword(), m3.getPassword());
   }
 
-  public void testSimplePasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
     Password p4 = new SimplePassword("abid");
@@ -69,7 +74,8 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p4.getPassword(), m4.getPassword());
   }
 
-  public void testRotatingPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testRotatingPasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
     Password p3 = RotatingPassword.createPassword("abid", "1234");
@@ -78,7 +84,8 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p3.getPassword(), m3.getPassword());
   }
 
-  public void testRomanNumeralPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testRomanNumeralPasswordType() throws IllegalArgumentException,
+      SecurityException, InstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException {
 
     Password p3 = RomanNumeralPassword.createPassword("abid", 1234);
@@ -88,22 +95,26 @@ public class PasswordFactoryTest extends TestCase {
   }
 
   public void testPasswordFactory() {
-    boolean added = PasswordFactory.addMutablePassword(ExtendedPassword.class);
+    boolean added = PasswordFactory
+        .registerPasswordType(ExtendedPassword.class);
     assertEquals(false, added);
 
-    List<Class<? extends MutablePassword>> list = PasswordFactory.getMutablePasswordList();
+    List<Class<? extends MutablePassword>> list = PasswordFactory
+        .getPasswordTypes();
     assertTrue(list.contains(ExtendedPassword.class));
 
-    boolean removed = PasswordFactory.removeMutablePassword(ExtendedPassword.class);
+    boolean removed = PasswordFactory
+        .unregisterPasswordType(ExtendedPassword.class);
     assertTrue(removed);
 
-    list = PasswordFactory.getMutablePasswordList();
+    list = PasswordFactory.getPasswordTypes();
     assertFalse(list.contains(ExtendedPassword.class));
 
-    boolean addedAgain = PasswordFactory.addMutablePassword(ExtendedPassword.class);
+    boolean addedAgain = PasswordFactory
+        .registerPasswordType(ExtendedPassword.class);
     assertTrue(addedAgain);
 
-    list = PasswordFactory.getMutablePasswordList();
+    list = PasswordFactory.getPasswordTypes();
     assertTrue(list.contains(ExtendedPassword.class));
   }
 }
