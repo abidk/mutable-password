@@ -28,7 +28,7 @@ public abstract class StatefulMutablePassword extends MutablePassword {
   private int state;
 
   /**
-   * Takes the mutable password.
+   * Constructs password as a stateful mutable password object.
    * 
    * @param password
    */
@@ -37,8 +37,7 @@ public abstract class StatefulMutablePassword extends MutablePassword {
   }
 
   /**
-   * Returns the state of the password. This allows you to store a value which
-   * can be used in the password evaluation.
+   * Returns the state, which can then be used when evaluating the password.
    * 
    * @return state
    */
@@ -47,8 +46,7 @@ public abstract class StatefulMutablePassword extends MutablePassword {
   }
 
   /**
-   * Allows you to set the state of the password. This value can then be used
-   * directly in the password evaluation.
+   * Set the state of the password.
    * 
    * @param state
    */

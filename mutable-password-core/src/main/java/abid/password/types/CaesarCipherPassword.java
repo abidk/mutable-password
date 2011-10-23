@@ -30,8 +30,8 @@ import abid.password.parameters.TimeParameter;
 /**
  * Basically, a Caesar cipher.
  * 
- * You can give it a time value e.g. pass[shift{month}] or you can create a
- * password with a state, the state can be specified later.
+ * Evaluates the password based on a state value, the state can be set before
+ * evaluating the password.
  * 
  * @author Abid
  * 
@@ -43,9 +43,7 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
   public static final String PASSWORD_TYPE = "caesarCipher";
 
   /**
-   * Takes the String password, which is then separated into the text and
-   * mutable block. The mutable block is split into the password type and
-   * expression.
+   * Constructs a Caesar Cipher Password object with the password argument.
    * 
    * @param password
    */
@@ -54,7 +52,7 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
   }
 
   /**
-   * This will shift the alphabet (A-Z) by the argument value.
+   * Shift the alphabet (A-Z) by the argument value.
    * 
    * @param shiftBy
    * @return shifted value
@@ -94,7 +92,8 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword) throws PasswordException {
+  public boolean confirmPassword(String confirmPassword)
+      throws PasswordException {
     try {
       String evaluatedPassword = getEvaluatedPassword();
       return evaluatedPassword.equals(confirmPassword);
@@ -135,7 +134,8 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
    * @param timeType
    * @return mutable password with state
    */
-  public static StatefulMutablePassword createPassword(String text, TimeParameter timeType) {
+  public static StatefulMutablePassword createPassword(String text,
+      TimeParameter timeType) {
     MutableBlock block = createMutableBlock(timeType);
     return new CaesarCipherPassword(text + block);
   }

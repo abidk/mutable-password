@@ -25,10 +25,8 @@ package abid.password;
  */
 public abstract class Password {
 
-  private String password;
-
   /**
-   * Allows you to confirm a password.
+   * Confirm password validity.
    * 
    * @param confirmPassword
    * @return if the password matches the confirm password parameter
@@ -36,13 +34,14 @@ public abstract class Password {
    */
   public abstract boolean confirmPassword(String confirmPassword) throws PasswordException;
 
+  private String password;
+
   /**
    * Stores the password and provides the ability to confirm a password.
    * 
    * @param password
    */
   public Password(String password) {
-    // set this as the original password
     this.password = password;
   }
 

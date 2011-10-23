@@ -25,7 +25,7 @@ import javax.script.ScriptException;
 import abid.password.parameters.Parameter;
 
 /**
- * This will take a expression and evaluate it.
+ * Javascript implementation to evaluate expression.
  * 
  * This uses Java version 6 JavaScript features, to make this compatible with
  * Java version 5, remove this class and use beanshell instead.
@@ -37,7 +37,7 @@ public class JavascriptEvaluator implements Evaluator {
   private ScriptEngine engine;
 
   /**
-   * Initiates the built-in Javascript engine.
+   * Initialise the built-in Javascript engine.
    */
   public JavascriptEvaluator() {
     ScriptEngineManager manager = new ScriptEngineManager();
@@ -45,32 +45,25 @@ public class JavascriptEvaluator implements Evaluator {
   }
 
   @Override
-  public String evaluateExpression(String expression, Map<String, Parameter> map)
-      throws ParseException {
+  public String evaluateExpression(String expression,
+      Map<String, Parameter> parameters) throws ParseException {
     try {
-      for (Map.Entry<String, Parameter> e : map.entrySet()) {
+      for (Map.Entry<String, Parameter> e : parameters.entrySet()) {
         String key = e.getKey();
         Parameter parameter = e.getValue();
         engine.put(key, parameter.getValue());
       }
 
-      // evaluate and get result
       String result = String.valueOf(engine.eval(expression));
-      // System.out.println(fixDecimalOutput(result));
-      return fixDecimalOutput(result);
+
+      // Remove the '.0' when two integers are added
+      return removeEmptyDecimalPoint(result);
     } catch (ScriptException e) {
       throw new ParseException(e);
     }
   }
 
-  /**
-   * This fixes the problem where you add two integers and you get a float which
-   * ends with '.0'.
-   * 
-   * @param evaluation
-   * @return replaced evaluation string
-   */
-  private String fixDecimalOutput(String evaluation) {
-    return evaluation.replace(".0", "");
+  private String removeEmptyDecimalPoint(String value) {
+    return value.replace(".0", "");
   }
 }
