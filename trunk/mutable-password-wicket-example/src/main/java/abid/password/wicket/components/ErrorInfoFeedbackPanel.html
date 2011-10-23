@@ -20,12 +20,13 @@
 <html xmlns:wicket>
 <body>
 <wicket:panel>
-	<div wicket:id="infoContainer" class="infoMessages">
-	  <div wicket:id="infoMessages"></div>
-	</div>
-	<div wicket:id="errorContainer" class="errorMessages">
-	  <div wicket:id="errorMessages"></div>
-	</div>
+  <wicket:enclosure>
+	  <div class="infoMessages" wicket:id="infoMessages"></div>
+  </wicket:enclosure>
+
+  <wicket:enclosure>
+	  <div class="errorMessages" wicket:id="errorMessages"></div>
+  </wicket:enclosure>
 </wicket:panel>
 </body>
 </html>
