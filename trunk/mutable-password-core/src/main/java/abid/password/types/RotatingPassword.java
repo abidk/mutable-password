@@ -20,7 +20,7 @@ import abid.password.MutableBlock;
 import abid.password.StatefulMutablePassword;
 
 /**
- * Password rotates the mutable part of the password according to the state.
+ * Rotates the mutable part of the password using the state.
  * 
  * The state will need to be stored somewhere and set when the mutable password
  * is initialised.

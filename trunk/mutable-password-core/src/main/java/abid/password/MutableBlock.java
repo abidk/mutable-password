@@ -17,7 +17,7 @@
 package abid.password;
 
 /**
- * Allows you to create and parse the mutable block.
+ * Parses the mutable element of the mutable password object.
  * 
  * @author Abid
  * 
@@ -57,7 +57,9 @@ public class MutableBlock {
   public MutableBlock(String password) {
     int startTag = password.indexOf(MUTABLE_BLOCK_START_TAG);
     int endTag = password.lastIndexOf(MUTABLE_BLOCK_END_TAG);
-    // check to see if we have an mutable block
+
+    // mutable block should contain a start and end tag
+    // otherwise the password is not mutable
     if (startTag != -1 && endTag != -1) {
       String mutateBlock = password.substring(startTag + 1, endTag);
       int expressionStartTag = mutateBlock.indexOf(EXPRESSION_START_TAG);

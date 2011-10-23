@@ -21,8 +21,7 @@ import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 
 /**
- * Allows this abstract class to be extended to allow the extension of further
- * mutable passwords.
+ * Abstract class to be extended when creating new mutable password types.
  * 
  * @author Abid
  * 
@@ -49,7 +48,7 @@ public abstract class MutablePassword extends Password {
   private String text;
 
   /**
-   * Takes the static password text and mutable block as separate parameters.
+   * Constructs password as a mutable password object.
    * 
    * @param text
    * @param mutableBlock
@@ -63,8 +62,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Takes the password, which will get split as the static element and the
-   * mutable element.
+   * Constructs password as a mutable password object.
    * 
    * @param password
    */
@@ -78,7 +76,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Returns the static text of the password.
+   * Returns password static text.
    * 
    * @return static password text
    */
@@ -87,7 +85,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Returns the type of mutable password.
+   * Returns the password type.
    * 
    * @return password type
    */
@@ -96,7 +94,7 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Returns the expression of the mutable block.
+   * Returns the mutable block expression.
    * 
    * @return password expression
    */
@@ -114,16 +112,16 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Returns the object of the evaluator.
+   * Returns the password evaluator.
    * 
-   * @return evaluator object
+   * @return evaluator
    */
   public Evaluator getEvaluator() {
     return evaluator;
   }
 
   /**
-   * Set a new evaluator.
+   * Set the evaluator to be used when evaluating passwords.
    * 
    * @param evaluator
    */

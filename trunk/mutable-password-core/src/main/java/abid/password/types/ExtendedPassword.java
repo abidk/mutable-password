@@ -28,7 +28,7 @@ import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
 
 /**
- * Allows you to concatenate a parameter at the end of the static password.
+ * Concatenates a parameter at the end of the static password.
  * 
  * e.g. pass[extend{year}] = pass2009
  * 

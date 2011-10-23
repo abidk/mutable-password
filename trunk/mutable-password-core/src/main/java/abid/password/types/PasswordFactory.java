@@ -26,7 +26,7 @@ import abid.password.MutablePassword;
 import abid.password.Password;
 
 /**
- * Factory class to convert a password String into a password object.
+ * Factory class to convert a password String into a Password object.
  * 
  * @author Abid
  * 

@@ -19,7 +19,7 @@ package abid.password.types;
 import abid.password.Password;
 
 /**
- * Just a normal password, which has not mutable block e.g. password123.
+ * Just a normal password e.g. password123.
  * 
  * @author Abid
  */
