@@ -32,8 +32,7 @@ public class PasswordFactoryTest extends TestCase {
   }
 
   @SuppressWarnings("unused")
-  public void testParameterConstruct() throws IllegalArgumentException,
-      InstantiationException, IllegalAccessException, InvocationTargetException {
+  public void testParameterConstruct() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
     final Class<?> cls = PasswordFactory.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);

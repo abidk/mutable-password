@@ -15,13 +15,11 @@
  */
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
+import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.StatefulMutablePassword;
-import junit.framework.TestCase;
 
 public class RotatingPasswordTest extends TestCase {
 
@@ -30,8 +28,7 @@ public class RotatingPasswordTest extends TestCase {
     assertEquals(RotatingPassword.PASSWORD_TYPE, password.getPasswordType());
   }
 
-  public void testPasswordFactory() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testPasswordFactory() throws PasswordInstantiationException {
     MutablePassword password = RotatingPassword.createPassword("pass", "123456");
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
     assertEquals(RotatingPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());

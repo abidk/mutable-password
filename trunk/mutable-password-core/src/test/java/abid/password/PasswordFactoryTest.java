@@ -16,7 +16,6 @@
 
 package abid.password;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -24,6 +23,7 @@ import abid.password.parameters.TimeParameter;
 import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.PasswordFactory;
+import abid.password.types.PasswordInstantiationException;
 import abid.password.types.RomanNumeralPassword;
 import abid.password.types.RotatingPassword;
 import abid.password.types.SimplePassword;
@@ -31,9 +31,7 @@ import abid.password.types.TimeLockPassword;
 
 public class PasswordFactoryTest extends TestCase {
 
-  public void testTimeLockPasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testTimeLockPasswordType() throws PasswordInstantiationException {
 
     Password p1 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR,
         0, 24);
@@ -44,50 +42,35 @@ public class PasswordFactoryTest extends TestCase {
     assertEquals(p1.getPassword(), m1.getPassword());
   }
 
-  public void testExtendedPasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
-
+  public void testExtendedPasswordType() throws PasswordInstantiationException {
     Password p2 = ExtendedPassword.createPassword("abid", TimeParameter.HOUR);
     Password m2 = PasswordFactory.getInstance(p2.getPassword());
     assertEquals(p2.getClass(), m2.getClass());
     assertEquals(p2.getPassword(), m2.getPassword());
   }
 
-  public void testShiftPasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
-
+  public void testShiftPasswordType() throws PasswordInstantiationException {
     Password p3 = CaesarCipherPassword.createPassword("abid");
     Password m3 = PasswordFactory.getInstance(p3.getPassword());
     assertEquals(p3.getClass(), m3.getClass());
     assertEquals(p3.getPassword(), m3.getPassword());
   }
 
-  public void testSimplePasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
-
+  public void testSimplePasswordType() throws PasswordInstantiationException {
     Password p4 = new SimplePassword("abid");
     Password m4 = PasswordFactory.getInstance(p4.getPassword());
     assertEquals(p4.getClass(), m4.getClass());
     assertEquals(p4.getPassword(), m4.getPassword());
   }
 
-  public void testRotatingPasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
-
+  public void testRotatingPasswordType() throws PasswordInstantiationException {
     Password p3 = RotatingPassword.createPassword("abid", "1234");
     Password m3 = PasswordFactory.getInstance(p3.getPassword());
     assertEquals(p3.getClass(), m3.getClass());
     assertEquals(p3.getPassword(), m3.getPassword());
   }
 
-  public void testRomanNumeralPasswordType() throws IllegalArgumentException,
-      SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
-
+  public void testRomanNumeralPasswordType() throws PasswordInstantiationException {
     Password p3 = RomanNumeralPassword.createPassword("abid", 1234);
     Password m3 = PasswordFactory.getInstance(p3.getPassword());
     assertEquals(p3.getClass(), m3.getClass());

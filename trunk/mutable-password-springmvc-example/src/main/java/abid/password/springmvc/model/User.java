@@ -25,7 +25,9 @@ import javax.persistence.Transient;
 
 import abid.password.MutablePassword;
 import abid.password.Password;
+import abid.password.evaluator.ParseException;
 import abid.password.types.PasswordFactory;
+import abid.password.types.PasswordInstantiationException;
 
 @Entity
 public class User implements Serializable {
@@ -54,16 +56,12 @@ public class User implements Serializable {
   }
 
   @Transient
-  public String getEvaluatedPassword() {
+  public String getEvaluatedPassword() throws PasswordInstantiationException, ParseException {
     String evalatedPassword = password;
-    try {
-      Password passwordObj = PasswordFactory.getInstance(password);
-      if (passwordObj instanceof MutablePassword) {
-        MutablePassword mutablePassword = (MutablePassword) passwordObj;
-        evalatedPassword = mutablePassword.getEvaluatedPassword();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    Password passwordObj = PasswordFactory.getInstance(password);
+    if (passwordObj instanceof MutablePassword) {
+      MutablePassword mutablePassword = (MutablePassword) passwordObj;
+      evalatedPassword = mutablePassword.getEvaluatedPassword();
     }
     return evalatedPassword;
   }

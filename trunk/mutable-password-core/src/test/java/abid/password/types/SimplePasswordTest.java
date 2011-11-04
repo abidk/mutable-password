@@ -24,7 +24,7 @@ import abid.password.PasswordException;
 
 public class SimplePasswordTest extends TestCase {
 
-  public void testSimplePassword() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePassword() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException, PasswordException {
     String password = "abid";
     Password dynamicPassword = PasswordFactory.getInstance(password);
@@ -36,7 +36,7 @@ public class SimplePasswordTest extends TestCase {
     assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testSimplePassword2() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePassword2() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException, PasswordException {
     String password = "abid[";
     Password dynamicPassword = PasswordFactory.getInstance(password);
@@ -48,7 +48,7 @@ public class SimplePasswordTest extends TestCase {
     assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testSimplePassword3() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePassword3() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException, PasswordException {
     Password dynamicPassword = PasswordFactory.getInstance("abid[]");
 
@@ -59,7 +59,7 @@ public class SimplePasswordTest extends TestCase {
     assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testSimplePassword4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePassword4() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException, PasswordException {
     Password dynamicPassword = PasswordFactory.getInstance("abid[{]");
 
@@ -70,7 +70,7 @@ public class SimplePasswordTest extends TestCase {
     assertFalse(dynamicPassword.confirmPassword(wrongPassword));
   }
 
-  public void testSimplePassword5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
+  public void testSimplePassword5() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
       InvocationTargetException, NoSuchMethodException, PasswordException {
     Password dynamicPassword = PasswordFactory.getInstance("ab[id}]");
 

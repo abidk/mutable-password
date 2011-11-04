@@ -15,8 +15,6 @@
  */
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
@@ -31,8 +29,7 @@ public class RomanNumeralPasswordTest extends TestCase {
     assertEquals("romanNumeral", password.getPasswordType());
   }
 
-  public void testPasswordFactory() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testPasswordFactory() throws PasswordInstantiationException {
     MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
     assertEquals(RomanNumeralPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());

@@ -16,8 +16,6 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import junit.framework.TestCase;
 import abid.password.MutableBlock;
 import abid.password.Password;
@@ -28,8 +26,7 @@ import abid.password.parameters.TimeParameter;
 
 public class CaesarCipherPasswordTest extends TestCase {
 
-  public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testPasswordObject() throws PasswordInstantiationException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("abid");
     password.setState(1);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
