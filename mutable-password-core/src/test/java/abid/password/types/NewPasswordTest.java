@@ -16,8 +16,6 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import junit.framework.TestCase;
 import abid.password.MutablePassword;
 import abid.password.Password;
@@ -26,8 +24,7 @@ import abid.password.evaluator.ParseException;
 
 public class NewPasswordTest extends TestCase {
 
-  public void testNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testNewPasswordType() throws PasswordInstantiationException {
     NewPassword password = (NewPassword) NewPassword.createPassword("something");
 
     Password m1 = PasswordFactory.getInstance(password.getPassword());
@@ -49,8 +46,7 @@ public class NewPasswordTest extends TestCase {
     assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
   }
 
-  public void testRegisteredNewPasswordType() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testRegisteredNewPasswordType() throws PasswordInstantiationException {
     // add the password to the factory
     PasswordFactory.registerPasswordType(NewPassword.class);
 

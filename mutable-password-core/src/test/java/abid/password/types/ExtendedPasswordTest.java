@@ -16,8 +16,6 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import junit.framework.TestCase;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
@@ -35,8 +33,7 @@ public class ExtendedPasswordTest extends TestCase {
     assertEquals("extend", password.getPasswordType());
   }
 
-  public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testPasswordObject() throws PasswordInstantiationException {
     TimeParameter timeType = TimeParameter.YEAR;
     MutablePassword password = ExtendedPassword.createPassword("abid", timeType);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());

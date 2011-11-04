@@ -17,7 +17,6 @@
 package abid.password.types;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,32 +52,24 @@ public class PasswordFactory {
    * 
    * @param password
    * @return Password object
-   * @throws SecurityException
-   * @throws NoSuchMethodException
-   * @throws IllegalArgumentException
-   * @throws InstantiationException
-   * @throws IllegalAccessException
-   * @throws InvocationTargetException
+   * @throws PasswordInstantiationException
    */
-  public static Password getInstance(String password) throws SecurityException,
-      NoSuchMethodException, IllegalArgumentException, InstantiationException,
-      IllegalAccessException, InvocationTargetException {
-
+  public static Password getInstance(String password) throws PasswordInstantiationException {
     MutableBlock block = new MutableBlock(password);
-    if (block.getType() != null) {
-      Class<?>[] argTypes = { String.class };
-      Object[] argObjects = { password };
-
-      // loop through the mutable types constructing a password object and then
-      // check the types for a match
-      for (Class<?> cls : passwordTypes) {
-        Constructor<?> ct = cls.getConstructor(argTypes);
-        MutablePassword mutatingPassword = (MutablePassword) ct
-            .newInstance(argObjects);
-        if (block.getType().equals(mutatingPassword.getPasswordType())) {
-          return mutatingPassword;
+    try {
+      if (block.getType() != null) {
+        Class<?>[] argTypes = { String.class };
+        Object[] argObjects = { password };
+        for (Class<?> cls : passwordTypes) {
+          Constructor<?> ct = cls.getConstructor(argTypes);
+          MutablePassword mutatingPassword = (MutablePassword) ct.newInstance(argObjects);
+          if (block.getType().equals(mutatingPassword.getPasswordType())) {
+            return mutatingPassword;
+          }
         }
       }
+    } catch (Exception e) {
+      throw new PasswordInstantiationException("Unable to construct password object.", e);
     }
     // if a type cannot be found then it must be a simple password
     return new SimplePassword(password);

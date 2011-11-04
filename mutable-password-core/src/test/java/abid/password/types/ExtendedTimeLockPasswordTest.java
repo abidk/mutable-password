@@ -16,8 +16,6 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
-
 import junit.framework.TestCase;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
@@ -28,8 +26,7 @@ import abid.password.parameters.TimeParameter;
 
 public class ExtendedTimeLockPasswordTest extends TestCase {
 
-  public void testPasswordObject() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException {
+  public void testPasswordObject() throws PasswordInstantiationException {
     Password password = ExtendedTimeLockPassword.createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
 
