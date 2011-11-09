@@ -55,8 +55,8 @@
 		<url>https://mutable-password.googlecode.com/svn/trunk</url>
 	</scm>
 
-	<!-- If you receive an error about certificate validation then run mvn deploy 
-		and accept the certificate permanently, then re-run the release:perform. -->
+	<!-- If you receive an error about certificate validation then run 'mvn deploy' -->
+	<!-- and accept the certificate permanently, then re-run the 'release:perform' -->
 	<distributionManagement>
 		<repository>
 			<id>release</id>
@@ -142,6 +142,29 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>1.0.1</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<bannedDependencies>
+									<excludes>
+										<exclude>commons-logging:commons-logging</exclude>
+										<!-- <exclude>log4j:log4j</exclude> -->
+									</excludes>
+								</bannedDependencies>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
