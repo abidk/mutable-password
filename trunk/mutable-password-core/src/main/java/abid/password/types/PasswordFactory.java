@@ -17,8 +17,8 @@
 package abid.password.types;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
@@ -32,7 +32,7 @@ import abid.password.Password;
  */
 public class PasswordFactory {
 
-  private static List<Class<? extends MutablePassword>> passwordTypes = new ArrayList<Class<? extends MutablePassword>>();
+  private static final CopyOnWriteArrayList<Class<? extends MutablePassword>> passwordTypes = new CopyOnWriteArrayList<Class<? extends MutablePassword>>();
 
   static {
     // register internal types
@@ -81,12 +81,8 @@ public class PasswordFactory {
    * @param passwordClass
    * @return password added or not
    */
-  public static boolean registerPasswordType(
-      Class<? extends MutablePassword> passwordClass) {
-    if (!passwordTypes.contains(passwordClass)) {
-      return passwordTypes.add(passwordClass);
-    }
-    return false;
+  public static boolean registerPasswordType(Class<? extends MutablePassword> passwordClass) {
+    return passwordTypes.addIfAbsent(passwordClass);
   }
 
   /**
@@ -95,8 +91,7 @@ public class PasswordFactory {
    * @param passwordClass
    * @return password removed or not
    */
-  public static boolean unregisterPasswordType(
-      Class<? extends MutablePassword> passwordClass) {
+  public static boolean unregisterPasswordType(Class<? extends MutablePassword> passwordClass) {
     return passwordTypes.remove(passwordClass);
   }
 
