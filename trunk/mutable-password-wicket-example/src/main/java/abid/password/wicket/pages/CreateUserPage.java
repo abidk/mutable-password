@@ -17,7 +17,6 @@
 package abid.password.wicket.pages;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
@@ -25,10 +24,10 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -36,7 +35,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import abid.password.wicket.fields.CaesarCipherPasswordField;
 import abid.password.wicket.fields.ExtendedPasswordField;
 import abid.password.wicket.fields.ExtendedTimeLockPasswordField;
-import abid.password.wicket.fields.MutablePasswordField;
+import abid.password.wicket.fields.PasswordTypeField;
+import abid.password.wicket.fields.PasswordTypeChoice;
+import abid.password.wicket.fields.PasswordTypeChoice.PasswordType;
 import abid.password.wicket.fields.SimplePasswordField;
 import abid.password.wicket.fields.TimeLockPasswordField;
 import abid.password.wicket.service.UserService;
@@ -46,26 +47,26 @@ import com.google.inject.Inject;
 @AuthorizeInstantiation(Roles.ADMIN)
 public class CreateUserPage extends BasePage {
 
+  private static final String PASSWORD_TYPE_SELECTION = "PASSWORD_TYPE_SELECTION";
   private static final long serialVersionUID = 1L;
 
   @Inject
   private UserService userService;
-
-  private final String CURRENT_SELECTION = "CURRENT_SELECTION";
-  private String currentSelection = "Simple";
+  private PasswordType passwordTypeSelection = PasswordType.SIMPLE;
 
   public CreateUserPage(PageParameters pageParameter) {
-    if (pageParameter.get(CURRENT_SELECTION) != null) {
-      currentSelection = pageParameter.get(CURRENT_SELECTION).toString();
+    if ( !pageParameter.get(PASSWORD_TYPE_SELECTION).isEmpty() ) {
+      String selection = pageParameter.get(PASSWORD_TYPE_SELECTION).toString();
+      passwordTypeSelection = PasswordType.valueOf(selection);
     }
 
     List<ITab> tabs = new ArrayList<ITab>();
-    tabs.add(new AbstractTab(new Model<String>("Dynamic Password")) {
+    tabs.add(new AbstractTab(new Model<String>("All Passwords")) {
 
       private static final long serialVersionUID = 1L;
 
       public Panel getPanel(String panelId) {
-        return new DynamicMutablePasswordPanel(panelId);
+        return new AllPasswordPanel(panelId);
       }
     });
     tabs.add(new AbstractTab(new Model<String>("Simple")) {
@@ -114,13 +115,13 @@ public class CreateUserPage extends BasePage {
 
   }
 
-  public class DynamicMutablePasswordPanel extends Panel {
+  public class AllPasswordPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
 
-    public DynamicMutablePasswordPanel(String id) {
+    public AllPasswordPanel(String id) {
       super(id);
 
       Form<Void> form = new Form<Void>("form") {
@@ -133,19 +134,20 @@ public class CreateUserPage extends BasePage {
         }
       };
 
-      List<String> passwordChoices = Arrays.asList(new String[] { "Simple", "Shift", "Extended", "Time Lock", "Extended Time Lock" });
-      DropDownChoice<String> passwordChoice = new DropDownChoice<String>("passwordType", new Model<String>(currentSelection), passwordChoices) {
+      IModel<PasswordType> passwordTypeModel = new Model<PasswordType>(passwordTypeSelection);
+      PasswordTypeChoice passwordChoice = new PasswordTypeChoice("passwordTypes", passwordTypeModel ) {
         private static final long serialVersionUID = 1L;
 
         @Override
         protected boolean wantOnSelectionChangedNotifications() {
+          // relies on AJAX, could instead add an update button TODO?
           return true;
         }
 
         @Override
-        protected void onSelectionChanged(String newSelection) {
+        protected void onSelectionChanged(PasswordType passwordType) {
           PageParameters parameters = new PageParameters();
-          parameters.add(CURRENT_SELECTION, newSelection);
+          parameters.add(PASSWORD_TYPE_SELECTION, passwordType.name());
           setResponsePage(new CreateUserPage(parameters));
         }
       };
@@ -157,7 +159,7 @@ public class CreateUserPage extends BasePage {
       form.add(userField);
 
       PropertyModel<String> passwordModel = new PropertyModel<String>(this, "password");
-      MutablePasswordField passwordField = new MutablePasswordField("mutablePasswordField", passwordModel, currentSelection);
+      PasswordTypeField passwordField = new PasswordTypeField("passwordField", passwordModel, passwordTypeModel);
       passwordField.setRequired(true);
       form.add(passwordField);
 

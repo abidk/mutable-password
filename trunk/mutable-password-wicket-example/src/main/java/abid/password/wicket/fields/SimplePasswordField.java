@@ -36,15 +36,8 @@ public class SimplePasswordField extends FormComponentPanel<String> {
 
   public SimplePasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new PasswordTextField("password", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
-
+    passwordField = new PasswordTextField("password", new Model<String>(""));
+    passwordField.setRequired(true);
     add(passwordField);
   }
 

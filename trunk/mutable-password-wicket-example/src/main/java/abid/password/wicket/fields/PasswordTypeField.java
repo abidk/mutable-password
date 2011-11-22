@@ -19,35 +19,36 @@ package abid.password.wicket.fields;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
-public class MutablePasswordField extends FormComponentPanel<String> {
+import abid.password.wicket.fields.PasswordTypeChoice.PasswordType;
+
+public class PasswordTypeField extends FormComponentPanel<String> {
 
   private static final long serialVersionUID = 1L;
   private FormComponent<String> selectedForm;
 
-  public MutablePasswordField(String id) {
-    this(id, new Model<String>(""), null);
-  }
-
-  public MutablePasswordField(String id, IModel<String> model, String currentSelection) {
+  public PasswordTypeField(String id, IModel<String> model, IModel<PasswordType> selectedChoiceModel) {
     super(id, model);
 
-    if (currentSelection == null) {
-      currentSelection = "Simple";
+    PasswordType selectedChoice = selectedChoiceModel.getObject();
+    switch (selectedChoice) {
+    case EXTENDED:
+      selectedForm = new ExtendedPasswordField("group");
+      break;
+    case SHIFT:
+      selectedForm = new CaesarCipherPasswordField("group");
+      break;
+    case TIME_LOCK:
+      selectedForm = new TimeLockPasswordField("group");
+      break;
+    case EXTENDED_TIME_LOCK:
+      selectedForm = new ExtendedTimeLockPasswordField("group");
+      break;
+    default:
+      selectedForm = new SimplePasswordField("group");
+      break;
     }
 
-    if (currentSelection.equals("Extended")) {
-      selectedForm = new ExtendedPasswordField("group");
-    } else if (currentSelection.equals("Shift")) {
-      selectedForm = new CaesarCipherPasswordField("group");
-    } else if (currentSelection.equals("Time Lock")) {
-      selectedForm = new TimeLockPasswordField("group");
-    } else if (currentSelection.equals("Extended Time Lock")) {
-      selectedForm = new ExtendedTimeLockPasswordField("group");
-    } else {
-      selectedForm = new SimplePasswordField("group");
-    }
     add(selectedForm);
   }
 

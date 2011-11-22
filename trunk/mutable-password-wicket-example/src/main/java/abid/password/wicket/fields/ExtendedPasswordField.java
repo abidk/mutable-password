@@ -40,25 +40,12 @@ public class ExtendedPasswordField extends FormComponentPanel<String> {
 
   public ExtendedPasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
-
-    // give it some logical shift values
-    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), null) {
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-
+    passwordField = new TextField<String>("password", new Model<String>(""));
+    passwordField.setRequired(true);
     add(passwordField);
+
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), null);
+    timeChoice.setRequired(true);
     add(timeChoice);
   }
 

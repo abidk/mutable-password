@@ -43,26 +43,13 @@ public class CaesarCipherPasswordField extends FormComponentPanel<String> {
 
   public CaesarCipherPasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
-
-    // give it some logical shift values
-    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices) {
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-
+    passwordField = new TextField<String>("password", new Model<String>(""));
+    passwordField.setRequired(true);
     add(passwordField);
+
+    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices);
+    timeChoice.setRequired(true);
     add(timeChoice);
   }
 

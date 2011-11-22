@@ -22,36 +22,21 @@
       xml:lang="en"  
       lang="en"> 
 <body>
-<wicket:extend>
-
-  <div id="heading">
-    <h1>Login</h1>
-  </div>
-  
-  <div wicket:id="loginPanel"></div>
-    
-
-  <div id="heading">
-    <h1>Users</h1>
-  </div>
-  
-  <table wicket:id="usersContainer">  
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Password *</th>
-      </tr>
-    </thead>
-    <tbody>
-	  <tr wicket:id="usersList">
-        <td><span wicket:id="userLabel"></span></td>
-        <td><span wicket:id="passLabel"></span></td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-    *<span wicket:id="refreshInformation"></span>
-  </div>
-</wicket:extend>
+<wicket:panel>
+  <form autocomplete="off" wicket:id="loginForm">
+    <div class="field">
+	  <p>Username</p>
+	  <input wicket:id="usernameField" type="text" size="35" /> 
+    </div>
+    <div class="field">
+	  <p>Password</p>
+	  <input wicket:id="passwordField" type="password" size="35" /> 
+    </div>
+    <div class="field">
+      <p>&nbsp;</p>
+      <input type="submit" value="Login" />
+    </div>
+  </form>
+</wicket:panel>
 </body>
 </html>

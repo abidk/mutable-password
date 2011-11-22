@@ -29,17 +29,18 @@ public abstract class BasePage extends WebPage {
 
   public BasePage() {
     ErrorInfoFeedbackPanel feedbackPanel = new ErrorInfoFeedbackPanel("feedbackPanel");
+    add(feedbackPanel);
 
     Link<String> usersLink = new BookmarkablePageLink<String>("usersLink", UsersPage.class);
     usersLink.setVisible(MutablePasswordSession.get().isSignedIn());
+    add(usersLink);
+
     Link<String> createUserLink = new BookmarkablePageLink<String>("createUserLink", CreateUserPage.class);
     createUserLink.setVisible(MutablePasswordSession.get().isSignedIn());
+    add(createUserLink);
+
     Link<String> logoutLink = new BookmarkablePageLink<String>("logoutLink", LogoutPage.class);
     logoutLink.setVisible(MutablePasswordSession.get().isSignedIn());
-
-    add(feedbackPanel);
-    add(usersLink);
-    add(createUserLink);
     add(logoutLink);
   }
 }
