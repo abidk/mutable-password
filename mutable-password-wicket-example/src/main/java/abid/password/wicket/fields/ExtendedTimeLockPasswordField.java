@@ -45,56 +45,27 @@ public class ExtendedTimeLockPasswordField extends FormComponentPanel<String> {
 
   public ExtendedTimeLockPasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
+    passwordField = new TextField<String>("password", new Model<String>(""));
+    passwordField.setRequired(true);
+    add(passwordField);
 
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
-
-    extendedParameter = new TimeParameterChoice("extendedParameter", new Model<TimeParameter>(), null) {
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
+    extendedParameter = new TimeParameterChoice("extendedParameter", new Model<TimeParameter>(), null);
+    extendedParameter.setRequired(true);
+    add(extendedParameter);
 
     List<TimeParameter> timeChoices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new TimeParameterChoice("timeChoice", new Model<TimeParameter>(), timeChoices) {
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-
-    startField = new TextField<Integer>("startField", new Model<Integer>(0)) {
-
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-    startField.setType(Integer.class);
-
-    endField = new TextField<Integer>("endField", new Model<Integer>(0)) {
-
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-    endField.setType(Integer.class);
-
-    add(passwordField);
-    add(extendedParameter);
+    timeChoice = new TimeParameterChoice("timeChoice", new Model<TimeParameter>(), timeChoices);
+    timeChoice.setRequired(true);
     add(timeChoice);
+
+    startField = new TextField<Integer>("startField", new Model<Integer>(0));
+    startField.setRequired(true);
+    startField.setType(Integer.class);
     add(startField);
+
+    endField = new TextField<Integer>("endField", new Model<Integer>(0));
+    endField.setRequired(true);
+    endField.setType(Integer.class);
     add(endField);
   }
 

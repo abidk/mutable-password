@@ -44,50 +44,23 @@ public class TimeLockPasswordField extends FormComponentPanel<String> {
 
   public TimeLockPasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>("")) {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public boolean isRequired() {
-        return true;
-      }
-    };
-
-    
-    // give it some logical shift values
-    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
-    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices) {
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-    
-
-    startField = new TextField<Integer>("startField", new Model<Integer>(0)) {
-
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-    startField.setType(Integer.class);
-
-    endField = new TextField<Integer>("endField", new Model<Integer>(0)) {
-
-      private static final long serialVersionUID = 1L;
-
-      public boolean isRequired() {
-        return true;
-      };
-    };
-    endField.setType(Integer.class);
-
+    passwordField = new TextField<String>("password", new Model<String>(""));;
+    passwordField.setRequired(true);
     add(passwordField);
+    
+    List<TimeParameter> choices = Arrays.asList(TimeParameter.HOUR, TimeParameter.MONTH, TimeParameter.DAY_OF_MONTH);
+    timeChoice = new TimeParameterChoice("parameter", new Model<TimeParameter>(), choices);
+    timeChoice.setRequired(true);
     add(timeChoice);
+    
+    startField = new TextField<Integer>("startField", new Model<Integer>(0));
+    startField.setType(Integer.class);
+    startField.setRequired(true);
     add(startField);
+
+    endField = new TextField<Integer>("endField", new Model<Integer>(0));
+    endField.setType(Integer.class);
+    endField.setRequired(true);
     add(endField);
   }
 

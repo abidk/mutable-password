@@ -26,6 +26,7 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -36,9 +37,11 @@ import org.slf4j.LoggerFactory;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.types.PasswordFactory;
+import abid.password.wicket.MutablePasswordApplication;
 import abid.password.wicket.MutablePasswordSession;
 import abid.password.wicket.components.AjaxFallbackLabel;
 import abid.password.wicket.model.User;
+import abid.password.wicket.service.UserException;
 import abid.password.wicket.service.UserService;
 
 import com.google.inject.Inject;
@@ -52,7 +55,8 @@ public class LoginPage extends BasePage {
   private UserService userService;
 
   public LoginPage() {
-    LoginForm loginForm = new LoginForm("loginForm");
+    LoginPanel loginPanel = new LoginPanel("loginPanel");
+    add(loginPanel);
 
     LoadableDetachableModel<List<User>> usersModel = new LoadableDetachableModel<List<User>>() {
 
@@ -91,47 +95,59 @@ public class LoginPage extends BasePage {
     };
 
     int refreshTime = 3;
-    final WebMarkupContainer dataContainer = new WebMarkupContainer("dataContainer");
-    dataContainer.setOutputMarkupId(true);
-    dataContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(refreshTime)));
-    dataContainer.add(dataList);
+    final WebMarkupContainer usersContainer = new WebMarkupContainer("usersContainer");
+    usersContainer.setOutputMarkupId(true);
+    usersContainer.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(refreshTime)));
+    usersContainer.add(dataList);
 
     String refreshInformation = String.format("Password refreshes every %s seconds.", refreshTime);
     String javascriptDisabledMsg = "Javascript is disabled you will need to refresh the page manually.";
     AjaxFallbackLabel refreshLabel = new AjaxFallbackLabel("refreshInformation", refreshInformation, javascriptDisabledMsg);
 
-    add(loginForm);
-    add(dataContainer);
+    add(usersContainer);
     add(refreshLabel);
   }
 
-  public class LoginForm extends Form<Void> {
+  public class LoginPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
 
-    public LoginForm(final String id) {
+    public LoginPanel(final String id) {
       super(id);
+
+      Form<Void> loginForm = new Form<Void>("loginForm") {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public final void onSubmit() {
+          UserService userService = MutablePasswordApplication.get().getUserService();
+          try {
+            userService.authenticate(username, password);
+            MutablePasswordSession session = MutablePasswordSession.get();
+            if (session.signIn(username, password)) {
+              setResponsePage(WebApplication.get().getHomePage());
+            }
+          } catch (UserException e) {
+            error( "Please enter the correct username/password from the users table below. Your password may have changed whilst you were typing it!");
+          }
+          
+
+        }
+      };
+      add(loginForm);
+
       PropertyModel<String> usernameModel = new PropertyModel<String>(this, "username");
       TextField<String> usernameField = new TextField<String>("usernameField", usernameModel);
       usernameField.setRequired(true);
+      loginForm.add(usernameField);
 
       PropertyModel<String> passwordModel = new PropertyModel<String>(this, "password");
       PasswordTextField passwordField = new PasswordTextField("passwordField", passwordModel);
       passwordField.setRequired(true);
-
-      add(usernameField);
-      add(passwordField);
-    }
-
-    @Override
-    public final void onSubmit() {
-      MutablePasswordSession session = MutablePasswordSession.get();
-      // Sign the user in
-      if (session.signIn(username, password)) {
-        setResponsePage(WebApplication.get().getHomePage());
-      }
+      loginForm.add(passwordField);
     }
   }
 
