@@ -16,27 +16,22 @@
 package abid.password.springmvc.validator;
 
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import abid.password.springmvc.model.CaesarCipherPasswordFormBean;
-import abid.password.springmvc.util.StringUtils;
+import abid.password.springmvc.model.ExtendedPasswordFormBean;
+import abid.password.springmvc.model.ExtendedTimeLockPasswordFormBean;
+import abid.password.springmvc.model.SimplePasswordFormBean;
+import abid.password.springmvc.model.TimeLockPasswordFormBean;
 
-public class CaesarCipherPasswordValidator implements Validator {
+public interface MutablePasswordValidator {
 
-  public boolean supports(Class<?> cls) {
-    return CaesarCipherPasswordFormBean.class.isAssignableFrom(cls);
-  }
+  public void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors);
 
-  public void validate(Object target, Errors errors) {
-    CaesarCipherPasswordFormBean formBean = (CaesarCipherPasswordFormBean) target;
+  public void validateCaesarCipherPassword(CaesarCipherPasswordFormBean formBean, Errors errors);
 
-    if (StringUtils.isEmpty(formBean.getUsername())) {
-      errors.rejectValue("username", "username.required");
-    }
+  public void validateExtendedPassword(ExtendedPasswordFormBean formBean, Errors errors);
 
-    if (StringUtils.isEmpty(formBean.getPassword())) {
-      errors.rejectValue("password", "password.required");
-    }
-  }
+  public void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordFormBean formBean, Errors errors);
 
+  public void validateTimeLockPassword(TimeLockPasswordFormBean formBean, Errors errors);
 }
