@@ -18,7 +18,6 @@ package abid.password.springmvc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
+import abid.password.springmvc.FeedbackMessage;
 import abid.password.springmvc.model.CaesarCipherPasswordFormBean;
 import abid.password.springmvc.model.ExtendedPasswordFormBean;
 import abid.password.springmvc.model.ExtendedTimeLockPasswordFormBean;
@@ -35,51 +35,56 @@ import abid.password.springmvc.model.Tab;
 import abid.password.springmvc.model.TabPanel;
 import abid.password.springmvc.model.TimeLockPasswordFormBean;
 import abid.password.springmvc.service.UserService;
+import abid.password.springmvc.validator.MutablePasswordValidator;
 import abid.password.types.CaesarCipherPassword;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.ExtendedTimeLockPassword;
 import abid.password.types.TimeLockPassword;
 
 @Controller
-@RequestMapping("/createUser")
+@RequestMapping("/create")
 public class CreateUserController {
 
-  public static final String TAB_URL_SIMPLE_PASWORD = "simplepassword";
-  public static final String TAB_URL_EXTENDED_PASWORD = "extendedpassword";
-  public static final String TAB_URL_CAESAR_PASWORD = "caesarcipherpassword";
-  public static final String TAB_URL_EXTENDED_TIMELOCK_PASWORD = "extendedtimelockpassword";
-  public static final String TAB_URL_TIMELOCK_PASWORD = "timelockpassword";
+  public static final String TAB_SIMPLE_PASWORD = "simple";
+  public static final String TAB_EXTENDED_PASWORD = "extended";
+  public static final String TAB_CAESAR_PASWORD = "caesarcipher";
+  public static final String TAB_EXTENDED_TIMELOCK_PASWORD = "extendedtimelock";
+  public static final String TAB_TIMELOCK_PASWORD = "timelock";
+  public static final String DEFAULT_SELECTED_TAB = TAB_SIMPLE_PASWORD;
+
+  private UserService userService;
+  private MutablePasswordValidator mutablePasswordValidator;
+  private FeedbackMessage feedbackMessage;
 
   @Autowired
-  private UserService userService;
+  public void setUserService(UserService userService) {
+    this.userService = userService;
+  }
+
   @Autowired
-  private Validator simplePasswordValidator;
+  public void setMutablePasswordValidator(MutablePasswordValidator mutablePasswordValidator) {
+    this.mutablePasswordValidator = mutablePasswordValidator;
+  }
+
   @Autowired
-  private Validator extendedPasswordValidator;
-  @Autowired
-  private Validator extendedTimeLockPasswordValidator;
-  @Autowired
-  private Validator timeLockPasswordValidator;
-  @Autowired
-  private Validator caesarCipherPasswordValidator;
+  public void setFeedbackMessage(FeedbackMessage feedbackMessage) {
+    this.feedbackMessage = feedbackMessage;
+  }
 
   @RequestMapping(value = { "", "/" })
   public ModelAndView handleCreateUser() {
-    return new ModelAndView("redirect:/app/createUser/" + TAB_URL_SIMPLE_PASWORD);
+    return new ModelAndView("redirect:/app/create/" + DEFAULT_SELECTED_TAB);
   }
 
-  @RequestMapping(value = { "/{selectedTab}" })
-  public ModelAndView handleCreateUserTab(@PathVariable String selectedTab) {
-    TabPanel tabPanel = new TabPanel();
-    tabPanel.addTab(buildTab("Simple Password", TAB_URL_SIMPLE_PASWORD, selectedTab));
-    tabPanel.addTab(buildTab("Extended Password", TAB_URL_EXTENDED_PASWORD, selectedTab));
-    tabPanel.addTab(buildTab("Caesar Cipher Password", TAB_URL_CAESAR_PASWORD, selectedTab));
-    tabPanel.addTab(buildTab("Extended Time Lock Password", TAB_URL_EXTENDED_TIMELOCK_PASWORD, selectedTab));
-    tabPanel.addTab(buildTab("Time Lock Password", TAB_URL_TIMELOCK_PASWORD, selectedTab));
-    tabPanel.setSelectedTab(selectedTab);
+  @RequestMapping(value = { "/{tab}" })
+  public ModelAndView handleCreateUserTab(@PathVariable String tab) {
+    TabPanel tabPanel = buildTabPanel(tab);
+    if (!tabPanel.isValidTab(tab)) {
+      return new ModelAndView("redirect:/app/create/");
+    }
 
     ModelAndView model = new ModelAndView("createUser");
-    model.getModelMap().put("tabs", tabPanel);
+    model.getModelMap().put("tabPanel", tabPanel);
     model.getModelMap().put("timeParameter", TimeParameter.values());
     model.getModelMap().put("SimplePasswordFormBean", new SimplePasswordFormBean());
     model.getModelMap().put("ExtendedPasswordFormBean", new ExtendedPasswordFormBean());
@@ -90,28 +95,27 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createSimplePassword")
-  public ModelAndView handleSimplePassword(@ModelAttribute("SimplePasswordFormBean") SimplePasswordFormBean formBean,
-      BindingResult result) {
+  public ModelAndView handleSimplePassword(@ModelAttribute("SimplePasswordFormBean") SimplePasswordFormBean formBean, BindingResult result) {
 
-    simplePasswordValidator.validate(formBean, result);
+    mutablePasswordValidator.validateSimplePassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_URL_SIMPLE_PASWORD);
+      return handleCreateUserTab(TAB_SIMPLE_PASWORD);
     }
 
     String username = formBean.getUsername();
     String password = formBean.getPassword();
     userService.saveUser(username, password);
 
+    feedbackMessage.info("user.created.successful", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedPassword")
-  public ModelAndView handleExtendedPassword(
-      @ModelAttribute("ExtendedPasswordFormBean") ExtendedPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handleExtendedPassword(@ModelAttribute("ExtendedPasswordFormBean") ExtendedPasswordFormBean formBean, BindingResult result) {
 
-    extendedPasswordValidator.validate(formBean, result);
+    mutablePasswordValidator.validateExtendedPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_URL_EXTENDED_PASWORD);
+      return handleCreateUserTab(TAB_EXTENDED_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -119,17 +123,22 @@ public class CreateUserController {
     TimeParameter parameter = formBean.getTimeParameter();
     MutablePassword mutablePassword = ExtendedPassword.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
+
+    // ModelAndView redirectView = new ModelAndView("redirect:/app/users/");
+    // redirectView.getModelMap().put(FlashScopeInterceptor.FEEDBACK_MESSAGE_ATT,
+    // "User successfully created.");
+    // return redirectView;
+    feedbackMessage.info("user.created.successful", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedTimeLockPassword")
-  public ModelAndView handleExtendedTimeLockPassword(
-      @ModelAttribute("ExtendedTimeLockPasswordFormBean") ExtendedTimeLockPasswordFormBean formBean,
+  public ModelAndView handleExtendedTimeLockPassword(@ModelAttribute("ExtendedTimeLockPasswordFormBean") ExtendedTimeLockPasswordFormBean formBean,
       BindingResult result) {
 
-    extendedTimeLockPasswordValidator.validate(formBean, result);
+    mutablePasswordValidator.validateExtendedTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_URL_EXTENDED_TIMELOCK_PASWORD);
+      return handleCreateUserTab(TAB_EXTENDED_TIMELOCK_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -138,20 +147,19 @@ public class CreateUserController {
     TimeParameter timeParameter = formBean.getTimeParameter();
     int start = formBean.getStart();
     int end = formBean.getEnd();
-    MutablePassword mutablePassword = ExtendedTimeLockPassword.createPassword(passwordText, extended, timeParameter,
-        start, end);
+    MutablePassword mutablePassword = ExtendedTimeLockPassword.createPassword(passwordText, extended, timeParameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
+    feedbackMessage.info("user.created.successful", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createTimeLockPassword")
-  public ModelAndView handleTimeLockPassword(
-      @ModelAttribute("TimeLockPasswordFormBean") TimeLockPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handleTimeLockPassword(@ModelAttribute("TimeLockPasswordFormBean") TimeLockPasswordFormBean formBean, BindingResult result) {
 
-    timeLockPasswordValidator.validate(formBean, result);
+    mutablePasswordValidator.validateTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_URL_TIMELOCK_PASWORD);
+      return handleCreateUserTab(TAB_TIMELOCK_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -162,16 +170,16 @@ public class CreateUserController {
     MutablePassword mutablePassword = TimeLockPassword.createPassword(passwordText, parameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
+    feedbackMessage.info("user.created.successful", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createCaesarCipherPassword")
-  public ModelAndView handleCaesarCipherPassword(
-      @ModelAttribute("CaesarCipherPasswordFormBean") CaesarCipherPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handleCaesarCipherPassword(@ModelAttribute("CaesarCipherPasswordFormBean") CaesarCipherPasswordFormBean formBean, BindingResult result) {
 
-    caesarCipherPasswordValidator.validate(formBean, result);
+    mutablePasswordValidator.validateCaesarCipherPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_URL_CAESAR_PASWORD);
+      return handleCreateUserTab(TAB_CAESAR_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -180,59 +188,23 @@ public class CreateUserController {
     MutablePassword mutablePassword = CaesarCipherPassword.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
 
+    feedbackMessage.info("user.created.successful", username);
     return new ModelAndView("redirect:/app/users/");
+  }
+
+  private TabPanel buildTabPanel(String selectedTab) {
+    TabPanel tabPanel = new TabPanel();
+    tabPanel.addTab(buildTab("Simple Password", TAB_SIMPLE_PASWORD, selectedTab));
+    tabPanel.addTab(buildTab("Extended Password", TAB_EXTENDED_PASWORD, selectedTab));
+    tabPanel.addTab(buildTab("Caesar Cipher Password", TAB_CAESAR_PASWORD, selectedTab));
+    tabPanel.addTab(buildTab("Extended Time Lock Password", TAB_EXTENDED_TIMELOCK_PASWORD, selectedTab));
+    tabPanel.addTab(buildTab("Time Lock Password", TAB_TIMELOCK_PASWORD, selectedTab));
+    tabPanel.setSelectedTab(selectedTab);
+    return tabPanel;
   }
 
   private Tab buildTab(String tabName, String tabUrl, String selectedTab) {
     return new Tab(tabName, tabUrl, selectedTab.equals(tabUrl));
-  }
-
-  public UserService getUserService() {
-    return userService;
-  }
-
-  public void setUserService(UserService userService) {
-    this.userService = userService;
-  }
-
-  public Validator getSimplePasswordValidator() {
-    return simplePasswordValidator;
-  }
-
-  public void setSimplePasswordValidator(Validator simplePasswordValidator) {
-    this.simplePasswordValidator = simplePasswordValidator;
-  }
-
-  public Validator getExtendedPasswordValidator() {
-    return extendedPasswordValidator;
-  }
-
-  public void setExtendedPasswordValidator(Validator extendedPasswordValidator) {
-    this.extendedPasswordValidator = extendedPasswordValidator;
-  }
-
-  public Validator getExtendedTimeLockPasswordValidator() {
-    return extendedTimeLockPasswordValidator;
-  }
-
-  public void setExtendedTimeLockPasswordValidator(Validator extendedTimeLockPasswordValidator) {
-    this.extendedTimeLockPasswordValidator = extendedTimeLockPasswordValidator;
-  }
-
-  public Validator getTimeLockPasswordValidator() {
-    return timeLockPasswordValidator;
-  }
-
-  public void setTimeLockPasswordValidator(Validator timeLockPasswordValidator) {
-    this.timeLockPasswordValidator = timeLockPasswordValidator;
-  }
-
-  public Validator getCaesarCipherPasswordValidator() {
-    return caesarCipherPasswordValidator;
-  }
-
-  public void setCaesarCipherPasswordValidator(Validator caesarCipherPasswordValidator) {
-    this.caesarCipherPasswordValidator = caesarCipherPasswordValidator;
   }
 
 }

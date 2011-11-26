@@ -20,19 +20,19 @@ import java.util.List;
 
 public class TabPanel {
 
-  private List<Tab> tabItems = new ArrayList<Tab>();
+  private List<Tab> tabs = new ArrayList<Tab>();
   private String selectedTab;
 
   public void addTab(Tab tab) {
-    tabItems.add(tab);
+    tabs.add(tab);
   }
 
-  public List<Tab> getTabItems() {
-    return tabItems;
+  public List<Tab> getTabs() {
+    return tabs;
   }
 
-  public void setTabItems(List<Tab> tabItems) {
-    this.tabItems = tabItems;
+  public void setTabs(List<Tab> tabs) {
+    this.tabs = tabs;
   }
 
   public String getSelectedTab() {
@@ -43,4 +43,12 @@ public class TabPanel {
     this.selectedTab = selectedTab;
   }
 
+  public boolean isValidTab(String selectedTab) {
+    for (Tab tab : tabs) {
+      if (tab.getUrlName().equalsIgnoreCase(selectedTab)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
