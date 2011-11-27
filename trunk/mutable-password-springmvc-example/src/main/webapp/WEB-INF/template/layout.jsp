@@ -7,7 +7,7 @@
 <head>
   <title>Mutable Password Wicket Example</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="/css/layout.css" />
+  <link rel="stylesheet" type="text/css" href="<c:url value="/css/layout.css" />" />
 </head>
 
 <body>
