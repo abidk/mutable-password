@@ -7,7 +7,7 @@
 <head>
   <title>Mutable Password Wicket Example</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="<c:url value='/layout.css' />" />
+  <link rel="stylesheet" type="text/css" href="/css/layout.css" />
 </head>
 
 <body>
@@ -18,22 +18,22 @@
       <div id="nav">
 	    <div id="button">
 		  <div id="buttonlink">
-		    <sec:authorize url="/app/">
-		      <a href="<c:url value="/app/users" />">Users</a>
+		    <sec:authorize url="/">
+		      <a href="<c:url value="/users" />">Users</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
-		    <sec:authorize url="/app/">
-		      <a href="<c:url value="/app/create" />">Create User</a>
+		    <sec:authorize url="/">
+		      <a href="<c:url value="/create" />">Create User</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
 		    <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
-		      <a href="<c:url value="/app/j_spring_security_logout" />">Logout</a>
+		      <a href="<c:url value="/j_spring_security_logout" />">Logout</a>
             </sec:authorize>
           </div>
 	    </div>
