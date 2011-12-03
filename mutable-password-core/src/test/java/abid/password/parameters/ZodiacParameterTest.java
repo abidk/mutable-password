@@ -15,13 +15,16 @@
  */
 package abid.password.parameters;
 
+import static org.junit.Assert.*;
+
 import java.util.Calendar;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 import abid.password.parameters.ZodiacParameter.DayMonth;
 import abid.password.parameters.ZodiacParameter.Zodiac;
 
-public class ZodiacParameterTest extends TestCase {
+public class ZodiacParameterTest {
 
   public static final int JAN = 0;
   public static final int FEB = 1;
@@ -36,9 +39,10 @@ public class ZodiacParameterTest extends TestCase {
   public static final int NOV = 10;
   public static final int DEC = 11;
 
-  public void testCapricorn() {
+  @Test
+  public void startEndDateShouldReturnCapricornZodiac() {
     assertEquals("Capricorn", Zodiac.CAPRICORN.getSign());
-    
+
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 22);
     startCal.set(Calendar.MONTH, DEC);
@@ -50,7 +54,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.CAPRICORN, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testAquarius() {
+  @Test
+  public void startEndDateShouldReturnAquariusZodiac() {
     assertEquals("Aquarius", Zodiac.AQUARIUS.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -64,7 +69,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.AQUARIUS, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testPisces() {
+  @Test
+  public void startEndDateShouldReturnPiscesZodiac() {
     assertEquals("Pisces", Zodiac.PISCES.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -78,7 +84,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.PISCES, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testAries() {
+  @Test
+  public void startEndDateShouldReturnAriesZodiac() {
     assertEquals("Aries", Zodiac.ARIES.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -92,7 +99,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.ARIES, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testTaurus() {
+  @Test
+  public void startEndDateShouldReturnTaurusZodiac() {
     assertEquals("Taurus", Zodiac.TAURUS.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -106,7 +114,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.TAURUS, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testGemini() {
+  @Test
+  public void startEndDateShouldReturnGeminiZodiac() {
     assertEquals("Gemini", Zodiac.GEMINI.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -120,7 +129,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.GEMINI, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testCancer() {
+  @Test
+  public void startEndDateShouldReturnCancerZodiac() {
     assertEquals("Cancer", Zodiac.CANCER.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -134,7 +144,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.CANCER, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testLeo() {
+  @Test
+  public void startEndDateShouldReturnLeoZodiac() {
     assertEquals("Leo", Zodiac.LEO.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -148,7 +159,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.LEO, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testVirgo() {
+  @Test
+  public void startEndDateShouldReturnVirgoZodiac() {
     assertEquals("Virgo", Zodiac.VIRGO.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -162,7 +174,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.VIRGO, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testLibra() {
+  @Test
+  public void startEndDateShouldReturnLibraZodiac() {
     assertEquals("Libra", Zodiac.LIBRA.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -176,7 +189,8 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.LIBRA, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testScorpio() {
+  @Test
+  public void startEndDateShouldReturnScorpioZodiac() {
     assertEquals("Scorpio", Zodiac.SCORPIO.getSign());
 
     Calendar startCal = Calendar.getInstance();
@@ -190,8 +204,10 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.SCORPIO, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testSagittarius() {
+  @Test
+  public void startEndDateShouldReturnSagittariusZodiac() {
     assertEquals("Sagittarius", Zodiac.SAGITTARIUS.getSign());
+    assertNotNull(Zodiac.SAGITTARIUS.toString());
 
     Calendar startCal = Calendar.getInstance();
     startCal.set(Calendar.DAY_OF_MONTH, 23);
@@ -204,29 +220,32 @@ public class ZodiacParameterTest extends TestCase {
     assertEquals(Zodiac.SAGITTARIUS, ZodiacParameter.getZodiac(endCal));
   }
 
-  public void testDayMonthInnerClass( ) {
+  @Test
+  public void testDayMonthAccessorMethods() {
     DayMonth dayMonth = new DayMonth(1, 2);
     assertEquals(1, dayMonth.getDay());
     assertEquals(2, dayMonth.getMonth());
   }
-  
-  public void testTodaysZodiac( ) {
-    Calendar today = Calendar.getInstance();
-    Zodiac todayZodiac  = ZodiacParameter.getZodiac(today);
+
+  @Test
+  public void getTodaysZodiacShouldReturnZodiacValueForToday() {
+    Zodiac todayZodiac = ZodiacParameter.getZodiac(Calendar.getInstance());
     assertEquals(todayZodiac, ZodiacParameter.getTodaysZodiac());
   }
-  
-  public void testNullValue() {
-    assertNull(ZodiacParameter.getZodiac(null));
+
+  @Test
+  public void getZodiacShouldReturnCorrectValue() {
+    Zodiac zodiac = ZodiacParameter.getZodiac(Calendar.getInstance());
+    assertNotNull( zodiac );
+    
+    zodiac = ZodiacParameter.getZodiac(null);
+    assertNull(zodiac);
   }
-  
-  public void testToStringIsNotNull( ) {
-    assertNotNull(Zodiac.SAGITTARIUS.toString());
-  }
-  
-  public void testAllZaodiacParameterToString( ) {
-    for( ZodiacParameter parameter : ZodiacParameter.values() ) {
+
+  @Test
+  public void testAllZodiacParameterToString() {
+    for (ZodiacParameter parameter : ZodiacParameter.values()) {
       assertNotNull(parameter.toString());
     }
   }
-} 
+}

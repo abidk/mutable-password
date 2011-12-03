@@ -67,10 +67,10 @@ public enum ZodiacParameter {
       int todayDay = date.get(Calendar.DAY_OF_MONTH);
       int todayMonth = date.get(Calendar.MONTH) + 1;
 
-      if (((todayMonth == zodiac.getEndDate().getMonth()) && (todayDay <= zodiac
-          .getEndDate().getDay()))
-          || ((todayMonth == zodiac.getStartDate().getMonth()) && (todayDay >= zodiac
-              .getStartDate().getDay()))) {
+      if (((todayMonth == zodiac.getEndDate().getMonth()) 
+          && (todayDay <= zodiac.getEndDate().getDay()))
+          || ((todayMonth == zodiac.getStartDate().getMonth()) 
+          && (todayDay >= zodiac.getStartDate().getDay()))) {
         result = zodiac;
         break;
       }
@@ -86,8 +86,7 @@ public enum ZodiacParameter {
   public static Map<String, Parameter> getParameters() {
     Map<String, Parameter> map = new HashMap<String, Parameter>();
     for (ZodiacParameter zodiacParameter : ZodiacParameter.values()) {
-      map.put(zodiacParameter.getParameter(), new Parameter(getTodaysZodiac()
-          .getSign()));
+      map.put(zodiacParameter.getParameter(), new Parameter(getTodaysZodiac().getSign()));
     }
 
     return map;

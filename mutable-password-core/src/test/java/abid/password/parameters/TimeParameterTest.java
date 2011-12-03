@@ -16,22 +16,24 @@
 
 package abid.password.parameters;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class TimeParameterTest extends TestCase {
+import org.junit.Test;
 
-  public void testWrongCalendarValue() {
+public class TimeParameterTest {
+
+  @Test
+  public void getCalendarValueShouldReturnCorrectValue() {
     int val = TimeParameter.getCalendarValue("madeUpType");
     assertEquals(-1, val);
-  }
 
-  public void testCalendarValue() {
-    int val = TimeParameter.getCalendarValue(TimeParameter.HOUR.getTextField());
+    val = TimeParameter.getCalendarValue(TimeParameter.HOUR.getTextField());
     assertEquals(TimeParameter.HOUR.getCalendarValue(), val);
   }
 
+  @Test
   public void testTimeParameterValues() {
     TimeParameter param = TimeParameter.HOUR;
-    param.toString();
+    assertTrue(param.toString().contains(param.getTextField()));
   }
 }

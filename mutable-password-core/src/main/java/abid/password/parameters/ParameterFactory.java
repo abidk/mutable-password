@@ -28,10 +28,10 @@ import java.util.Map;
  */
 public class ParameterFactory {
 
+  private static final Map<String, Parameter> parameters = new HashMap<String, Parameter>();
+
   private ParameterFactory() {
   }
-
-  private static Map<String, Parameter> parameters = new HashMap<String, Parameter>();
 
   /**
    * This method returns the latest parameter values for time, stock market, and
@@ -51,7 +51,8 @@ public class ParameterFactory {
   }
 
   /**
-   * Adds a parameter to be used for password evaluations.
+   * Adds a parameter to be used for password evaluations. Existing parameters
+   * are not overriden, and must be removed first.
    * 
    * @param key
    * @param parameter
@@ -63,6 +64,16 @@ public class ParameterFactory {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Will return the key object or null.
+   * 
+   * @param key
+   * @return Parameter
+   */
+  public static Parameter getParameter(String key) {
+    return parameters.get(key);
   }
 
   /**

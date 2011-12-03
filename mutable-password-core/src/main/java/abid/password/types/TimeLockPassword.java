@@ -71,23 +71,24 @@ public class TimeLockPassword extends MutablePassword {
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword)
-      throws PasswordException {
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
     String passwordText = getText();
     // check if passwords match first
     if (confirmPassword.equals(passwordText)) {
       try {
-        Evaluator evaluator = getEvaluator();
-        Map<String, Parameter> parameters = ParameterFactory
-            .getAllParamterData();
-        String evaluatedPassword = evaluator.evaluateExpression(
-            getExpression(), parameters);
-        return "true".equalsIgnoreCase(evaluatedPassword);
+        return isPasswordLocked();
       } catch (ParseException e) {
         throw new PasswordException(e);
       }
     }
     return false;
+  }
+
+  protected boolean isPasswordLocked() throws ParseException {
+    Evaluator evaluator = getEvaluator();
+    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+    String result = evaluator.evaluateExpression(getExpression(), parameters);
+    return "true".equalsIgnoreCase(result);
   }
 
   @Override
@@ -103,8 +104,7 @@ public class TimeLockPassword extends MutablePassword {
    * @param end
    * @return mutable block
    */
-  public static MutableBlock createMutableBlock(TimeParameter timeType,
-      int start, int end) {
+  public static MutableBlock createMutableBlock(TimeParameter timeType, int start, int end) {
     String type = timeType.getTextField();
     String expression = type + ">=" + start + "&&" + type + "<=" + end;
     MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
@@ -120,8 +120,7 @@ public class TimeLockPassword extends MutablePassword {
    * @param end
    * @return mutable password
    */
-  public static MutablePassword createPassword(String text,
-      TimeParameter timeType, int start, int end) {
+  public static MutablePassword createPassword(String text, TimeParameter timeType, int start, int end) {
     MutableBlock block = createMutableBlock(timeType, start, end);
     return new TimeLockPassword(text, block);
   }

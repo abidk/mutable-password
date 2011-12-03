@@ -46,13 +46,4 @@ public class Parameter implements Serializable {
   public Object getValue() {
     return value;
   }
-
-  /**
-   * Set the new parameter object.
-   * 
-   * @param value
-   */
-  public void setValue(Object value) {
-    this.value = value;
-  }
 }

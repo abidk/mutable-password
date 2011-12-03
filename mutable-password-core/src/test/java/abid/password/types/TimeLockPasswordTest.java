@@ -16,64 +16,55 @@
 
 package abid.password.types;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Calendar;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
-public class TimeLockPasswordTest extends TestCase {
+public class TimeLockPasswordTest {
 
-  public void testTimeLockPassword() throws PasswordException {
-    String confirmPassword = "abid";
-    MutablePassword mutatingPassword = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
-    assertTrue(mutatingPassword.confirmPassword(confirmPassword));
+  @Test
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordException {
+    MutablePassword password = TimeLockPassword.createPassword("pass1", TimeParameter.HOUR, 0, 24);
+    assertTrue(password.confirmPassword("pass1"));
+    assertFalse(password.confirmPassword("pass123"));
 
-    MutablePassword mutatingPassword2 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, -2, -1);
-    assertFalse(mutatingPassword2.confirmPassword(confirmPassword));
+    password = TimeLockPassword.createPassword("pass1", TimeParameter.HOUR, -2, -1);
+    assertFalse(password.confirmPassword("pass1"));
+    assertFalse(password.confirmPassword("pass123"));
 
-    String wrongPassword = "diba";
-    MutablePassword mutatingPassword3 = TimeLockPassword.createPassword("abid", TimeParameter.HOUR, 0, 24);
-    assertFalse(mutatingPassword3.confirmPassword(wrongPassword));
+    password = TimeLockPassword.createPassword("pass1", TimeParameter.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.SATURDAY);
+    assertTrue(password.confirmPassword("pass1"));
+    assertFalse(password.confirmPassword("pass123"));
   }
 
-  public void testEvaluatedPassword() throws ParseException, PasswordException {
-    String passwordText = "abid";
-    MutablePassword password = TimeLockPassword.createPassword(passwordText, TimeParameter.HOUR, 0, 24);
+  @Test
+  public void getEvaluatedPasswordShouldReturnCorrectValue() throws ParseException, PasswordException {
+    MutablePassword password = TimeLockPassword.createPassword("pass1", TimeParameter.HOUR, 0, 24);
+    assertEquals("pass1", password.getEvaluatedPassword());
 
-    // test the evaluated password
-    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
-  }
-  
-  public void testDayOfWeekPassword() throws PasswordException {
-    // Calendar.SUNDAY = 1
-    // Calendar.MONDAY = 2
-    // Calendar.TUESDAY = 3
-    // Calendar.WEDNESDAY = 4
-    // Calendar.THURSDAY = 5
-    // Calendar.FRIDAY = 6
-    // Calendar.SATURDAY = 7
-    String confirmPassword = "a";
-    String wrongPassword = "wrongDayOfWeek";
-    MutablePassword mutatingPassword = TimeLockPassword.createPassword(confirmPassword, TimeParameter.DAY_OF_WEEK, Calendar.SUNDAY, Calendar.SATURDAY);
-    assertTrue(mutatingPassword.confirmPassword(confirmPassword));
-    assertFalse(mutatingPassword.confirmPassword(wrongPassword));
+    password = TimeLockPassword.createPassword("pass1", TimeParameter.HOUR, -2, -1);
+    assertEquals("pass1", password.getEvaluatedPassword());
   }
 
-  public void testPasswordException() {
-    String passwordText = "abid";
-    String confirmPassword = "abid";
-    MutableBlock mutableBlock = NewTimeLockPassword.createMutableBlock(TimeParameter.HOUR, "a", "b");
-    MutablePassword mutatingPassword = new TimeLockPassword(passwordText, mutableBlock);
-
-    try {
-      mutatingPassword.confirmPassword(confirmPassword);
-    } catch (PasswordException e) {
-      return;
-    }
-    fail("Should not reach this!");
+  @Test(expected = PasswordException.class)
+  public void confirmPasswordPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws PasswordException {
+    MutableBlock mutableBlock = TimeLockPassword.createMutableBlock(TimeParameter.HOUR, 1, 2);
+    TimeLockPassword password = new TimeLockPassword("pass", mutableBlock) {
+      @Override
+      protected boolean isPasswordLocked() throws ParseException {
+        throw new ParseException(new Exception("some exception"));
+      }
+    };
+    password.confirmPassword("pass");
   }
 }

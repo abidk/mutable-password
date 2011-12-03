@@ -15,84 +15,71 @@
  */
 package abid.password.types;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.StatefulMutablePassword;
 
-public class RotatingPasswordTest extends TestCase {
+public class RotatingPasswordTest {
 
-  public void testPasswordType() {
+  @Test
+  public void getPasswordTypeShouldReturnCorrectType() {
     MutablePassword password = RotatingPassword.createPassword("pass", "123456");
     assertEquals(RotatingPassword.PASSWORD_TYPE, password.getPasswordType());
   }
 
-  public void testPasswordFactory() throws PasswordInstantiationException {
+  @Test
+  public void passwordFactoryShouldReturnCorrectType() throws PasswordInstantiationException {
     MutablePassword password = RotatingPassword.createPassword("pass", "123456");
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
-    assertEquals(RotatingPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
+    assertEquals(RotatingPassword.class, unknownPassword.getClass());
   }
 
-  public void testPasswordWithoutState() throws PasswordException {
+  @Test
+  public void confirmPasswordShouldValidateCorrectly() throws PasswordException {
     StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
     assertEquals(0, password.getState());
     assertTrue(password.confirmPassword("pass1"));
-  }
 
-  public void testPasswordWithState() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(0);
     assertTrue(password.confirmPassword("pass1"));
-  }
 
-  public void testPasswordWithState2() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(1);
     assertTrue(password.confirmPassword("pass2"));
-  }
 
-  public void testPasswordWithState3() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(5);
     assertTrue(password.confirmPassword("pass6"));
-  }
 
-  public void testPasswordWithNegativeState() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(-1);
     assertTrue(password.confirmPassword("pass2"));
-  }
 
-  public void testPasswordWithNegativeState2() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(-5);
     assertTrue(password.confirmPassword("pass6"));
-  }
 
-  public void testPasswordWithStateBiggerThanMaxLength() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    // state is bigger than password length, should loop correctly
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(12);
     assertTrue(password.confirmPassword("pass1"));
-  }
 
-  public void testPasswordWithWrongConfirmPassword() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(0);
     assertFalse(password.confirmPassword("pass99"));
-  }
 
-  public void testPasswordWithWrongStaticText() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", "123456");
+    password = RotatingPassword.createPassword("pass", "123456");
     password.setState(0);
     assertFalse(password.confirmPassword("somethingElse1"));
-  }
 
-  /**
-   * Passing null will be treated as a string value. Do we want this????
-   */
-  public void testPasswordWithoutText() throws PasswordException {
-    StatefulMutablePassword password = RotatingPassword.createPassword("pass", null);
+    // TODO Passing null will be treated as a string value. Do we want this????
+    password = RotatingPassword.createPassword("pass", null);
     password.setState(0);
     assertTrue(password.confirmPassword("passn"));
   }

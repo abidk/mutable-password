@@ -16,68 +16,53 @@
 
 package abid.password.types;
 
-import java.lang.reflect.InvocationTargetException;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 import abid.password.Password;
 import abid.password.PasswordException;
 
-public class SimplePasswordTest extends TestCase {
+public class SimplePasswordTest {
 
-  public void testSimplePassword() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
-    String password = "abid";
-    Password dynamicPassword = PasswordFactory.getInstance(password);
+  @Test
+  public void passwordFactoryShouldReturnSimplePassword() throws PasswordInstantiationException {
+    Password password = PasswordFactory.getInstance("pass1");
+    assertEquals(SimplePassword.class, password.getClass());
 
-    String confirmPassword = "abid";
-    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
+    password = PasswordFactory.getInstance("pass[");
+    assertEquals(SimplePassword.class, password.getClass());
 
-    String wrongPassword = "bcje";
-    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
+    password = PasswordFactory.getInstance("pass[]");
+    assertEquals(SimplePassword.class, password.getClass());
+
+    password = PasswordFactory.getInstance("pass[{]");
+    assertEquals(SimplePassword.class, password.getClass());
+
+    password = PasswordFactory.getInstance("ab[id}]");
+    assertEquals(SimplePassword.class, password.getClass());
   }
 
-  public void testSimplePassword2() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
-    String password = "abid[";
-    Password dynamicPassword = PasswordFactory.getInstance(password);
+  @Test
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordInstantiationException, PasswordException {
+    Password password = new SimplePassword("pass1");
+    assertTrue(password.confirmPassword("pass1"));
+    assertFalse(password.confirmPassword("pass123"));
 
-    String confirmPassword = "abid[";
-    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
+    password = new SimplePassword("pass[");
+    assertTrue(password.confirmPassword("pass["));
+    assertFalse(password.confirmPassword("pass"));
 
-    String wrongPassword = "bcje";
-    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
-  }
+    password = new SimplePassword("pass[]");
+    assertTrue(password.confirmPassword("pass[]"));
+    assertFalse(password.confirmPassword("pass"));
 
-  public void testSimplePassword3() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
-    Password dynamicPassword = PasswordFactory.getInstance("abid[]");
+    password = new SimplePassword("pass[{]");
+    assertTrue(password.confirmPassword("pass[{]"));
+    assertFalse(password.confirmPassword("pass"));
 
-    String confirmPassword = "abid[]";
-    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
-
-    String wrongPassword = "bcje";
-    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
-  }
-
-  public void testSimplePassword4() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
-    Password dynamicPassword = PasswordFactory.getInstance("abid[{]");
-
-    String confirmPassword = "abid[{]";
-    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
-
-    String wrongPassword = "bcje";
-    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
-  }
-
-  public void testSimplePassword5() throws IllegalArgumentException, SecurityException, PasswordInstantiationException, IllegalAccessException,
-      InvocationTargetException, NoSuchMethodException, PasswordException {
-    Password dynamicPassword = PasswordFactory.getInstance("ab[id}]");
-
-    String confirmPassword = "ab[id}]";
-    assertTrue(dynamicPassword.confirmPassword(confirmPassword));
-
-    String wrongPassword = "bcje";
-    assertFalse(dynamicPassword.confirmPassword(wrongPassword));
+    password = new SimplePassword("ab[id}]");
+    assertTrue(password.confirmPassword("ab[id}]"));
+    assertFalse(password.confirmPassword("bcje"));
   }
 }

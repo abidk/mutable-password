@@ -15,35 +15,18 @@
  */
 package abid.password.parameters;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ParameterTest extends TestCase {
+import org.junit.Test;
 
-  public void testStringParameter( ) {
-    String value = "someValue";
-    Parameter parameter = new Parameter(value);
-    assertEquals(value, parameter.getValue());
-  }
-  
-  public void testIntegerParameter( ) {
-    int value = 99;
-    Parameter parameter = new Parameter(value);
-    assertEquals(value, parameter.getValue());
-  }
-  
-  public void testNumberParameter( ) {
-    Number value = 99;
-    Parameter parameter = new Parameter(value);
-    assertEquals(value, parameter.getValue());
-  }
-  
-  public void testParameterObject( ) {
-    int value = 99;
-    Parameter parameter = new Parameter(value);
-    assertEquals(value, parameter.getValue());
-    
-    int newValue = 99;
-    parameter.setValue(newValue);
-    assertEquals(newValue, parameter.getValue());
+public class ParameterTest {
+
+  @Test
+  public void getValueShouldReturnParameterValue() {
+    Parameter parameter = new Parameter("someValue");
+    assertEquals("someValue", parameter.getValue());
+
+    parameter = new Parameter(new Integer(99));
+    assertEquals(99, parameter.getValue());
   }
 }

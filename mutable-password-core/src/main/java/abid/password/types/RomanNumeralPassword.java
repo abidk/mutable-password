@@ -26,7 +26,6 @@ import abid.password.evaluator.ParseException;
 import abid.password.parameters.Parameter;
 import abid.password.parameters.ParameterFactory;
 import abid.password.parameters.TimeParameter;
-import abid.password.util.StringUtils;
 
 /**
  * Replaces the number value with Roman numerals.
@@ -55,11 +54,7 @@ public class RomanNumeralPassword extends MutablePassword {
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
     String evaluation = evaluator.evaluateExpression(getExpression(), parameters);
 
-    String romanValue = evaluation;
-    if (StringUtils.containsOnlyNumbers(evaluation)) {
-      long value = Long.parseLong(evaluation);
-      romanValue = getRoman(value);
-    }
+    String romanValue = getRoman(Long.parseLong(evaluation));
     String evaluatedPassword = getText() + romanValue;
     return evaluatedPassword;
   }
