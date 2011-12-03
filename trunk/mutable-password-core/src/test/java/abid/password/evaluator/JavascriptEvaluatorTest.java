@@ -39,11 +39,8 @@ public class JavascriptEvaluatorTest {
 
   @Test
   public void evaluateExpressionShouldReturnCorrectResult() throws ParseException {
-    String result = evaluator.evaluateExpression("2009+2009.2", parameters);
-    assertEquals("4018.2", result);
-    
-    result = evaluator.evaluateExpression("(2+2+2)/6", parameters);
-    assertEquals("1", result);
+    assertEquals("4018.2", evaluator.evaluateExpression("2009+2009.2", parameters));
+    assertEquals("1", evaluator.evaluateExpression("(2+2+2)/6", parameters));
   }
 
   @Test(expected = ParseException.class)
@@ -58,7 +55,7 @@ public class JavascriptEvaluatorTest {
 
   @Test
   public void evaluateExpressionShouldEvaluateExpressionWhenExpressionIsEscaped() throws ParseException {
-    evaluator.evaluateExpression("'a'", parameters);
+    assertEquals("a", evaluator.evaluateExpression("'a'", parameters) );
   }
 
 }

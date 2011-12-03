@@ -77,12 +77,11 @@ public class ParameterFactory {
   }
 
   /**
-   * Adds all the parameter to be used for password evaluations.
+   * Adds all the parameter to be used for password evaluations. This will
+   * override existing values.
    * 
-   * @param newParams
    */
   public static void addAllParameters(Map<String, Parameter> newParams) {
-    // hmm, will override existing values
     parameters.putAll(newParams);
   }
 

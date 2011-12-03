@@ -65,7 +65,7 @@ public class RotatingPasswordTest {
     password.setState(-5);
     assertTrue(password.confirmPassword("pass6"));
 
-    // state is bigger than password length, should loop correctly
+    // state is bigger than password length, should still loop correctly
     password = RotatingPassword.createPassword("pass", "123456");
     password.setState(12);
     assertTrue(password.confirmPassword("pass1"));

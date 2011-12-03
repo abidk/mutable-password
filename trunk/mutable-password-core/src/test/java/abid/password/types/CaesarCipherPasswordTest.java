@@ -62,6 +62,16 @@ public class CaesarCipherPasswordTest {
     assertTrue(password.confirmPassword("g"));
     assertFalse(password.confirmPassword("f"));
 
+    password = CaesarCipherPassword.createPassword("^^");
+    password.setState(1);
+    assertTrue(password.confirmPassword("^^"));
+    assertFalse(password.confirmPassword("^"));
+    
+    password = CaesarCipherPassword.createPassword(" ");
+    password.setState(1);
+    assertTrue(password.confirmPassword(" "));
+    assertFalse(password.confirmPassword("  "));
+    
     // test digits
     password = CaesarCipherPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6");
     password.setState(1);
@@ -73,6 +83,42 @@ public class CaesarCipherPasswordTest {
     password.setState(1);
     assertTrue(password.confirmPassword("6bcdefghijklmn^opqrstuvwxyza6"));
     assertFalse(password.confirmPassword("6abcdefghijklm^nopqrstuvwxyz6"));
+
+    // uppercase
+    password = CaesarCipherPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    password.setState(1);
+    assertTrue(password.confirmPassword("BCDEFGHIJKLMNOPQRSTUVWXYZA"));
+    assertFalse(password.confirmPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+
+    password = CaesarCipherPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6");
+    password.setState(1);
+    assertTrue(password.confirmPassword("6BCDEFGHIJKLM6NOPQRSTUVWXYZA6"));
+    assertFalse(password.confirmPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6"));
+
+    password = CaesarCipherPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz");
+    password.setState(1);
+    assertTrue(password.confirmPassword("BcDeFgHiJkLmNoPqRsTuVwXyZa"));
+    assertFalse(password.confirmPassword("AbCdEfGhIjKlMnOpQrStUvWxYz"));
+
+    password = CaesarCipherPassword.createPassword("6z6");
+    password.setState(1);
+    assertTrue(password.confirmPassword("6a6"));
+    assertFalse(password.confirmPassword("6z6"));
+
+    password = CaesarCipherPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^");
+    password.setState(1);
+    assertTrue(password.confirmPassword("^BcDeFgHiJkLm^NoPqRsTuVwXyZa^"));
+    assertFalse(password.confirmPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^"));
+
+    password = CaesarCipherPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6");
+    password.setState(1);
+    assertTrue(password.confirmPassword("6BcDeFgHiJkLm^NoPqRsTuVwXyZa6"));
+    assertFalse(password.confirmPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6"));
+    
+    password = CaesarCipherPassword.createPassword("ab^id");
+    password.setState(1);
+    assertTrue(password.confirmPassword("bc^je"));
+    assertFalse(password.confirmPassword("ab^id"));
   }
 
   @Test
@@ -105,80 +151,6 @@ public class CaesarCipherPasswordTest {
     password = CaesarCipherPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6");
     password.setState(1);
     assertEquals("6bcdefghijklmn^opqrstuvwxyza6", password.getEvaluatedPassword());
-  }
-
-  @Test
-  public void testUpperCasePassword() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    password.setState(1);
-
-    String confirmPassword = "BCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  @Test
-  public void testUpperCaseNumberCombination() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6");
-    password.setState(1);
-
-    String confirmPassword = "6BCDEFGHIJKLM6NOPQRSTUVWXYZA6";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  @Test
-  public void testUppercaseLowercaseCombo() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz");
-    password.setState(1);
-    assertTrue(password.confirmPassword("BcDeFgHiJkLmNoPqRsTuVwXyZa"));
-    assertFalse(password.confirmPassword("AbCdEfGhIjKlMnOpQrStUvWxYz"));
-
-    password = CaesarCipherPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    password.setState(1);
-    assertTrue(password.confirmPassword("bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA"));
-    assertFalse(password.confirmPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
-  }
-
-  @Test
-  public void testLowercasePassword() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("az");
-    password.setState(1);
-    assertTrue(password.confirmPassword("ba"));
-    assertFalse(password.confirmPassword("az"));
-
-    password = CaesarCipherPassword.createPassword("6z6");
-    password.setState(1);
-    assertTrue(password.confirmPassword("6a6"));
-    assertFalse(password.confirmPassword("6z6"));
-  }
-
-  @Test
-  public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^");
-    password.setState(1);
-    assertTrue(password.confirmPassword("^BcDeFgHiJkLm^NoPqRsTuVwXyZa^"));
-    assertFalse(password.confirmPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^"));
-  }
-
-  @Test
-  public void testUppercaseLowercaseNumberSymbolCombo() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6");
-    password.setState(1);
-    assertTrue(password.confirmPassword("6BcDeFgHiJkLm^NoPqRsTuVwXyZa6"));
-    assertFalse(password.confirmPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6"));
-  }
-
-  @Test
-  public void testShiftNonAlphabeticalCorrectPassword() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ab^id");
-    password.setState(1);
-    assertTrue(password.confirmPassword("bc^je"));
-    assertFalse(password.confirmPassword("ab^id"));
   }
 
   @Test

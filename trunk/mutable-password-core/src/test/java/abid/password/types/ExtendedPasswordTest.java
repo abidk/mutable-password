@@ -27,7 +27,6 @@ import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.Parameter;
 import abid.password.parameters.TimeParameter;
@@ -109,18 +108,14 @@ public class ExtendedPasswordTest {
   }
 
   @Test
-  public void testNullMutableBlock() {
-    String passwordText = "pass";
-    MutablePassword password = new ExtendedPassword(passwordText, null);
+  public void badlyFormedExpressionShouldParseCorrectly() {
+    MutablePassword password = new ExtendedPassword("pass", null);
     assertNull(password.getExpression());
     assertNull(password.getType());
     assertNull(password.getMutableBlock());
-    assertEquals(passwordText, password.getText());
-  }
+    assertEquals("pass", password.getText());
 
-  @Test
-  public void testBrokenMutableExpression() {
-    ExtendedPassword password = new ExtendedPassword("abidextendedTimeLock{year}]");
+    password = new ExtendedPassword("abidextendedTimeLock{year}]");
     assertNull(password.getExpression());
     assertNull(password.getType());
     assertNull(password.getMutableBlock());
@@ -128,10 +123,8 @@ public class ExtendedPasswordTest {
   }
 
   @Test
-  public void testAccessorAndMutators() {
+  public void setEvaluatorShouldReturnCorrectSetEvaluator() {
     MutablePassword password = new ExtendedPassword("pass", null);
-    assertEquals(JavascriptEvaluator.class, password.getEvaluator().getClass());
-
     password.setEvaluator(new NewEvalutator());
     assertEquals(NewEvalutator.class, password.getEvaluator().getClass());
   }
