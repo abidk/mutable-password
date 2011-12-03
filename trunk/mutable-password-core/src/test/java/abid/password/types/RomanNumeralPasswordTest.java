@@ -15,103 +15,122 @@
  */
 package abid.password.types;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
-public class RomanNumeralPasswordTest extends TestCase {
+public class RomanNumeralPasswordTest {
 
-  public void testPasswordType() {
+  @Test
+  public void getPasswordTypeShouldReturnCorrectType() {
     MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
     assertEquals("romanNumeral", password.getPasswordType());
   }
 
-  public void testPasswordFactory() throws PasswordInstantiationException {
+  @Test
+  public void passwordPasswordShouldReturnCorrectPasswordType() throws PasswordInstantiationException {
     MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
     assertEquals(RomanNumeralPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
+    assertEquals(RomanNumeralPassword.class, unknownPassword.getClass());
   }
 
-  public void testPasswordEvaluation() throws ParseException {
+  @Test
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordException {
+    Password password = RomanNumeralPassword.createPassword("pass", 1000);
+    assertTrue(password.confirmPassword("passM"));
+
+    password = RomanNumeralPassword.createPassword("pass", 900);
+    assertTrue(password.confirmPassword("passCM"));
+
+    password = RomanNumeralPassword.createPassword("pass", 500);
+    assertTrue(password.confirmPassword("passD"));
+
+    password = RomanNumeralPassword.createPassword("pass", 400);
+    assertTrue(password.confirmPassword("passCD"));
+
+    password = RomanNumeralPassword.createPassword("pass", 100);
+    assertTrue(password.confirmPassword("passC"));
+
+    password = RomanNumeralPassword.createPassword("pass", 90);
+    assertTrue(password.confirmPassword("passXC"));
+
+    password = RomanNumeralPassword.createPassword("pass", 10);
+    assertTrue(password.confirmPassword("passX"));
+
+    password = RomanNumeralPassword.createPassword("pass", 9);
+    assertTrue(password.confirmPassword("passIX"));
+
+    password = RomanNumeralPassword.createPassword("pass", 5);
+    assertTrue(password.confirmPassword("passV"));
+
+    password = RomanNumeralPassword.createPassword("pass", 4);
+    assertTrue(password.confirmPassword("passIV"));
+
+    password = RomanNumeralPassword.createPassword("pass", 1);
+    assertTrue(password.confirmPassword("passI"));
+
+    password = RomanNumeralPassword.createPassword("pass", 0);
+    assertTrue(password.confirmPassword("pass"));
+
+    password = RomanNumeralPassword.createPassword("pass", 0);
+    assertTrue(password.confirmPassword("pass"));
+  }
+
+  @Test
+  public void getEvaluatedPasswordShouldReturnCorrectEvaluation() throws ParseException {
     MutablePassword password = RomanNumeralPassword.createPassword("pass", TimeParameter.YEAR);
     assertNotNull(password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 1000);
+    assertEquals("passM", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 900);
+    assertEquals("passCM", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 500);
+    assertEquals("passD", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 400);
+    assertEquals("passCD", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 100);
+    assertEquals("passC", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 90);
+    assertEquals("passXC", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 10);
+    assertEquals("passX", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 9);
+    assertEquals("passIX", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 5);
+    assertEquals("passV", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 4);
+    assertEquals("passIV", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 1);
+    assertEquals("passI", password.getEvaluatedPassword());
+
+    password = RomanNumeralPassword.createPassword("pass", 0);
+    assertEquals("pass", password.getEvaluatedPassword());
   }
-
-  public void testRomanNumeralM() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 1000);
-    assertEquals("-M", password.getEvaluatedPassword());
+  
+  @Test(expected = PasswordException.class)
+  public void confirmPasswordPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws PasswordException {
+    MutablePassword password = new RomanNumeralPassword("pass[romanNumeral{a}]");
+    password.confirmPassword("pass");
   }
-
-  public void testRomanNumeralCM() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 900);
-    assertEquals("-CM", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralD() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 500);
-    assertEquals("-D", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralCD() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 400);
-    assertEquals("-CD", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralC() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 100);
-    assertEquals("-C", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralXC() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 90);
-    assertEquals("-XC", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralX() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 10);
-    assertEquals("-X", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralIX() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 9);
-    assertEquals("-IX", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralV() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 5);
-    assertEquals("-V", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralIV() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 4);
-    assertEquals("-IV", password.getEvaluatedPassword());
-  }
-
-  public void testRomanNumeralI() throws ParseException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 1);
-    assertEquals("-I", password.getEvaluatedPassword());
-  }
-
-  public void testPasswordContainsNoRomanNumeral() throws PasswordException {
-    MutablePassword password = RomanNumeralPassword.createPassword("-", 0);
-    assertTrue(password.confirmPassword("-"));
-  }
-
-  //public void testPasswordContainsNoRomanNumeral2() throws PasswordException {
-  //  MutablePassword password = RomanNumeralPassword.createPassword("-", 'a'");
-  //  assertTrue(password.confirmPassword("-a"));
-  //}
-
-  //public void testUneascapedExpression() {
-  //  MutablePassword password = RomanNumeralPassword.createPassword("-", "a");
-  //  try {
-  //    assertTrue(password.confirmPassword("-a"));
-  //  } catch (PasswordException e) {
-  //    return;
-  //  }
-  //  assert false;
-  //}
+  
 }

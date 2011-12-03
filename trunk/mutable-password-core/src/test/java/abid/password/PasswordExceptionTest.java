@@ -16,25 +16,24 @@
 
 package abid.password;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PasswordExceptionTest extends TestCase {
+import org.junit.Test;
 
-  private String exceptionMsg = "some exception";
+public class PasswordExceptionTest {
 
+  private final String exceptionMsg = "some exception";
+
+  @Test
   public void testPasswordException() {
-    try {
-      throw new PasswordException(new Exception(exceptionMsg));
-    } catch (Exception e) {
-      assertEquals(exceptionMsg, e.getCause().getMessage());
-    }
+    PasswordException exception = new PasswordException(exceptionMsg);
+    assertEquals(exceptionMsg, exception.getMessage());
+    
+    exception = new PasswordException(new Exception(exceptionMsg));
+    assertEquals(exceptionMsg, exception.getCause().getMessage());
 
-    try {
-      throw new PasswordException("some text", new Exception(exceptionMsg));
-    } catch (Exception e) {
-      assertEquals("some text", e.getMessage());
-      assertEquals(exceptionMsg, e.getCause().getMessage());
-    }
-
+    exception = new PasswordException("some text", new Exception(exceptionMsg));
+    assertEquals("some text", exception.getMessage());
+    assertEquals(exceptionMsg, exception.getCause().getMessage());
   }
 }

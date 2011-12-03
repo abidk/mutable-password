@@ -16,99 +16,98 @@
 
 package abid.password.types;
 
-import junit.framework.TestCase;
-import abid.password.MutableBlock;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.StatefulMutablePassword;
 import abid.password.evaluator.ParseException;
 import abid.password.parameters.TimeParameter;
 
-public class CaesarCipherPasswordTest extends TestCase {
+public class CaesarCipherPasswordTest {
 
-  public void testPasswordObject() throws PasswordInstantiationException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abid");
-    password.setState(1);
+  @Test
+  public void passwordFactoryShouldReturnCorrectPasswordType() throws PasswordInstantiationException {
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("pass");
     Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
-
+    assertEquals(CaesarCipherPassword.class, unknownPassword.getClass());
     assertEquals(CaesarCipherPassword.PASSWORD_TYPE, ((StatefulMutablePassword) unknownPassword).getType());
   }
 
-  public void testShiftPassword() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abid");
-    password.setState(1);
-
-    String confirmPassword = "bcje";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "abid";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testEvaluatedPassword() throws ParseException, PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    String passwordText = "abid";
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword(passwordText, timeType);
-
-    // test the evaluated password
-    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
-  }
-
-  public void testLowerCasePassword() throws PasswordException {
+  @Test
+  public void confirmPasswordShouldValidateInputCorrectly() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("z");
+    password.setState(1);
+    assertTrue(password.confirmPassword("a"));
+    assertFalse(password.confirmPassword("b"));
+
+    // test state value
+    password = CaesarCipherPassword.createPassword("z");
     password.setState(2);
+    assertTrue(password.confirmPassword("b"));
+    assertFalse(password.confirmPassword("a"));
 
-    String confirmPassword = "b";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "a";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowerCasePassword2() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("zyxwvutsrqponmlkjihgfedcba");
+    // test lowercase letters
+    password = CaesarCipherPassword.createPassword("zyxwvutsrqponmlkjihgfedcba");
     password.setState(1);
+    assertTrue(password.confirmPassword("azyxwvutsrqponmlkjihgfedcb"));
+    assertFalse(password.confirmPassword("zyxwvutsrqponmlkjihgfedcba"));
 
-    String confirmPassword = "azyxwvutsrqponmlkjihgfedcb";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "zyxwvutsrqponmlkjihgfedcba";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowerCaseOneCharPass() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("f");
+    // test single character
+    password = CaesarCipherPassword.createPassword("f");
     password.setState(1);
+    assertTrue(password.confirmPassword("g"));
+    assertFalse(password.confirmPassword("f"));
 
-    String confirmPassword = "g";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "f";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowerCaseNumberCombination() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6");
+    // test digits
+    password = CaesarCipherPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6");
     password.setState(1);
+    assertTrue(password.confirmPassword("6bcdefghijklmn6opqrstuvwxyza6"));
+    assertFalse(password.confirmPassword("6abcdefghijklm6nopqrstuvwxyz6"));
 
-    String confirmPassword = "6bcdefghijklmn6opqrstuvwxyza6";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "6abcdefghijklm6nopqrstuvwxyz6";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowerCaseSymbolNumberCombination() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6");
+    // test symbols
+    password = CaesarCipherPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6");
     password.setState(1);
-
-    String confirmPassword = "6bcdefghijklmn^opqrstuvwxyza6";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "6abcdefghijklm^nopqrstuvwxyz6";
-    assertFalse(password.confirmPassword(wrongPassword));
+    assertTrue(password.confirmPassword("6bcdefghijklmn^opqrstuvwxyza6"));
+    assertFalse(password.confirmPassword("6abcdefghijklm^nopqrstuvwxyz6"));
   }
 
+  @Test
+  public void getEvaluatedPasswordShouldReturnCorrectValue() throws ParseException, PasswordException {
+    StatefulMutablePassword password = CaesarCipherPassword.createPassword("z");
+    password.setState(1);
+    assertEquals("a", password.getEvaluatedPassword());
+
+    // test state value
+    password = CaesarCipherPassword.createPassword("z");
+    password.setState(2);
+    assertEquals("b", password.getEvaluatedPassword());
+
+    // test lowercase letters
+    password = CaesarCipherPassword.createPassword("zyxwvutsrqponmlkjihgfedcba");
+    password.setState(1);
+    assertEquals("azyxwvutsrqponmlkjihgfedcb", password.getEvaluatedPassword());
+
+    // test single character
+    password = CaesarCipherPassword.createPassword("f");
+    password.setState(1);
+    assertEquals("g", password.getEvaluatedPassword());
+
+    // test digits
+    password = CaesarCipherPassword.createPassword("6abcdefghijklm6nopqrstuvwxyz6");
+    password.setState(1);
+    assertEquals("6bcdefghijklmn6opqrstuvwxyza6", password.getEvaluatedPassword());
+
+    // test symbols
+    password = CaesarCipherPassword.createPassword("6abcdefghijklm^nopqrstuvwxyz6");
+    password.setState(1);
+    assertEquals("6bcdefghijklmn^opqrstuvwxyza6", password.getEvaluatedPassword());
+  }
+
+  @Test
   public void testUpperCasePassword() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     password.setState(1);
@@ -120,6 +119,7 @@ public class CaesarCipherPasswordTest extends TestCase {
     assertFalse(password.confirmPassword(wrongPassword));
   }
 
+  @Test
   public void testUpperCaseNumberCombination() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("6ABCDEFGHIJKL6MNOPQRSTUVWXYZ6");
     password.setState(1);
@@ -131,114 +131,72 @@ public class CaesarCipherPasswordTest extends TestCase {
     assertFalse(password.confirmPassword(wrongPassword));
   }
 
+  @Test
   public void testUppercaseLowercaseCombo() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("AbCdEfGhIjKlMnOpQrStUvWxYz");
     password.setState(1);
+    assertTrue(password.confirmPassword("BcDeFgHiJkLmNoPqRsTuVwXyZa"));
+    assertFalse(password.confirmPassword("AbCdEfGhIjKlMnOpQrStUvWxYz"));
 
-    String confirmPassword = "BcDeFgHiJkLmNoPqRsTuVwXyZa";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "AbCdEfGhIjKlMnOpQrStUvWxYz";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowercaseUppercase() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    password = CaesarCipherPassword.createPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
     password.setState(1);
-
-    String confirmPassword = "bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    assertFalse(password.confirmPassword(wrongPassword));
+    assertTrue(password.confirmPassword("bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA"));
+    assertFalse(password.confirmPassword("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
   }
 
+  @Test
   public void testLowercasePassword() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("az");
     password.setState(1);
+    assertTrue(password.confirmPassword("ba"));
+    assertFalse(password.confirmPassword("az"));
 
-    String confirmPassword = "ba";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "az";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testLowercasePassword2() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("6z6");
+    password = CaesarCipherPassword.createPassword("6z6");
     password.setState(1);
-
-    String confirmPassword = "6a6";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "6z6";
-    assertFalse(password.confirmPassword(wrongPassword));
+    assertTrue(password.confirmPassword("6a6"));
+    assertFalse(password.confirmPassword("6z6"));
   }
 
+  @Test
   public void testUppercaseLowercaseSymbolCombo() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^");
     password.setState(1);
-
-    String confirmPassword = "^BcDeFgHiJkLm^NoPqRsTuVwXyZa^";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "^AbCdEfGhIjKl^MnOpQrStUvWxYz^";
-    assertFalse(password.confirmPassword(wrongPassword));
+    assertTrue(password.confirmPassword("^BcDeFgHiJkLm^NoPqRsTuVwXyZa^"));
+    assertFalse(password.confirmPassword("^AbCdEfGhIjKl^MnOpQrStUvWxYz^"));
   }
 
+  @Test
   public void testUppercaseLowercaseNumberSymbolCombo() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6");
     password.setState(1);
-
-    String confirmPassword = "6BcDeFgHiJkLm^NoPqRsTuVwXyZa6";
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "6AbCdEfGhIjKl^MnOpQrStUvWxYz6";
-    assertFalse(password.confirmPassword(wrongPassword));
+    assertTrue(password.confirmPassword("6BcDeFgHiJkLm^NoPqRsTuVwXyZa6"));
+    assertFalse(password.confirmPassword("6AbCdEfGhIjKl^MnOpQrStUvWxYz6"));
   }
 
+  @Test
   public void testShiftNonAlphabeticalCorrectPassword() throws PasswordException {
     StatefulMutablePassword password = CaesarCipherPassword.createPassword("ab^id");
     password.setState(1);
-
-    String confirmPassword = "bc^je";
-    assertTrue(password.confirmPassword(confirmPassword));
+    assertTrue(password.confirmPassword("bc^je"));
+    assertFalse(password.confirmPassword("ab^id"));
   }
 
-  public void testShiftNonAlphabeticalWrongPassword() throws PasswordException {
-    StatefulMutablePassword password = CaesarCipherPassword.createPassword("ab^id");
-    password.setState(1);
-
-    String wrongPassword = "ab^id";
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
+  @Test
   public void testShiftPasswordUsingTime() throws PasswordException {
-    // shift password every hour
     TimeParameter timeType = TimeParameter.DAY_OF_WEEK;
     CaesarCipherPassword shiftPassword = (CaesarCipherPassword) CaesarCipherPassword.createPassword("abid", timeType);
-
     String shiftedPassword = shiftPassword.getShiftedPassword(timeType.getCalendarValue());
-    // System.out.println("shift by: " + timeType.getCalendarValue() +
-    // " shifted value: " + shiftedPassword);
     assertTrue(shiftPassword.confirmPassword(shiftedPassword));
-
-    String wrongPassword = "abid";
-    assertFalse(shiftPassword.confirmPassword(wrongPassword));
+    assertFalse(shiftPassword.confirmPassword("abid"));
   }
 
-  public void testPasswordException() {
-    String passwordText = "abid";
-    MutableBlock mutableBlock = NewCaesarCipherPassword.createMutableBlock("a");
-    CaesarCipherPassword password = new CaesarCipherPassword(passwordText + mutableBlock);
-
-    String wrongPassword = "abid";
-    try {
-      password.confirmPassword(wrongPassword);
-    } catch (PasswordException e) {
-      return;
-    }
-    fail("Should not reach here");
+  @Test(expected = PasswordException.class)
+  public void confirmPasswordShouldThrowPasswordExceptionWhenExpressionIsMalformed() throws PasswordException {
+    MutablePassword password = new CaesarCipherPassword("ab^id") {
+      public String getEvaluatedPassword() throws ParseException {
+        throw new ParseException(new Exception("exception"));
+      };
+    };
+    password.confirmPassword("something");
   }
-
 }

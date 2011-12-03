@@ -16,17 +16,15 @@
 
 package abid.password.evaluator;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class ParseExceptionTest extends TestCase {
+import org.junit.Test;
 
-  private String exceptionMsg = "some exception";
+public class ParseExceptionTest {
 
-  public void testParseException() {
-    try {
-      throw new ParseException(new Exception(exceptionMsg));
-    } catch (Exception e) {
-      assertEquals(exceptionMsg, e.getCause().getMessage());
-    }
+  @Test
+  public void testParseExceptionReturnsCorrectMessage() {
+    ParseException exception = new ParseException(new Exception("some exception"));
+    assertEquals("some exception", exception.getCause().getMessage());
   }
 }

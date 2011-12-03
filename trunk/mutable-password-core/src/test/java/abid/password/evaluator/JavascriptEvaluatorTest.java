@@ -16,47 +16,48 @@
 
 package abid.password.evaluator;
 
+import static org.junit.Assert.*;
+
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+
 import abid.password.parameters.Parameter;
 import abid.password.parameters.ParameterFactory;
 
-public class JavascriptEvaluatorTest extends TestCase {
+public class JavascriptEvaluatorTest {
 
-  public void testScript() throws ParseException {
-    JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    evaluator.evaluateExpression("2009+2009.2", parameters);
+  private JavascriptEvaluator evaluator;
+  private Map<String, Parameter> parameters;
+
+  @Before
+  public void setUp() {
+    evaluator = new JavascriptEvaluator();
+    parameters = ParameterFactory.getAllParamterData();
   }
-  
-  public void testScriptException( ) {
-    JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    String result = null;
-    try {
-      Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-      result = evaluator.evaluateExpression("2009(2009.2", parameters);
-    } catch (ParseException e) {
-      //e.printStackTrace();
-    }
-    assertNull(result);
+
+  @Test
+  public void evaluateExpressionShouldReturnCorrectResult() throws ParseException {
+    String result = evaluator.evaluateExpression("2009+2009.2", parameters);
+    assertEquals("4018.2", result);
+    
+    result = evaluator.evaluateExpression("(2+2+2)/6", parameters);
+    assertEquals("1", result);
   }
-  
-  public void testNonEscapedExpressionThrowsException()  {
-    JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    try {
-      // this should fail to parse
-      evaluator.evaluateExpression("a", parameters);
-    } catch (ParseException e) {
-      return;
-    }
-    fail("Should not reach here");
+
+  @Test(expected = ParseException.class)
+  public void evaluateExpressionShouldThrowExceptionWhenExpressionIsMalformed() throws ParseException {
+    evaluator.evaluateExpression("2009(2009.2", parameters);
   }
-  
-  public void testEscapedExpression() throws ParseException  {
-    JavascriptEvaluator evaluator = new JavascriptEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
+
+  @Test(expected = ParseException.class)
+  public void evaluateExpressionShouldThrowExceptionWhenExpressionIsNonEscaped() throws ParseException {
+    evaluator.evaluateExpression("a", parameters);
+  }
+
+  @Test
+  public void evaluateExpressionShouldEvaluateExpressionWhenExpressionIsEscaped() throws ParseException {
     evaluator.evaluateExpression("'a'", parameters);
   }
 

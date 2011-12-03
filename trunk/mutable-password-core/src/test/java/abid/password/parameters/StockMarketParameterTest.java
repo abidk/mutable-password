@@ -16,41 +16,45 @@
 
 package abid.password.parameters;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class StockMarketParameterTest extends TestCase {
+public class StockMarketParameterTest {
 
-  public void testStockMarketName() {
+  @Test
+  public void getMarketShouldReturnMarketName() {
     StockMarketParameter marketParameter = StockMarketParameter.DOW;
     assertEquals("dow", marketParameter.getMarket());
 
-    StockMarketParameter ftseMarketParameter = StockMarketParameter.FTSE100;
-    assertEquals("ftse100", ftseMarketParameter.getMarket());
+    marketParameter = StockMarketParameter.FTSE100;
+    assertEquals("ftse100", marketParameter.getMarket());
   }
 
-  public void testStockMarketIndexValue() {
-    StockMarketParameter marketParameter = StockMarketParameter.DOW;
+  @Test
+  public void indexValueShouldReturnMarketIndex() {
     try {
-      marketParameter.getIndexValue();
+      StockMarketParameter marketParameter = StockMarketParameter.DOW;
+      assertNotNull(marketParameter.getIndexValue());
     } catch (IOException e) {
       // this might occur because it cannot connect to yahoo
     }
 
-    StockMarketParameter ftseMarketParameter = StockMarketParameter.FTSE100;
     try {
-      ftseMarketParameter.getIndexValue();
+      StockMarketParameter ftseMarketParameter = StockMarketParameter.FTSE100;
+      assertNotNull(ftseMarketParameter.getIndexValue());
     } catch (IOException e) {
       // this might occur because it cannot connect to yahoo
     }
   }
 
-  public void testStockMarkerParameterValues() {
-    Map<String, Parameter> marketValues;
+  @Test
+  public void getParametersShouldReturnStockMarketParameters() {
     try {
-      marketValues = StockMarketParameter.getParameters();
+      Map<String, Parameter> marketValues = StockMarketParameter.getParameters();
       assertNotNull(marketValues);
       for (StockMarketParameter marketParameter : StockMarketParameter.values()) {
         marketValues.containsKey(marketParameter.getMarket());
@@ -59,8 +63,9 @@ public class StockMarketParameterTest extends TestCase {
       // this might occur because it cannot connect to yahoo
     }
   }
-  
-  public void testToString( ) {
+
+  @Test
+  public void toStringShouldReturnMarketName() {
     assertEquals("ftse100", StockMarketParameter.FTSE100.toString());
     assertEquals("dow", StockMarketParameter.DOW.toString());
   }

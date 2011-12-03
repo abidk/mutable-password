@@ -16,192 +16,132 @@
 
 package abid.password.types;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import java.util.Map;
+
+import org.junit.Test;
+
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
+import abid.password.evaluator.Evaluator;
+import abid.password.evaluator.JavascriptEvaluator;
 import abid.password.evaluator.ParseException;
+import abid.password.parameters.Parameter;
 import abid.password.parameters.TimeParameter;
 import abid.password.parameters.ZodiacParameter;
-import abid.password.parameters.ZodiacParameter.Zodiac;
 
-public class ExtendedPasswordTest extends TestCase {
+public class ExtendedPasswordTest {
 
-  public void testPasswordType() {
-    MutablePassword password = ExtendedPassword.createPassword("abid", "year(year");
-    assertEquals("extend", password.getPasswordType());
-  }
-
-  public void testPasswordObject() throws PasswordInstantiationException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    MutablePassword password = ExtendedPassword.createPassword("abid", timeType);
-    Password unknownPassword = PasswordFactory.getInstance(password.getPassword());
-
+  @Test
+  public void passwordFactoryShouldReturnCorrectPasswordType() throws PasswordInstantiationException {
+    Password unknownPassword = PasswordFactory.getInstance(ExtendedPassword.createPassword("abid", TimeParameter.YEAR).getPassword());
+    assertEquals(ExtendedPassword.class, unknownPassword.getClass());
     assertEquals(ExtendedPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
   }
 
-  public void testExtendedPassword() throws PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("abid", timeType);
+  @Test
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordException, ParseException {
+    MutablePassword password = ExtendedPassword.createPassword("pass1", TimeParameter.YEAR);
+    assertTrue(password.confirmPassword("pass1" + TimeParameter.YEAR.getCalendarValue()));
+    assertFalse(password.confirmPassword("pass1a" + TimeParameter.YEAR.getCalendarValue()));
 
-    String confirmPassword = "abid" + timeType.getCalendarValue();
-    assertTrue(password.confirmPassword(confirmPassword));
+    password = ExtendedPassword.createPassword("pass1", "year+year");
+    assertTrue(password.confirmPassword("pass1" + (TimeParameter.YEAR.getCalendarValue() + TimeParameter.YEAR.getCalendarValue())));
+    assertFalse(password.confirmPassword("pass1" + TimeParameter.YEAR.getCalendarValue()));
 
-    String wrongPassword = "abida" + timeType.getCalendarValue();
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
+    password = ExtendedPassword.createPassword("pass", "((year+year)*2)-10");
+    assertTrue(password
+        .confirmPassword("pass" + ((TimeParameter.YEAR.getCalendarValue() + TimeParameter.YEAR.getCalendarValue()) * 2 - 10)));
 
-  public void testEvaluatedPassword() throws ParseException, PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    String passwordText = "abid";
-    MutablePassword password = ExtendedPassword.createPassword(passwordText, timeType);
+    password = ExtendedPassword.createPassword("pass", "zodiac");
+    assertTrue(password.confirmPassword("pass" + ZodiacParameter.getTodaysZodiac().getSign()));
+    assertFalse(password.confirmPassword("pass"));
 
-    // test the evaluated password
-    assertTrue(password.confirmPassword(password.getEvaluatedPassword()));
-  }
+    password = ExtendedPassword.createPassword("ab^id", TimeParameter.YEAR);
+    assertTrue(password.confirmPassword("ab^id" + TimeParameter.YEAR.getCalendarValue()));
+    assertFalse(password.confirmPassword("abid" + TimeParameter.YEAR.getCalendarValue()));
 
-  public void testExtendedPassword2() throws PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("abid", "year+year");
+    password = new ExtendedPassword("abid", ExtendedPassword.createMutableBlock(TimeParameter.HOUR));
+    assertTrue(password.confirmPassword("abid" + TimeParameter.HOUR.getCalendarValue()));
 
-    String confirmPassword = "abid" + (timeType.getCalendarValue() + timeType.getCalendarValue());
-    assertTrue(password.confirmPassword(confirmPassword));
-
-    String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertFalse(password.confirmPassword(wrongPassword));
-  }
-
-  public void testAlgebraExtendedPassword() throws ParseException {
-    String algebra = "((year+year)*2)-10";
-    MutablePassword algebraPassword = ExtendedPassword.createPassword("pAss", algebra);
-    //System.out.println(algebraPassword.getEvaluatedPassword());
-    assertNotNull(algebraPassword.getEvaluatedPassword());
-  }
-  
-  public void testAlgebraPasswordWithZodiacParameter() throws ParseException {
-    String algebra = "(year-10)+zodiac";
-    MutablePassword algebraPassword = ExtendedPassword.createPassword("pAss", algebra);
-    //System.out.println(algebraPassword.getEvaluatedPassword());
-    assertNotNull(algebraPassword.getEvaluatedPassword());
-  }
-
-  public void testAlgebraPasswordThatChangesHourly() throws ParseException {
-    String x = TimeParameter.YEAR.getTextField();
-    String y = TimeParameter.HOUR.getTextField();
-    String algebra = x + "-" + y;
-    MutablePassword algebraPassword = ExtendedPassword.createPassword("pAss", algebra);
-    //System.out.println(algebraPassword.getEvaluatedPassword());
-    assertNotNull(algebraPassword.getEvaluatedPassword());
-  }
-
-  public void testPasswordWithZodiacParameter() throws PasswordException, ParseException {
-    MutablePassword password = ExtendedPassword.createPassword("abid", ZodiacParameter.ZODIAC.getParameter());
-    //System.out.println("Password: " + password.getPassword());
-    //System.out.println("Evaluated: " + password.getEvaluatedPassword());
-
-    Zodiac todayZodiac = ZodiacParameter.getTodaysZodiac();
-    String confirmPassword = "abid" + todayZodiac.getSign();
-    //System.out.println("Confirm: " + confirmPassword);
+    password = ExtendedPassword.createPassword("ab^id", TimeParameter.YEAR);
+    String confirmPassword = "ab^id" + TimeParameter.YEAR.getCalendarValue();
     assertTrue(password.confirmPassword(confirmPassword));
   }
 
-  public void testExtendedPassword3() throws PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("abid", "year+1.5");
+  @Test
+  public void getEvaluatedPasswordShouldReturnCorrectEvaludatyion() throws ParseException {
+    MutablePassword password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR);
+    assertEquals("pass2011", password.getEvaluatedPassword());
 
-    String confirmPassword = "abid" + (timeType.getCalendarValue() + 1.5);
-    assertTrue(password.confirmPassword(confirmPassword));
+    password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR.getTextField() + "-" + TimeParameter.YEAR.getTextField());
+    assertEquals("pass0", password.getEvaluatedPassword());
 
-    String wrongPassword = "abid" + timeType.getCalendarValue();
-    assertFalse(password.confirmPassword(wrongPassword));
+    // algebra
+    password = ExtendedPassword.createPassword("pass", "((year+year)*2)-10");
+    assertEquals("pass8034", password.getEvaluatedPassword());
+
+    // algebra and zodiac
+    password = ExtendedPassword.createPassword("pass", "(year-10)+zodiac");
+    assertEquals("pass2001Sagittarius", password.getEvaluatedPassword());
   }
 
-  /*
-   * This method is well dodgy. Yahoo will throw a http response 99 sometimes.
-   */
-  /*
-   * public void testExtendedPasswordStockMarketParameter() throws
-   * PasswordException { try { StockMarketParameter stock =
-   * StockMarketParameter.FTSE100; Password password =
-   * ExtendedPassword.createPassword("abid", stock.getMarket());
-   * 
-   * // System.out.println(dynamicPassword.getPassword());
-   * 
-   * String confirmPassword = "abid" + stock.getIndexValue(); //
-   * System.out.println(confirmPassword); assertEquals(true,
-   * password.confirmPassword(confirmPassword));
-   * 
-   * String wrongPassword = "abid"; assertEquals(false,
-   * password.confirmPassword(wrongPassword)); } catch (Exception e) {
-   * e.printStackTrace(); } }
-   */
-
-  public void testMutableBlock() {
+  @Test
+  public void createMutableBlockShouldReturnCorrectParameters() {
     MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);
     assertEquals(TimeParameter.HOUR.getTextField(), mutableBlock.getExpression());
     assertEquals(ExtendedPassword.PASSWORD_TYPE, mutableBlock.getType());
   }
 
-  public void testMutableBlockConstruction() throws PasswordException {
-    MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);
-    ExtendedPassword extendedPassword = new ExtendedPassword("abid", mutableBlock);
-
-    String confirmPassword = "abid" + TimeParameter.HOUR.getCalendarValue();
-    assertTrue(extendedPassword.confirmPassword(confirmPassword));
+  @Test(expected = PasswordException.class)
+  public void confirmPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws PasswordException {
+    Password password = ExtendedPassword.createPassword("pass", "year(year");
+    password.confirmPassword("pass");
   }
 
-  public void testNonAlphbecticalWrongPassword() throws PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("ab^id", timeType);
-
-    String confirmPassword = "abid" + timeType.getCalendarValue();
-    assertFalse(password.confirmPassword(confirmPassword));
+  @Test(expected = ParseException.class)
+  public void getEvaluatedPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws ParseException {
+    MutablePassword password = ExtendedPassword.createPassword("pass", "year(year");
+    password.getEvaluatedPassword();
   }
 
-  public void testNonAlphbecticalCorrectPassword() throws PasswordException {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("ab^id", timeType);
-
-    String confirmPassword = "ab^id" + timeType.getCalendarValue();
-    assertTrue(password.confirmPassword(confirmPassword));
+  @Test
+  public void testNullMutableBlock() {
+    String passwordText = "pass";
+    MutablePassword password = new ExtendedPassword(passwordText, null);
+    assertNull(password.getExpression());
+    assertNull(password.getType());
+    assertNull(password.getMutableBlock());
+    assertEquals(passwordText, password.getText());
   }
 
-  public void testPasswordException() {
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("abid", "year(year");
+  @Test
+  public void testBrokenMutableExpression() {
+    ExtendedPassword password = new ExtendedPassword("abidextendedTimeLock{year}]");
+    assertNull(password.getExpression());
+    assertNull(password.getType());
+    assertNull(password.getMutableBlock());
+    assertNull(password.getText());
+  }
 
-    String confirmPassword = "abid" + (timeType.getCalendarValue() + timeType.getCalendarValue());
-    boolean isAuthenticated = false;
-    try {
-      isAuthenticated = password.confirmPassword(confirmPassword);
-    } catch (PasswordException e) {
+  @Test
+  public void testAccessorAndMutators() {
+    MutablePassword password = new ExtendedPassword("pass", null);
+    assertEquals(JavascriptEvaluator.class, password.getEvaluator().getClass());
+
+    password.setEvaluator(new NewEvalutator());
+    assertEquals(NewEvalutator.class, password.getEvaluator().getClass());
+  }
+
+  public class NewEvalutator implements Evaluator {
+
+    @Override
+    public String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException {
+      return null;
     }
-    assertFalse(isAuthenticated);
   }
 
-  public void testPasswordString() throws ParseException {
-    Password password = ExtendedPassword.createPassword("abid", "year+year");
-    assertNotNull(password.getPassword());
-
-    MutablePassword mutablePassword = (MutablePassword) password;
-    assertNotNull(mutablePassword.getPassword());
-    assertNotNull(mutablePassword.getEvaluatedPassword());
-  }
-
-  public void testBrokenPasswordStringThrowsException() {
-    Password password = ExtendedPassword.createPassword("abid", "year(year");
-    assertNotNull(password.getPassword());
-
-    MutablePassword mutablePassword = (MutablePassword) password;
-    assertNotNull(mutablePassword.getPassword());
-
-    try {
-      assertNotNull(mutablePassword.getEvaluatedPassword());
-    } catch (ParseException e) {
-      // e.printStackTrace();
-      return;
-    }
-    fail("Should not reach here");
-  }
 }

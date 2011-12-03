@@ -15,17 +15,20 @@
  */
 package abid.password.util;
 
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class StringUtilsTest extends TestCase {
+public class StringUtilsTest {
 
-  public void testContainsOnlyNumbers() {
+  @Test
+  public void containsOnlyNumbersShouldReturnCorrectValue() {
     assertTrue(StringUtils.containsOnlyNumbers("123"));
     assertFalse(StringUtils.containsOnlyNumbers(" "));
     assertFalse(StringUtils.containsOnlyNumbers(null));
@@ -35,18 +38,25 @@ public class StringUtilsTest extends TestCase {
     assertFalse(StringUtils.containsOnlyNumbers("123a"));
   }
 
-  public void testStreamToString() throws IOException {
-    String testStr = "test";
-    InputStream in = new ByteArrayInputStream(testStr.getBytes());
-    String convertedStr = StringUtils.convertStreamToString(in);
-    in.close();
-    assertEquals(testStr, convertedStr);
+  @Test
+  public void convertStreamToStringShouldConvertStreamToString()
+      throws IOException {
+    String inputText = "test";
+    InputStream in = null;
+    try {
+      in = new ByteArrayInputStream(inputText.getBytes());
+      String convertedStr = StringUtils.convertStreamToString(in);
+      assertEquals(inputText, convertedStr);
+    } finally {
+      if (in != null) {
+        in.close();
+      }
+    }
   }
 
-  /*
-   * Workaround to get coverage on a private constructor.
-   */
-  public void testPrivateConstructor() throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+  @Test
+  public void testPrivateConstructor() throws IllegalArgumentException,
+      InstantiationException, IllegalAccessException, InvocationTargetException {
     final Class<?> cls = StringUtils.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);

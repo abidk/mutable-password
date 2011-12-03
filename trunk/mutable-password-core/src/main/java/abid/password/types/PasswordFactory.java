@@ -55,24 +55,33 @@ public class PasswordFactory {
    * @throws PasswordInstantiationException
    */
   public static Password getInstance(String password) throws PasswordInstantiationException {
-    MutableBlock block = new MutableBlock(password);
     try {
+      MutableBlock block = new MutableBlock(password);
       if (block.getType() != null) {
-        Class<?>[] argTypes = { String.class };
-        Object[] argObjects = { password };
-        for (Class<?> cls : passwordTypes) {
-          Constructor<?> ct = cls.getConstructor(argTypes);
-          MutablePassword mutatingPassword = (MutablePassword) ct.newInstance(argObjects);
-          if (block.getType().equals(mutatingPassword.getPasswordType())) {
-            return mutatingPassword;
-          }
+        MutablePassword mutablePassword = createPasswordTypeObject(block, password);
+        if (mutablePassword != null) {
+          return mutablePassword;
         }
       }
     } catch (Exception e) {
       throw new PasswordInstantiationException("Unable to construct password object.", e);
     }
+    
     // if a type cannot be found then it must be a simple password
     return new SimplePassword(password);
+  }
+
+  protected static MutablePassword createPasswordTypeObject(MutableBlock block, String password) throws Exception {
+    Class<?>[] argTypes = { String.class };
+    Object[] argObjects = { password };
+    for (Class<?> cls : passwordTypes) {
+      Constructor<?> ct = cls.getConstructor(argTypes);
+      MutablePassword mutatingPassword = (MutablePassword) ct.newInstance(argObjects);
+      if (block.getType().equals(mutatingPassword.getPasswordType())) {
+        return mutatingPassword;
+      }
+    }
+    return null;
   }
 
   /**
