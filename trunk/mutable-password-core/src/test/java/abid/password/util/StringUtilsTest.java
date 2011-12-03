@@ -21,7 +21,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 
@@ -39,8 +38,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void convertStreamToStringShouldConvertStreamToString()
-      throws IOException {
+  public void convertStreamToStringShouldConvertStreamToString() throws IOException {
     String inputText = "test";
     InputStream in = null;
     try {
@@ -55,8 +53,7 @@ public class StringUtilsTest {
   }
 
   @Test
-  public void testPrivateConstructor() throws IllegalArgumentException,
-      InstantiationException, IllegalAccessException, InvocationTargetException {
+  public void testPrivateConstructor() throws Exception {
     final Class<?> cls = StringUtils.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
