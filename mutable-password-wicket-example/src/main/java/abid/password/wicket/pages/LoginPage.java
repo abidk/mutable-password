@@ -54,6 +54,10 @@ public class LoginPage extends BasePage {
   @Inject
   private UserService userService;
 
+  public void setUserService(UserService userService) {
+    this.userService = userService;
+  }
+  
   public LoginPage() {
     LoginPanel loginPanel = new LoginPanel("loginPanel");
     add(loginPanel);
@@ -131,9 +135,8 @@ public class LoginPage extends BasePage {
               setResponsePage(WebApplication.get().getHomePage());
             }
           } catch (UserException e) {
-            error( "Please enter the correct username/password from the users table below. Your password may have changed whilst you were typing it!");
+            error("Please enter the correct username/password from the users table below. Your password may have changed whilst you were typing it!");
           }
-          
 
         }
       };
@@ -151,12 +154,6 @@ public class LoginPage extends BasePage {
     }
   }
 
-  public UserService getUserService() {
-    return userService;
-  }
 
-  public void setUserService(UserService userService) {
-    this.userService = userService;
-  }
 
 }

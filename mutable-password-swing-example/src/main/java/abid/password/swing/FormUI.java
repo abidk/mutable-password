@@ -25,7 +25,6 @@ import abid.password.swing.form.CreateUserForm;
 import abid.password.swing.form.LoginForm;
 
 import com.jeta.forms.components.panel.FormPanel;
-import com.jeta.forms.gui.common.FormException;
 
 public class FormUI extends JPanel {
 
@@ -45,35 +44,32 @@ public class FormUI extends JPanel {
     this.setLayout(new BorderLayout());
   }
 
-  public void init() throws FormException {
+  public void init() {
     loginForm = new LoginForm(application);
-    loginForm.loadForm();
     createUserForm = new CreateUserForm(application);
-    createUserForm.loadForm();
   }
-  
-  public void loadLoginForm( ) {
+
+  public void loadLoginForm() {
     loginForm.refreshComponent();
     FormPanel form = loginForm.getForm();
     loadForm(form);
   }
 
-  public void loadCreateUserForm( ) {
+  public void loadCreateUserForm() {
     createUserForm.refreshComponent();
     FormPanel form = createUserForm.getForm();
     loadForm(form);
   }
-  
+
   public void refreshLoginForm() {
     loginForm.refreshComponent();
   }
-  
+
   private void loadForm(FormPanel form) {
     removeAll();
     add(form);
     form.setVisible(false);
     form.setVisible(true);
   }
-
 
 }

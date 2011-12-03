@@ -44,7 +44,7 @@ public class TimeLockPasswordField extends FormComponentPanel<String> {
 
   public TimeLockPasswordField(String id, IModel<String> model) {
     super(id, model);
-    passwordField = new TextField<String>("password", new Model<String>(""));;
+    passwordField = new TextField<String>("password", new Model<String>(""));
     passwordField.setRequired(true);
     add(passwordField);
     

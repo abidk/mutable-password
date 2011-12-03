@@ -199,12 +199,11 @@ public class CreateUserController {
     tabPanel.addTab(buildTab("Caesar Cipher Password", TAB_CAESAR_PASWORD, selectedTab));
     tabPanel.addTab(buildTab("Extended Time Lock Password", TAB_EXTENDED_TIMELOCK_PASWORD, selectedTab));
     tabPanel.addTab(buildTab("Time Lock Password", TAB_TIMELOCK_PASWORD, selectedTab));
-    tabPanel.setSelectedTab(selectedTab);
     return tabPanel;
   }
 
   private Tab buildTab(String tabName, String tabUrl, String selectedTab) {
-    return new Tab(tabName, tabUrl, selectedTab.equals(tabUrl));
+    return new Tab(tabName, tabUrl, tabUrl.equalsIgnoreCase(selectedTab));
   }
 
 }

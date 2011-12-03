@@ -55,7 +55,7 @@ public class CreateUserPage extends BasePage {
   private PasswordType passwordTypeSelection = PasswordType.SIMPLE;
 
   public CreateUserPage(PageParameters pageParameter) {
-    if ( !pageParameter.get(PASSWORD_TYPE_SELECTION).isEmpty() ) {
+    if (!pageParameter.get(PASSWORD_TYPE_SELECTION).isEmpty()) {
       String selection = pageParameter.get(PASSWORD_TYPE_SELECTION).toString();
       passwordTypeSelection = PasswordType.valueOf(selection);
     }
@@ -135,7 +135,7 @@ public class CreateUserPage extends BasePage {
       };
 
       IModel<PasswordType> passwordTypeModel = new Model<PasswordType>(passwordTypeSelection);
-      PasswordTypeChoice passwordChoice = new PasswordTypeChoice("passwordTypes", passwordTypeModel ) {
+      PasswordTypeChoice passwordChoice = new PasswordTypeChoice("passwordTypes", passwordTypeModel) {
         private static final long serialVersionUID = 1L;
 
         @Override

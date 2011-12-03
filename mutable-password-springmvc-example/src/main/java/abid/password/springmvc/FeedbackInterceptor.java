@@ -34,7 +34,9 @@ public class FeedbackInterceptor implements WebRequestInterceptor {
   }
 
   public void preHandle(WebRequest request) throws Exception {
-    final MessageSourceResolvable[] messages = feedbackMessage.getMessages().toArray(new MessageSourceResolvable[0]);
+    MessageSourceResolvable[] messages = feedbackMessage.getMessages().toArray(
+        new MessageSourceResolvable[feedbackMessage.getMessages().size()]);
+
     request.setAttribute(FEEDBACK_MESSAGE_ATT, messages, RequestAttributes.SCOPE_REQUEST);
     feedbackMessage.reset();
   }

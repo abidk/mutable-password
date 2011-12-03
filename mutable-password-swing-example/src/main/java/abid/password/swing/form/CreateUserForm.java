@@ -19,7 +19,6 @@ package abid.password.swing.form;
 import abid.password.swing.Application;
 
 import com.jeta.forms.components.panel.FormPanel;
-import com.jeta.forms.gui.common.FormException;
 
 public class CreateUserForm extends AbstractForm {
 
@@ -31,13 +30,15 @@ public class CreateUserForm extends AbstractForm {
   private AbstractTab romanPasswordTab;
   private AbstractTab rotatingPasswordTab;
 
-  public CreateUserForm(Application application) throws FormException {
+  public CreateUserForm(Application application) {
     super(application, "CreateUser.jfrm");
-    this.application = application;
+    loadForm();
   }
 
   @Override
-  public void initComponents(FormPanel form) {
+  public void initComponents() {
+    FormPanel form = getForm();
+    Application application = getApplication();
     simplePasswordTab = new SimplePasswordTab(application, form);
     extendedPasswordTab = new ExtendedPasswordTab(application, form);
     extendedTimeLockPasswordTab = new ExtendedTimeLockPasswordTab(application, form);

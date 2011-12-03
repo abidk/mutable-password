@@ -21,7 +21,6 @@ import java.util.List;
 public class TabPanel {
 
   private List<Tab> tabs = new ArrayList<Tab>();
-  private String selectedTab;
 
   public void addTab(Tab tab) {
     tabs.add(tab);
@@ -35,12 +34,13 @@ public class TabPanel {
     this.tabs = tabs;
   }
 
-  public String getSelectedTab() {
-    return selectedTab;
-  }
-
-  public void setSelectedTab(String selectedTab) {
-    this.selectedTab = selectedTab;
+  public Tab getActiveTab() {
+    for (Tab tab : tabs) {
+      if (tab.isActive()) {
+        return tab;
+      }
+    }
+    return null;
   }
 
   public boolean isValidTab(String selectedTab) {

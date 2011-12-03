@@ -16,11 +16,8 @@
 
 package abid.password.swing.model;
 
-import java.io.Serializable;
+public class User {
 
-public class User implements Serializable {
-
-  private static final long serialVersionUID = 1L;
   private String username;
   private String password;
   private int state;
@@ -48,24 +45,4 @@ public class User implements Serializable {
   public void setState(int state) {
     this.state = state;
   }
-
-  @Override
-  public int hashCode() {
-    return username.hashCode();
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if ((this == obj)) {
-      return true;
-    }
-
-    if (!(obj instanceof User)) {
-      return false;
-    }
-
-    User other = (User) obj;
-    return username.equals(other.username);
-  }
-
 }
