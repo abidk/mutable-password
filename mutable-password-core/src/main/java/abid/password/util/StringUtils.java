@@ -33,14 +33,14 @@ public class StringUtils {
   /**
    * Checks the string input to see if it contains numbers only.
    * 
-   * @param str
+   * @param textInput
    * @return true if it input contains numerals only
    */
-  public static boolean containsOnlyNumbers(String str) {
-    if (str == null || str.trim().length() == 0) {
+  public static boolean containsOnlyNumbers(String textInput) {
+    if (textInput == null) {
       return false;
     }
-    for (char c : str.toCharArray()) {
+    for (char c : textInput.toCharArray()) {
       if (!Character.isDigit(c)) {
         return false;
       }

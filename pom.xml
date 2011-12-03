@@ -27,6 +27,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.6.2</slf4j.version>
+		<jdk.version>1.6</jdk.version>
 	</properties>
 
 	<licenses>
@@ -80,6 +81,17 @@
 			</extension>
 		</extensions>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<optimise>true</optimise>
+					<debug>false</debug>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.5</version>
@@ -199,14 +211,8 @@
 				<version>4.10</version>
 				<scope>test</scope>
 			</dependency>
-			<!-- 
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-all</artifactId>
-				<version>1.9.0-rc1</version>
-				<scope>test</scope>
-			</dependency>
-			 -->
+			<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-all</artifactId> <version>1.9.0-rc1</version> 
+				<scope>test</scope> </dependency> -->
 		</dependencies>
 	</dependencyManagement>
 
