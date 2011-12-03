@@ -12,8 +12,7 @@ public class MutableBlockTest {
     assertEquals("type", block.getType());
     assertEquals("year", block.getExpression());
 
-    String password = "[extendedTimeLock{zodiac}]";
-    block = new MutableBlock(password);
+    block = new MutableBlock("[extendedTimeLock{zodiac}]");
     assertEquals("extendedTimeLock", block.getType());
     assertEquals("zodiac", block.getExpression());
   }

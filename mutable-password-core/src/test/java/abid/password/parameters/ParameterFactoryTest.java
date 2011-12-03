@@ -21,7 +21,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,12 +29,10 @@ import org.junit.Test;
 public class ParameterFactoryTest {
 
   @Test
-  public void addParameterShouldStoreNewParameter() {
-    boolean added = ParameterFactory.addParameter("test", new Parameter(1));
-    assertTrue(added);
-    
-    boolean newAdded = ParameterFactory.addParameter("test", new Parameter(1));
-    assertFalse(newAdded);
+  public void addParameterShouldOnlyAddAParameterWhenItdoesNotExistAlready() {
+    assertTrue(ParameterFactory.addParameter("test", new Parameter(1)));
+    assertFalse(ParameterFactory.addParameter("test", new Parameter(1)));
+    assertFalse(ParameterFactory.addParameter("test", new Parameter(2)));
   }
 
   @Test
@@ -47,22 +44,20 @@ public class ParameterFactoryTest {
   @Test
   public void getAllParamterDataShouldReturnParameters() {
     ParameterFactory.addParameter("params", new Parameter(1));
-    Parameter parameter = ParameterFactory.getAllParamterData().get("params");
-    assertEquals(1, parameter.getValue());
-  }
-  
-  @Test
-  public void removeParameterShouldRemoveParamterFromFactory( ) {
-    ParameterFactory.addParameter("param3", new Parameter(1));
-    boolean removed = ParameterFactory.removeParameter("param3");
-    assertTrue(removed);
-    
-    removed = ParameterFactory.removeParameter("madeUp");
-    assertFalse(removed);
+    assertEquals(1, ParameterFactory.getAllParamterData().get("params").getValue());
   }
 
   @Test
-  public void addAllParametersShouldAddTypesToFactory() {
+  public void removeParameterShouldRemoveParamterWhenItExists() {
+    ParameterFactory.addParameter("param3", new Parameter(1));
+    
+    assertTrue(ParameterFactory.removeParameter("param3"));
+    assertFalse(ParameterFactory.removeParameter("param3"));
+    assertFalse(ParameterFactory.removeParameter("madeUp"));
+  }
+
+  @Test
+  public void addAllParametersShouldAddAndOverrideExistingParameters() {
     Map<String, Parameter> newParams = new HashMap<String, Parameter>();
     newParams.put("newKey1", new Parameter(99));
     newParams.put("newKey2", new Parameter(98));
@@ -71,11 +66,19 @@ public class ParameterFactoryTest {
     Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
     assertEquals(99, parameters.get("newKey1").getValue());
     assertEquals(98, parameters.get("newKey2").getValue());
+    
+    newParams = new HashMap<String, Parameter>();
+    newParams.put("newKey1", new Parameter(79));
+    newParams.put("newKey2", new Parameter(78));
+    ParameterFactory.addAllParameters(newParams);
+    
+    parameters = ParameterFactory.getAllParamterData();
+    assertEquals(79, parameters.get("newKey1").getValue());
+    assertEquals(78, parameters.get("newKey2").getValue());
   }
 
   @Test
-  public void testParameterConstruct() throws IllegalArgumentException,
-      InstantiationException, IllegalAccessException, InvocationTargetException {
+  public void testSingletonConstruct() throws Exception {
     final Class<?> cls = ParameterFactory.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);

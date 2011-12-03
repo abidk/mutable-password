@@ -24,16 +24,13 @@ public class TimeParameterTest {
 
   @Test
   public void getCalendarValueShouldReturnCorrectValue() {
-    int val = TimeParameter.getCalendarValue("madeUpType");
-    assertEquals(-1, val);
-
-    val = TimeParameter.getCalendarValue(TimeParameter.HOUR.getTextField());
-    assertEquals(TimeParameter.HOUR.getCalendarValue(), val);
+    assertEquals(-1, TimeParameter.getCalendarValue("madeUpType"));
+    assertEquals(TimeParameter.HOUR.getCalendarValue(), 
+        TimeParameter.getCalendarValue(TimeParameter.HOUR.getTextField()));
   }
 
   @Test
-  public void testTimeParameterValues() {
-    TimeParameter param = TimeParameter.HOUR;
-    assertTrue(param.toString().contains(param.getTextField()));
+  public void ToStringMethodShouldMatchGetTextField() {
+    assertTrue(TimeParameter.HOUR.toString().contains(TimeParameter.HOUR.getTextField()));
   }
 }
