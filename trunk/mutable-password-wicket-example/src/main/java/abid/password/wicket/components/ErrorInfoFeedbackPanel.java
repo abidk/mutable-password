@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * Splits the error and info messages so different stylings can be applied
+ * Splits the error and info messages so different stylings can be applied.
  * 
  * @author Abid Khalil
  * 

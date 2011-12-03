@@ -28,19 +28,21 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
 
   public static final String FEEDBACK_MESSAGE_ATT = "feedbackMessage";
 
-  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
+      Object handler, Exception ex) throws Exception {
   }
 
   /**
-   * Get feedback message from model and put it into the session
+   * Get feedback message from model and put it into the session.
    */
-  public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+  public void postHandle(HttpServletRequest request, HttpServletResponse response, 
+      Object handler, ModelAndView modelAndView) throws Exception {
     // move flash object into session
     HttpSession httpSession = request.getSession(false);
     for (Entry<String, Object> map : modelAndView.getModelMap().entrySet()) {
       String key = map.getKey();
       Object value = map.getValue();
-      
+
       if (key.equals(FEEDBACK_MESSAGE_ATT)) {
         httpSession.setAttribute(FEEDBACK_MESSAGE_ATT, value);
       }
@@ -51,9 +53,10 @@ public class FlashScopeInterceptor implements HandlerInterceptor {
   }
 
   /**
-   * Get session flash and put it in request
+   * Get session flash and put it in request.
    */
-  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
+      Object handler) throws Exception {
     HttpSession httpSession = request.getSession(false);
     Object flashObject = httpSession.getAttribute(FEEDBACK_MESSAGE_ATT);
     if (flashObject != null) {

@@ -44,6 +44,7 @@
 			<property name="allowMissingParamTags" value="true" />
 			<property name="allowMissingPropertyJavadoc" value="true" />
 			<property name="allowMissingThrowsTags" value="true" />
+			
 		</module>
 		<module name="JavadocType">
 			<property name="scope" value="public" />
@@ -155,7 +156,7 @@
 			<property name="severity" value="ignore" />
 		</module>
 		<module name="TodoComment">
-			<property name="format" value="WARNING" />
+			<property name="format" value="warning" />
 		</module>
 		<module name="UpperEll" />
 	</module>

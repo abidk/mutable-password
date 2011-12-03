@@ -22,12 +22,12 @@ import org.springframework.context.MessageSourceResolvable;
 
 public interface FeedbackMessage {
 
-  public void info(String message, Serializable... arguments);
+  void info(String message, Serializable... arguments);
 
-  public void error(String message, Serializable... arguments);
+  void error(String message, Serializable... arguments);
 
-  public Set<MessageSourceResolvable> getMessages();
+  Set<MessageSourceResolvable> getMessages();
 
-  public void reset();
+  void reset();
 
 }

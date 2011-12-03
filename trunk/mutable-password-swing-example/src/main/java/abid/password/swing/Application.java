@@ -29,22 +29,20 @@ import abid.password.types.ExtendedPassword;
 import abid.password.types.RomanNumeralPassword;
 import abid.password.types.SimplePassword;
 
-import com.jeta.forms.gui.common.FormException;
-
 public class Application {
 
   public static final String APPLICATION_TITLE = "Mutable Password Example";
   public static final int APPLICATION_WIDTH = 500;
   public static final int APPLICATION_HEIGHT = 400;
 
-  public Set<User> users = new HashSet<User>();
-  public FormUI form;
-  public FormController controller;
+  private Set<User> users = new HashSet<User>();
+  private FormUI form;
+  private FormController controller;
 
   public Application() {
   }
 
-  public void init() throws FormException {
+  public void init() {
     // add some example data
     createExampleUsers();
 
@@ -116,23 +114,19 @@ public class Application {
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
-        try {
-          JFrame window = new JFrame();
-          window.setTitle(APPLICATION_TITLE);
-          window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          window.setSize(APPLICATION_WIDTH, APPLICATION_HEIGHT);
-          window.setLocationRelativeTo(null);
+        JFrame window = new JFrame();
+        window.setTitle(APPLICATION_TITLE);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        window.setLocationRelativeTo(null);
 
-          Application application = new Application();
-          application.init();
-          FormUI mainUI = application.getForm();
-          window.setContentPane(mainUI);
-          // window.setExtendedState(Frame.MAXIMIZED_BOTH);
-          // window.pack();
-          window.setVisible(true);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+        Application application = new Application();
+        application.init();
+        FormUI mainUI = application.getForm();
+        window.setContentPane(mainUI);
+        // window.setExtendedState(Frame.MAXIMIZED_BOTH);
+        // window.pack();
+        window.setVisible(true);
       }
     });
   }

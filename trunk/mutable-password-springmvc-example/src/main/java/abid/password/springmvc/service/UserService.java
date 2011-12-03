@@ -22,10 +22,10 @@ import abid.password.springmvc.model.User;
 
 public interface UserService {
 
-  public void saveUser(String username, String password);
+  void saveUser(String username, String password);
 
-  public User authenticate(String username, String password) throws UserException;
+  User authenticate(String username, String password) throws UserException;
 
-  public List<User> getUsers();
+  List<User> getUsers();
 
 }

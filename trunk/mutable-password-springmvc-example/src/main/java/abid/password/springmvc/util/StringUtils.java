@@ -15,7 +15,6 @@
  */
 package abid.password.springmvc.util;
 
-
 /**
  * Additional String manipulation methods.
  * 
@@ -32,7 +31,7 @@ public class StringUtils {
    * @param input
    * @return
    */
-  public static boolean isEmpty( String input ) {
-    return input == null || input.trim( ).equals( "" );
+  public static boolean isEmpty(String input) {
+    return input == null || input.trim().equals("");
   }
 }

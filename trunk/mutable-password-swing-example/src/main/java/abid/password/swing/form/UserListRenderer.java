@@ -24,12 +24,13 @@ import javax.swing.ListCellRenderer;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.StatefulMutablePassword;
+import abid.password.evaluator.ParseException;
 import abid.password.swing.Application;
 import abid.password.swing.model.User;
 import abid.password.types.PasswordFactory;
+import abid.password.types.PasswordInstantiationException;
 
 import com.jeta.forms.components.panel.FormPanel;
-import com.jeta.forms.gui.common.FormException;
 
 public class UserListRenderer extends AbstractComponent implements ListCellRenderer {
 
@@ -38,11 +39,7 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
 
   public UserListRenderer(Application application) {
     super(application, "UserListCell.jfrm");
-    try {
-      loadForm();
-    } catch (FormException e) {
-      e.printStackTrace();
-    }
+    loadForm();
   }
 
   public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -54,22 +51,21 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
       if (password instanceof StatefulMutablePassword) {
         StatefulMutablePassword statefulPassword = (StatefulMutablePassword) password;
         statefulPassword.setState(user.getState());
-        String evalatedPassword = statefulPassword.getEvaluatedPassword();
-        passwordLabel.setText(evalatedPassword);
+        passwordLabel.setText(statefulPassword.getEvaluatedPassword());
       } else if (password instanceof MutablePassword) {
         MutablePassword mutablePassword = (MutablePassword) password;
-        String evalatedPassword = mutablePassword.getEvaluatedPassword();
-        passwordLabel.setText(evalatedPassword);
+        passwordLabel.setText(mutablePassword.getEvaluatedPassword());
       }
-    } catch (Exception e) {
+    } catch (PasswordInstantiationException e) {
+      e.printStackTrace();
+    } catch (ParseException e) {
       e.printStackTrace();
     }
-
-    FormPanel form = getForm();
-    return form;
+    return getForm();
   }
 
-  public void initComponents(FormPanel form) {
+  public void initComponents() {
+    FormPanel form = getForm();
     usernameLabel = form.getLabel("list.username");
     passwordLabel = form.getLabel("list.password");
   }

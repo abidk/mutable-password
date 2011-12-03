@@ -25,13 +25,13 @@ import abid.password.springmvc.model.TimeLockPasswordFormBean;
 
 public interface MutablePasswordValidator {
 
-  public void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors);
+  void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors);
 
-  public void validateCaesarCipherPassword(CaesarCipherPasswordFormBean formBean, Errors errors);
+  void validateCaesarCipherPassword(CaesarCipherPasswordFormBean formBean, Errors errors);
 
-  public void validateExtendedPassword(ExtendedPasswordFormBean formBean, Errors errors);
+  void validateExtendedPassword(ExtendedPasswordFormBean formBean, Errors errors);
 
-  public void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordFormBean formBean, Errors errors);
+  void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordFormBean formBean, Errors errors);
 
-  public void validateTimeLockPassword(TimeLockPasswordFormBean formBean, Errors errors);
+  void validateTimeLockPassword(TimeLockPasswordFormBean formBean, Errors errors);
 }

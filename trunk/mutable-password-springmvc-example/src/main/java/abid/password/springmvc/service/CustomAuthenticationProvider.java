@@ -74,7 +74,7 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
     throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.badCredentials", "Bad credentials"));
   }
 
-  public class CustomUserDetails implements UserDetails {
+  public static class CustomUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     private User user;

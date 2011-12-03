@@ -33,7 +33,6 @@ import abid.password.swing.Application;
 import abid.password.swing.model.User;
 
 import com.jeta.forms.components.panel.FormPanel;
-import com.jeta.forms.gui.common.FormException;
 
 public class LoginForm extends AbstractForm {
 
@@ -70,11 +69,13 @@ public class LoginForm extends AbstractForm {
     }
   };
 
-  public LoginForm(Application application) throws FormException {
+  public LoginForm(Application application) {
     super(application, "Login.jfrm");
+    loadForm();
   }
 
-  public void initComponents(FormPanel form) {
+  public void initComponents() {
+    FormPanel form = getForm();
     feedbackLabel = form.getLabel("form.feedbackLabel");
     setFeedbackLabel(feedbackLabel);
     setInfo(null);
@@ -102,11 +103,11 @@ public class LoginForm extends AbstractForm {
 
   public boolean validateComponents() {
     setInfo(null);
-    if (usernameField.getText().equals("")) {
+    if (usernameField.getText().length() == 0) {
       setError("Username field cannot be blank");
       return false;
     }
-    if (passwordField.getPassword().equals("")) {
+    if (passwordField.getPassword().length == 0) {
       setError("Password field cannot be blank");
       return false;
     }

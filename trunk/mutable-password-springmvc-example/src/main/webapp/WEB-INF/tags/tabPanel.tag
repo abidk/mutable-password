@@ -16,6 +16,6 @@
 
 <div class="tab-panel">
   <div class="tabcontent">
-    <jsp:include page="tabs/${basePage}_${fn:toLowerCase(tabPanel.selectedTab)}.jsp" />
+    <jsp:include page="tabs/${basePage}_${fn:toLowerCase(tabPanel.activeTab.urlName)}.jsp" />
   </div>
 </div>

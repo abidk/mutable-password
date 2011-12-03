@@ -25,9 +25,9 @@ import com.jeta.forms.gui.common.FormException;
 
 public abstract class AbstractComponent {
 
-  public final String FORM_DIR = "/";
+  private static final String FORM_DIR = "/";
 
-  protected Application application;
+  private Application application;
   private String formName;
   private FormPanel form;
 
@@ -36,16 +36,18 @@ public abstract class AbstractComponent {
     this.formName = formName;
   }
 
-  public void loadForm() throws FormException {
-    InputStream inputStream = null;
+  public void loadForm() {
+    InputStream formStream = null;
     try {
-      inputStream = getClass().getResourceAsStream(FORM_DIR + formName);
-      form = new FormPanel(inputStream);
-      initComponents(form);
+      formStream = getClass().getResourceAsStream(FORM_DIR + formName);
+      form = new FormPanel(formStream);
+      initComponents();
+    } catch (FormException e) {
+      throw new RuntimeException("Unable to load form.", e);
     } finally {
-      if (inputStream != null) {
+      if (formStream != null) {
         try {
-          inputStream.close();
+          formStream.close();
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -61,7 +63,14 @@ public abstract class AbstractComponent {
     return form;
   }
 
-  public abstract void initComponents(FormPanel form);
+  /**
+   * Initialises components.
+   */
+  public abstract void initComponents();
+
+  /**
+   * Refreshes components.
+   */
   public abstract void refreshComponent();
 
 }

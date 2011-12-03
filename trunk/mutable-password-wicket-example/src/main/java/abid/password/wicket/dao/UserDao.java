@@ -22,10 +22,10 @@ import abid.password.wicket.model.User;
 
 public interface UserDao {
 
-  public void saveUser(User user);
+  void saveUser(User user);
 
-  public User getUser(String username);
+  User getUser(String username);
 
-  public List<User> getUsers();
+  List<User> getUsers();
 
 }
