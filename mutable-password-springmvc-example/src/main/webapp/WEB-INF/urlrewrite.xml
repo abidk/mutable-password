@@ -7,14 +7,14 @@
 <urlrewrite default-match-type="wildcard">
 	<rule>
 		<from>/images/**</from>
-		<to>/images/$1</to>
+		<to last="true">/images/$1</to>
 	</rule>
 	<rule>
 		<from>/css/**</from>
-		<to>/css/$1</to>
+		<to last="true">/css/$1</to>
 	</rule>
-	<rule match-type="regex">
-        <from>^([^\.]+)$</from>
+	<rule>
+        <from>/**</from>
 		<to>/app/$1</to>
 	</rule>
 	<outbound-rule>
