@@ -19,21 +19,21 @@
 	    <div id="button">
 		  <div id="buttonlink">
 		    <sec:authorize url="/">
-		      <a href="<c:url value="/users" />">Users</a>
+		      <a href="<c:url value="/app/users" />">Users</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
 		    <sec:authorize url="/">
-		      <a href="<c:url value="/create" />">Create User</a>
+		      <a href="<c:url value="/app/create" />">Create User</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
 		    <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
-		      <a href="<c:url value="/j_spring_security_logout" />">Logout</a>
+		      <a href="<c:url value="/app/j_spring_security_logout" />">Logout</a>
             </sec:authorize>
           </div>
 	    </div>
