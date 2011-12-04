@@ -13,9 +13,13 @@
 		<security:intercept-url pattern="/app/login*" filters="none" />
 		<security:intercept-url pattern="/app/**" access="ROLE_USER" />
 		
-		<security:form-login login-page="/login" default-target-url="/index" always-use-default-target="true" authentication-failure-url="/loginfailed" />
+		<security:form-login login-page="/login" always-use-default-target="true" default-target-url="/index" authentication-failure-url="/loginfailed" />
 		<security:logout logout-success-url="/logout" />
 	</security:http>
+
+
+	<!-- authentication-success-handler-ref="customAuthenticationSuccessHandler" -->
+	<bean id="customAuthenticationSuccessHandler" class="abid.password.springmvc.service.CustomAuthenticationSuccessHandler" />
 
 <!-- 
 	<security:authentication-manager>
