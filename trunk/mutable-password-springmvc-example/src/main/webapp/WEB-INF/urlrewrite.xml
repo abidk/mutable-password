@@ -11,7 +11,15 @@
 		<to>/css/$1</to>
 	</rule>
 	<rule>
+		<from>/</from>
+		<to>/app/$1</to>
+	</rule>
+	<rule>
 		<from>/**</from>
+		<to>/app/$1</to>
+	</rule>
+	<rule>
+		<from>/app/app/**</from>
 		<to>/app/$1</to>
 	</rule>
 	<outbound-rule>
