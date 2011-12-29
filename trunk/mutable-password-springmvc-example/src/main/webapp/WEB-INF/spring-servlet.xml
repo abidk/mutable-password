@@ -33,7 +33,6 @@
 	</bean>
 
 	<mvc:interceptors>
-		<!-- <bean class="abid.password.springmvc.flash.FlashScopeInterceptor" /> -->
 		<bean class="abid.password.springmvc.FeedbackInterceptor" />
 	</mvc:interceptors>
 

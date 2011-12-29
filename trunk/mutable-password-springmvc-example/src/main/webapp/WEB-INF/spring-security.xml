@@ -1,11 +1,9 @@
-<beans:beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
-
-<!--
-	<security:global-method-security secured-annotations="enabled" />
--->
+	                    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<security:http auto-config="true">
 		<security:intercept-url pattern="/css/**" filters="none" />
@@ -17,25 +15,10 @@
 		<security:logout logout-success-url="/logout" />
 	</security:http>
 
-
-	<!-- authentication-success-handler-ref="customAuthenticationSuccessHandler" -->
-	<bean id="customAuthenticationSuccessHandler" class="abid.password.springmvc.service.CustomAuthenticationSuccessHandler" />
-
-<!-- 
-	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="admin" password="admin" authorities="ROLE_USER" />
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
--->
-
 	<security:authentication-manager>
 		<security:authentication-provider ref="customAuthenticationProvider" />
 	</security:authentication-manager>
 
 	<bean id="customAuthenticationProvider" class="abid.password.springmvc.service.CustomAuthenticationProvider" />
-
 
 </beans:beans>
