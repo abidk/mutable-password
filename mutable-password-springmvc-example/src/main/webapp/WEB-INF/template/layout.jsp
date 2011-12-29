@@ -1,4 +1,9 @@
-<%@ include file="includes.jsp" %>
+<%@ page trimDirectiveWhitespaces="true" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,21 +23,21 @@
       <div id="nav">
 	    <div id="button">
 		  <div id="buttonlink">
-		    <sec:authorize url="/">
+		    <sec:authorize access="isAuthenticated()">
 		      <a href="<c:url value="/app/users" />">Users</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
-		    <sec:authorize url="/">
+		    <sec:authorize access="isAuthenticated()">
 		      <a href="<c:url value="/app/create" />">Create User</a>
             </sec:authorize>
           </div>
 	    </div>
 	    <div id="button">
 		  <div id="buttonlink">
-		    <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+		    <sec:authorize access="isAuthenticated()">
 		      <a href="<c:url value="/app/j_spring_security_logout" />">Logout</a>
             </sec:authorize>
           </div>

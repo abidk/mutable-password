@@ -34,15 +34,11 @@ public class UserDaoHibernateImpl implements UserDao {
   @Autowired
   private SessionFactory sessionFactory;
 
-  public SessionFactory getSessionFactory() {
-    return sessionFactory;
-  }
-
   public void setSessionFactory(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public User getUser(String username) {
     Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
     criteria.add(Restrictions.eq("username", username));
@@ -56,7 +52,7 @@ public class UserDaoHibernateImpl implements UserDao {
   }
 
   @SuppressWarnings("unchecked")
-  @Transactional
+  @Transactional(readOnly = true)
   public List<User> getUsers() {
     Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
     List<User> userList = (List<User>) criteria.list();

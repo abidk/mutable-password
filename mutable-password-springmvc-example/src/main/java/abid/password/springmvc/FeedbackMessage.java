@@ -21,12 +21,10 @@ import org.springframework.context.MessageSourceResolvable;
 
 public interface FeedbackMessage {
 
-  void info(String message, Serializable... arguments);
-
-  void error(String message, Serializable... arguments);
+  void addMessage(String message, Serializable... arguments);
 
   MessageSourceResolvable[] getMessages();
 
-  void reset();
+  void clearMessages();
 
 }

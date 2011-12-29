@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package abid.password.springmvc.service;
+package abid.password.springmvc;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,11 +31,13 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import abid.password.springmvc.model.User;
+import abid.password.springmvc.service.UserException;
+import abid.password.springmvc.service.UserService;
 import abid.password.springmvc.util.StringUtils;
 
-public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+public class MutablePasswordAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
-  private static final Logger log = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
+  private static final Logger log = LoggerFactory.getLogger(MutablePasswordAuthenticationProvider.class);
 
   @Autowired
   private UserService userService;

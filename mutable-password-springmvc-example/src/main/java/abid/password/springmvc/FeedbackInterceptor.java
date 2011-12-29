@@ -34,7 +34,7 @@ public class FeedbackInterceptor implements WebRequestInterceptor {
 
   public void preHandle(WebRequest request) throws Exception {
     request.setAttribute(FEEDBACK_MESSAGE_ATT, feedbackMessage.getMessages(), RequestAttributes.SCOPE_REQUEST);
-    feedbackMessage.reset();
+    feedbackMessage.clearMessages();
   }
 
   public void postHandle(WebRequest request, ModelMap model) throws Exception {

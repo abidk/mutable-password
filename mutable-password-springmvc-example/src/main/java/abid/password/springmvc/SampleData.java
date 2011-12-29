@@ -42,18 +42,22 @@ public class SampleData {
     String user = "Example3";
     String password = ExtendedPassword.createPassword("second_", TimeParameter.SECOND).getPassword();
     userService.saveUser(user, password);
+    
     user = "Example4";
     password = ExtendedPassword.createPassword("minute_", TimeParameter.MINUTE).getPassword();
     userService.saveUser(user, password);
+    
     user = "Example5";
     password = ExtendedPassword.createPassword("hourly_", TimeParameter.HOUR).getPassword();
     userService.saveUser(user, password);
+    
     user = "Example6";
     password = ExtendedPassword.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
     userService.saveUser(user, password);
+    
     user = "admin";
     password = new SimplePassword("admin").getPassword();
     userService.saveUser(user, password);
-    log.info("Added users!");
+    log.info("Sample users added!");
   }
 }
