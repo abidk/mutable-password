@@ -21,7 +21,7 @@ import org.springframework.context.MessageSourceResolvable;
 
 public interface FeedbackMessage {
 
-  void addMessage(String message, Serializable... arguments);
+  void addMessage(String code, Serializable... arguments);
 
   MessageSourceResolvable[] getMessages();
 
