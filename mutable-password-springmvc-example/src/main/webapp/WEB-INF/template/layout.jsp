@@ -4,13 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tgs" tagdir="/WEB-INF/tags/" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-  <title>Mutable Password Wicket Example</title>
+  <title>Mutable Password Spring MVC Example</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/layout.css" />" />
 </head>
@@ -49,13 +50,12 @@
 
 
       <div style="clear:both;height:2px;width:1px;"></div>
+      
       <div id="content">
-        <div wicket:id="feedbackPanel">          
-          <c:forEach var="message" items="${feedbackMessages}">
-            <div class="infoMessages"><spring:message message="${message}" /></div>
-          </c:forEach>
-        </div>
+        <tgs:feedbackMessage />
+
         <div style="clear:both;height:6px;width:1px;"></div>
+        
         <tiles:insertAttribute name="body" />
       </div>
     </div>
