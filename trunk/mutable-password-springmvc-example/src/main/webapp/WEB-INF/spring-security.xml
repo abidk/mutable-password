@@ -5,20 +5,21 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	                    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:http auto-config="true">
+	<security:http use-expressions="true" auto-config="true">
 		<security:intercept-url pattern="/css/**" filters="none" />
 		<security:intercept-url pattern="/images/**" filters="none" />
-		<security:intercept-url pattern="/app/login*" filters="none" />
-		<security:intercept-url pattern="/app/**" access="ROLE_USER" />
+		
+		<security:intercept-url pattern="/app/login*" access="isAnonymous()" />
+		<security:intercept-url pattern="/app/**" access="hasRole('ROLE_USER')" />
 		
 		<security:form-login login-page="/login" always-use-default-target="true" default-target-url="/index" authentication-failure-url="/loginfailed" />
 		<security:logout logout-success-url="/logout" />
 	</security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider ref="customAuthenticationProvider" />
+		<security:authentication-provider ref="mutablePasswordAuthenticationProvider" />
 	</security:authentication-manager>
 
-	<bean id="customAuthenticationProvider" class="abid.password.springmvc.service.CustomAuthenticationProvider" />
+	<bean id="mutablePasswordAuthenticationProvider" class="abid.password.springmvc.MutablePasswordAuthenticationProvider" />
 
 </beans:beans>

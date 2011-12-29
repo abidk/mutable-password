@@ -28,13 +28,9 @@ import abid.password.springmvc.service.UserService;
 @Controller
 public class UsersController {
 
-  @Autowired
   private UserService userService;
 
-  public UserService getUserService() {
-    return userService;
-  }
-
+  @Autowired
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
