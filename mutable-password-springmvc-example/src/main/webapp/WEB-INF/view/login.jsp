@@ -26,10 +26,8 @@
 </form>
 
 	
-<div id="heading">
-  <h1>Users</h1>
-</div>
-  
+<h3>Users</h3>
+
 <table>  
   <thead>
     <tr>

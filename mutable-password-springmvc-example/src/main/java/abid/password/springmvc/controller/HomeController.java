@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
   @RequestMapping(value = { "/", "/index" })
-  public ModelAndView showHomePage() {
+  public ModelAndView handleGetHomePage() {
     ModelAndView model = new ModelAndView("index");
     return model;
   }

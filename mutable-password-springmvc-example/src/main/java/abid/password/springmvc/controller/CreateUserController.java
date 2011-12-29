@@ -72,12 +72,12 @@ public class CreateUserController {
   }
 
   @RequestMapping(value = { "", "/" })
-  public ModelAndView handleCreateUser() {
+  public ModelAndView handleGetCreateUser() {
     return new ModelAndView("redirect:/app/create/" + DEFAULT_SELECTED_TAB);
   }
 
   @RequestMapping(value = { "/{tab}" })
-  public ModelAndView handleCreateUserTab(@PathVariable String tab) {
+  public ModelAndView handleGetCreateUserTab(@PathVariable String tab) {
     TabPanel tabPanel = buildTabPanel(tab);
     if (!tabPanel.isValidTab(tab)) {
       return new ModelAndView("redirect:/app/create/");
@@ -95,11 +95,13 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createSimplePassword")
-  public ModelAndView handleSimplePassword(@ModelAttribute("SimplePasswordFormBean") SimplePasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handlePostSimplePassword(
+      @ModelAttribute("SimplePasswordFormBean") SimplePasswordFormBean formBean,
+      BindingResult result) {
 
     mutablePasswordValidator.validateSimplePassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_SIMPLE_PASWORD);
+      return handleGetCreateUserTab(TAB_SIMPLE_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -111,11 +113,13 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedPassword")
-  public ModelAndView handleExtendedPassword(@ModelAttribute("ExtendedPasswordFormBean") ExtendedPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handlePostExtendedPassword(
+      @ModelAttribute("ExtendedPasswordFormBean") ExtendedPasswordFormBean formBean,
+      BindingResult result) {
 
     mutablePasswordValidator.validateExtendedPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_EXTENDED_PASWORD);
+      return handleGetCreateUserTab(TAB_EXTENDED_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -129,12 +133,13 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedTimeLockPassword")
-  public ModelAndView handleExtendedTimeLockPassword(@ModelAttribute("ExtendedTimeLockPasswordFormBean") ExtendedTimeLockPasswordFormBean formBean,
+  public ModelAndView handlePostExtendedTimeLockPassword(
+      @ModelAttribute("ExtendedTimeLockPasswordFormBean") ExtendedTimeLockPasswordFormBean formBean, 
       BindingResult result) {
 
     mutablePasswordValidator.validateExtendedTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_EXTENDED_TIMELOCK_PASWORD);
+      return handleGetCreateUserTab(TAB_EXTENDED_TIMELOCK_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -151,11 +156,13 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createTimeLockPassword")
-  public ModelAndView handleTimeLockPassword(@ModelAttribute("TimeLockPasswordFormBean") TimeLockPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handlePostTimeLockPassword(
+      @ModelAttribute("TimeLockPasswordFormBean") TimeLockPasswordFormBean formBean,
+      BindingResult result) {
 
     mutablePasswordValidator.validateTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_TIMELOCK_PASWORD);
+      return handleGetCreateUserTab(TAB_TIMELOCK_PASWORD);
     }
 
     String username = formBean.getUsername();
@@ -171,11 +178,13 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createCaesarCipherPassword")
-  public ModelAndView handleCaesarCipherPassword(@ModelAttribute("CaesarCipherPasswordFormBean") CaesarCipherPasswordFormBean formBean, BindingResult result) {
+  public ModelAndView handlePostCaesarCipherPassword(
+      @ModelAttribute("CaesarCipherPasswordFormBean") CaesarCipherPasswordFormBean formBean,
+      BindingResult result) {
 
     mutablePasswordValidator.validateCaesarCipherPassword(formBean, result);
     if (result.hasErrors()) {
-      return handleCreateUserTab(TAB_CAESAR_PASWORD);
+      return handleGetCreateUserTab(TAB_CAESAR_PASWORD);
     }
 
     String username = formBean.getUsername();

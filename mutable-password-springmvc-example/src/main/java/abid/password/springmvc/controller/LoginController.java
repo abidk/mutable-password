@@ -37,14 +37,14 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/login", method = RequestMethod.GET)
-  public String login(ModelMap model) {
+  public String handleGetLogin(ModelMap model) {
     List<User> users = userService.getUsers();
     model.addAttribute("users", users);
     return "login";
   }
 
   @RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
-  public String loginerror(ModelMap model) {
+  public String handleGetLoginError(ModelMap model) {
     List<User> users = userService.getUsers();
     model.addAttribute("users", users);
     model.addAttribute("error", "true");
@@ -52,7 +52,7 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/logout", method = RequestMethod.GET)
-  public String logout(ModelMap model) {
+  public String handleGetLogout(ModelMap model) {
     return "redirect:/";
   }
 

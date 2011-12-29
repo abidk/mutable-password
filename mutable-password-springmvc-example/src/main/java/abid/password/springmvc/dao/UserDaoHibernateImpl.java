@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package abid.password.springmvc.dao.hibernate;
+package abid.password.springmvc.dao;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import abid.password.springmvc.dao.UserDao;
 import abid.password.springmvc.model.User;
 
 @Repository

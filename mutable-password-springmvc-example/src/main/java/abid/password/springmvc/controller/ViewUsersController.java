@@ -26,7 +26,7 @@ import abid.password.springmvc.model.User;
 import abid.password.springmvc.service.UserService;
 
 @Controller
-public class UsersController {
+public class ViewUsersController {
 
   private UserService userService;
 
@@ -36,8 +36,8 @@ public class UsersController {
   }
 
   @RequestMapping(value = { "/users" })
-  public ModelAndView handleUsers() {
-    ModelAndView model = new ModelAndView("users");
+  public ModelAndView handleGetUsers() {
+    ModelAndView model = new ModelAndView("viewUsers");
     List<User> users = userService.getUsers();
     model.getModelMap().put("users", users);
     return model;
