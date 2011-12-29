@@ -40,26 +40,23 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
   @Autowired
   private UserService userService;
 
-  public UserService getUserService() {
-    return userService;
-  }
-
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
 
   @Override
-  protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+  protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
+      throws AuthenticationException {
   }
 
   @Override
   protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
     if (StringUtils.isEmpty(username)) {
-      throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.usernameMissing", "Username missing"));
+      throw new BadCredentialsException(getLocalisedMessage("authentication.username.required"));
     }
     String password = String.valueOf(authentication.getCredentials());
     if (StringUtils.isEmpty(password)) {
-      throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.passwordMissing", "Password missing"));
+      throw new BadCredentialsException(getLocalisedMessage("authentication.password.required"));
     }
 
     try {
@@ -71,7 +68,11 @@ public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticat
       log.error("Error occurred authentication user", e);
     }
 
-    throw new BadCredentialsException(messages.getMessage("CustomAuthenticationProvider.badCredentials", "Bad credentials"));
+    throw new BadCredentialsException(getLocalisedMessage("authentication.failed"));
+  }
+
+  private String getLocalisedMessage(String code) {
+    return messages.getMessage(code, code + "missing!");
   }
 
   public static class CustomUserDetails implements UserDetails {

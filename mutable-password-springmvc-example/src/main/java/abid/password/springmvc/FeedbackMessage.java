@@ -16,7 +16,6 @@
 package abid.password.springmvc;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import org.springframework.context.MessageSourceResolvable;
 
@@ -26,7 +25,7 @@ public interface FeedbackMessage {
 
   void error(String message, Serializable... arguments);
 
-  Set<MessageSourceResolvable> getMessages();
+  MessageSourceResolvable[] getMessages();
 
   void reset();
 

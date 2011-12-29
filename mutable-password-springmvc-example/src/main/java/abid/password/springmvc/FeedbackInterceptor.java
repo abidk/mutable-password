@@ -16,7 +16,6 @@
 package abid.password.springmvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSourceResolvable;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
@@ -34,10 +33,7 @@ public class FeedbackInterceptor implements WebRequestInterceptor {
   }
 
   public void preHandle(WebRequest request) throws Exception {
-    MessageSourceResolvable[] messages = feedbackMessage.getMessages().toArray(
-        new MessageSourceResolvable[feedbackMessage.getMessages().size()]);
-
-    request.setAttribute(FEEDBACK_MESSAGE_ATT, messages, RequestAttributes.SCOPE_REQUEST);
+    request.setAttribute(FEEDBACK_MESSAGE_ATT, feedbackMessage.getMessages(), RequestAttributes.SCOPE_REQUEST);
     feedbackMessage.reset();
   }
 

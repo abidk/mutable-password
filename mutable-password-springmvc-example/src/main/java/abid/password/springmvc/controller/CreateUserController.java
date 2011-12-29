@@ -106,7 +106,7 @@ public class CreateUserController {
     String password = formBean.getPassword();
     userService.saveUser(username, password);
 
-    feedbackMessage.info("user.created.successful", username);
+    feedbackMessage.info("user.created.success", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
@@ -124,11 +124,7 @@ public class CreateUserController {
     MutablePassword mutablePassword = ExtendedPassword.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
 
-    // ModelAndView redirectView = new ModelAndView("redirect:/app/users/");
-    // redirectView.getModelMap().put(FlashScopeInterceptor.FEEDBACK_MESSAGE_ATT,
-    // "User successfully created.");
-    // return redirectView;
-    feedbackMessage.info("user.created.successful", username);
+    feedbackMessage.info("user.created.success", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
@@ -150,7 +146,7 @@ public class CreateUserController {
     MutablePassword mutablePassword = ExtendedTimeLockPassword.createPassword(passwordText, extended, timeParameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
-    feedbackMessage.info("user.created.successful", username);
+    feedbackMessage.info("user.created.success", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
@@ -170,7 +166,7 @@ public class CreateUserController {
     MutablePassword mutablePassword = TimeLockPassword.createPassword(passwordText, parameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
-    feedbackMessage.info("user.created.successful", username);
+    feedbackMessage.info("user.created.success", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
@@ -188,7 +184,7 @@ public class CreateUserController {
     MutablePassword mutablePassword = CaesarCipherPassword.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
 
-    feedbackMessage.info("user.created.successful", username);
+    feedbackMessage.info("user.created.success", username);
     return new ModelAndView("redirect:/app/users/");
   }
 
