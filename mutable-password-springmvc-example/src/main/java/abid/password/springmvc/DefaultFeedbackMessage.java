@@ -31,8 +31,8 @@ public class DefaultFeedbackMessage implements FeedbackMessage {
 
   private Set<MessageSourceResolvable> messages = new HashSet<MessageSourceResolvable>();
 
-  public void addMessage(String message, Serializable... arguments) {
-    messages.add(new DefaultMessageSourceResolvable(new String[] { message }, arguments));
+  public void addMessage(String code, Serializable... arguments) {
+    messages.add(new DefaultMessageSourceResolvable(new String[] { code }, arguments));
   }
 
   public MessageSourceResolvable[] getMessages() {
