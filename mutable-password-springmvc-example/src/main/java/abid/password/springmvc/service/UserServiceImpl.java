@@ -19,6 +19,7 @@ package abid.password.springmvc.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import abid.password.Password;
 import abid.password.PasswordException;
@@ -26,6 +27,7 @@ import abid.password.springmvc.dao.UserDao;
 import abid.password.springmvc.model.User;
 import abid.password.types.PasswordFactory;
 
+@Service
 public class UserServiceImpl implements UserService {
 
   @Autowired
