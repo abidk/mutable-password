@@ -16,8 +16,8 @@
 package abid.password.springmvc;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.annotation.Scope;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Scope(value = "session", proxyMode = ScopedProxyMode.INTERFACES)
 public class FeedbackMessageImpl implements FeedbackMessage {
 
-  private Set<MessageSourceResolvable> messages = new HashSet<MessageSourceResolvable>();
+  private List<MessageSourceResolvable> messages = new ArrayList<MessageSourceResolvable>();
 
   public void info(String message, Serializable... arguments) {
     messages.add(new DefaultMessageSourceResolvable(new String[] { message }, arguments));
@@ -39,8 +39,8 @@ public class FeedbackMessageImpl implements FeedbackMessage {
     messages.add(new DefaultMessageSourceResolvable(new String[] { message }, arguments));
   }
 
-  public Set<MessageSourceResolvable> getMessages() {
-    return messages;
+  public MessageSourceResolvable[] getMessages() {
+    return messages.toArray(new MessageSourceResolvable[messages.size()]);
   }
 
   public void reset() {
