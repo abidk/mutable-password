@@ -26,7 +26,7 @@ import abid.password.springmvc.model.TimeLockPasswordFormBean;
 import abid.password.springmvc.util.StringUtils;
 
 @Component
-public class MutablePasswordValidatorImpl implements MutablePasswordValidator {
+public class DefaultMutablePasswordValidator implements MutablePasswordValidator {
 
   public void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {

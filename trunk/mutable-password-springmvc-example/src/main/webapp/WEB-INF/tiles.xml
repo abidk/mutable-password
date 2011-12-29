@@ -15,8 +15,8 @@
         <put-attribute name="body" value="/WEB-INF/view/login.jsp" />
     </definition>
 
-    <definition name="users" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/view/users.jsp" />
+    <definition name="viewUsers" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/view/viewUsers.jsp" />
     </definition>
 
 

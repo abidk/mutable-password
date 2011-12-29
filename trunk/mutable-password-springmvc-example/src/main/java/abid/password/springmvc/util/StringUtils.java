@@ -32,6 +32,6 @@ public class StringUtils {
    * @return
    */
   public static boolean isEmpty(String input) {
-    return input == null || input.trim().equals("");
+    return input == null || input.trim().isEmpty();
   }
 }
