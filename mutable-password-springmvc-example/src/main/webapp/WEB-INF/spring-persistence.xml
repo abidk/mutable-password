@@ -14,7 +14,6 @@
 	                    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	                    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-
 	<tx:annotation-driven />
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -51,6 +50,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="initDb" class="abid.password.springmvc.InitDatabase" init-method="initDatabase" />
+    <!-- Add sample data to database -->
+	<bean id="sampleData" class="abid.password.springmvc.SampleData" init-method="initDbWithUsers" />
 
 </beans>

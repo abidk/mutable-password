@@ -24,22 +24,21 @@ import abid.password.springmvc.service.UserService;
 import abid.password.types.ExtendedPassword;
 import abid.password.types.SimplePassword;
 
-public class InitDatabase {
+public class SampleData {
 
-  private static final Logger log = LoggerFactory.getLogger(InitDatabase.class);
+  private static final Logger log = LoggerFactory.getLogger(SampleData.class);
 
   @Autowired
   private UserService userService;
-
-  public UserService getUserService() {
-    return userService;
-  }
 
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
 
-  public void initDatabase() {
+  /*
+   * Initiate the database with users.
+   */
+  public void initDbWithUsers() {
     String user = "Example3";
     String password = ExtendedPassword.createPassword("second_", TimeParameter.SECOND).getPassword();
     userService.saveUser(user, password);
