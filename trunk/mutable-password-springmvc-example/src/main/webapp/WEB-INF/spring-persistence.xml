@@ -52,8 +52,5 @@
 	</bean>
 
 	<bean id="initDb" class="abid.password.springmvc.InitDatabase" init-method="initDatabase" />
-	<bean id="userDao" class="abid.password.springmvc.dao.hibernate.UserDaoHibernateImpl" />
-	<bean id="userService" class="abid.password.springmvc.service.UserServiceImpl" />
-
 
 </beans>
