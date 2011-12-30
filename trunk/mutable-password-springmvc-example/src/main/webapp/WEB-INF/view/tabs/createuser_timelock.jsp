@@ -3,7 +3,8 @@
 
 <c:url var="formUrl" value="/app/create/createTimeLockPassword" />        
 <form:form  autocomplete="off" action="${formUrl}" modelAttribute="TimeLockPasswordFormBean" method="post">     
-  <form:errors path="*" cssClass="error" /> 
+  <form:errors path="*" cssClass="errorMessages" element="div" /> 
+
   <fieldset>
     <legend>Time Lock Password</legend>
     <div>Username: <form:input path="username" /></div>

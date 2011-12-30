@@ -3,7 +3,8 @@
 
 <c:url var="formUrl" value="/app/create/createExtendedTimeLockPassword" />        
 <form:form  autocomplete="off" action="${formUrl}" modelAttribute="ExtendedTimeLockPasswordFormBean" method="post">
-  <form:errors path="*" cssClass="error" /> 
+  <form:errors path="*" cssClass="errorMessages" element="div" /> 
+
   <fieldset>
     <legend>Extended Time Lock Password</legend>
     <div>Username: <form:input path="username" /></div>

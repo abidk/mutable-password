@@ -24,7 +24,7 @@ public class CreateUserControllerIT extends BaseIntegrationTester {
   }
   
   @Test
-  public void testCreateSimplePasswordShouldRedirectAndUserAppearsInViewUsersTable() {
+  public void testCreateSimplePasswordShouldRedirectToViewUsersPageAndUserExists() {
     beginAt("/index");
     login("admin", "admin");
 
@@ -39,6 +39,7 @@ public class CreateUserControllerIT extends BaseIntegrationTester {
     submit("", "Save User");
     
     // check view users page contains the new user
+    assertTextPresent("User \"simple_username\" created successfully.");
     String [] [] expectedTableData = new String [][] {
         {"simple_username", "simple_password" }
     };
