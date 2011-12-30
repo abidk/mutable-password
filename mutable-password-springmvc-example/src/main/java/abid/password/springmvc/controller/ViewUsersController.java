@@ -20,6 +20,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import abid.password.springmvc.model.User;
@@ -35,7 +36,7 @@ public class ViewUsersController {
     this.userService = userService;
   }
 
-  @RequestMapping(value = { "/users" })
+  @RequestMapping(method = RequestMethod.GET, value = { "/users" })
   public ModelAndView handleGetUsers() {
     ModelAndView model = new ModelAndView("viewUsers");
     List<User> users = userService.getUsers();
