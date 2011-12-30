@@ -47,7 +47,7 @@ public class LoginController {
   public String handleGetLoginError(ModelMap model) {
     List<User> users = userService.getUsers();
     model.addAttribute("users", users);
-    model.addAttribute("error", "true");
+    model.addAttribute("error", true);
     return "login";
   }
 

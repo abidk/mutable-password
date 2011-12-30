@@ -2,8 +2,8 @@
 
 <h3>Login</h3>
  
-<c:if test="${not empty error}">
-  <div class="errorblock">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
+<c:if test="${error}">
+  <div class="errorMessages">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</div>
 </c:if>
  
 <form name="f" action="<c:url value="/app/j_spring_security_check" />" method="POST">

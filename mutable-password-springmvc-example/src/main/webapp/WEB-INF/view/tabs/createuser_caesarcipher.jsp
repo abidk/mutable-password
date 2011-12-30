@@ -3,7 +3,7 @@
 
 <c:url var="formUrl" value="/app/create/createCaesarCipherPassword" />        
 <form:form  autocomplete="off" action="${formUrl}" modelAttribute="CaesarCipherPasswordFormBean" method="post">
-  <form:errors path="*" cssClass="error" /> 
+  <form:errors path="*" cssClass="errorMessages" element="div" /> 
 
   <fieldset>
     <legend>Caesar Cipher Password</legend>

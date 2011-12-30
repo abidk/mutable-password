@@ -3,7 +3,8 @@
 
 <c:url var="formUrl" value="/app/create/createSimplePassword" />        
 <form:form  autocomplete="off" action="${formUrl}" modelAttribute="SimplePasswordFormBean" method="post">
-  <form:errors path="*" cssClass="error" /> 
+  <form:errors path="*" cssClass="errorMessages" element="div" /> 
+  
   <fieldset>
     <legend>Simple Password</legend>
     <div>Username: <form:input path="username" /></div>
