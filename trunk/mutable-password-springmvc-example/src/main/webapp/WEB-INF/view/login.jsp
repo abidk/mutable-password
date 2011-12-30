@@ -18,8 +18,7 @@
     </tr>
     <tr>
       <td colspan="2">
-        <input name="submit" type="submit" value="submit" />
-        <input name="reset" type="reset" />
+        <input name="submit" type="submit" value="Submit" />
       </td>
     </tr>
   </table>

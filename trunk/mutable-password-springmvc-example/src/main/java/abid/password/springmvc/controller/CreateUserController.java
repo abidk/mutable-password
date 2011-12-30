@@ -71,13 +71,13 @@ public class CreateUserController {
     this.feedbackMessage = feedbackMessage;
   }
 
-  @RequestMapping(value = { "", "/" })
+  @RequestMapping(method = RequestMethod.GET, value = { "", "/" })
   public ModelAndView handleGetCreateUser() {
     return new ModelAndView("redirect:/app/create/" + DEFAULT_SELECTED_TAB);
   }
 
-  @RequestMapping(value = { "/{tab}" })
-  public ModelAndView handleGetCreateUserTab(@PathVariable String tab) {
+  @RequestMapping(method = RequestMethod.GET, value = { "/{tab}" })
+  public ModelAndView handleGetCreateUserTab(@PathVariable("tab") String tab) {
     TabPanel tabPanel = buildTabPanel(tab);
     if (!tabPanel.isValidTab(tab)) {
       return new ModelAndView("redirect:/app/create/");
