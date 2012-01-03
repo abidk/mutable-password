@@ -72,16 +72,12 @@ public class ExtendedPasswordTest {
   }
 
   @Test
-  public void getEvaluatedPasswordShouldReturnCorrectEvaludation() throws ParseException {
-    MutablePassword password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR);
-    assertEquals("pass2011", password.getEvaluatedPassword());
-
-    password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR.getTextField() + "-" + TimeParameter.YEAR.getTextField());
+  public void getEvaluatedPasswordShouldReturnCorrectEvaluation() throws ParseException {
+    MutablePassword password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR.getTextField() + "-" + TimeParameter.YEAR.getTextField());
     assertEquals("pass0", password.getEvaluatedPassword());
 
-    // algebra
-    password = ExtendedPassword.createPassword("pass", "((year+year)*2)-10");
-    assertEquals("pass8034", password.getEvaluatedPassword());
+    password = ExtendedPassword.createPassword("pass", "(year-year)+10");
+    assertEquals("pass10", password.getEvaluatedPassword());
   }
 
   @Test
