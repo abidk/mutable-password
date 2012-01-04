@@ -9,10 +9,10 @@
 		<security:intercept-url pattern="/css/**" filters="none" />
 		<security:intercept-url pattern="/images/**" filters="none" />
 		
-		<security:intercept-url pattern="/app/login*" access="isAnonymous()" />
-		<security:intercept-url pattern="/app/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/login*" access="isAnonymous()" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		
-		<security:form-login login-page="/login" always-use-default-target="true" default-target-url="/index" authentication-failure-url="/loginfailed" />
+		<security:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginfailed" />
 		<security:logout logout-success-url="/logout" />
 	</security:http>
 
