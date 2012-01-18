@@ -4,9 +4,9 @@ import static net.sourceforge.jwebunit.junit.JWebUnit.*;
 
 import org.junit.Test;
 
-import abid.password.springmvc.BaseIntegrationTester;
+import abid.password.springmvc.IntegrationTestCase;
 
-public class ViewUsersControllerIT extends BaseIntegrationTester {
+public class ViewUsersControllerIT extends IntegrationTestCase {
 
   @Test
   public void testViewUsersPageContainsTableWithSampleData() {
