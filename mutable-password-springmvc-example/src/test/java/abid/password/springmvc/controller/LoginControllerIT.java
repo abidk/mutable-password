@@ -4,9 +4,9 @@ import static net.sourceforge.jwebunit.junit.JWebUnit.*;
 
 import org.junit.Test;
 
-import abid.password.springmvc.BaseIntegrationTester;
+import abid.password.springmvc.IntegrationTestCase;
 
-public class LoginControllerIT extends BaseIntegrationTester {
+public class LoginControllerIT extends IntegrationTestCase {
   
   @Test
   public void testAccessingHomepageReturnsLoginPage() {
@@ -41,7 +41,7 @@ public class LoginControllerIT extends BaseIntegrationTester {
     assertLinkPresentWithExactText("Create User");
     assertLinkPresentWithExactText("Logout");
     
-    clickLinkWithExactText("Logout");
+    logout();
     
     assertFormElementPresent("j_username");
     assertFormElementPresent("j_password");  

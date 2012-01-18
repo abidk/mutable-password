@@ -4,17 +4,16 @@ import static net.sourceforge.jwebunit.junit.JWebUnit.*;
 
 import org.junit.Test;
 
-import abid.password.springmvc.BaseIntegrationTester;
+import abid.password.springmvc.IntegrationTestCase;
 
-public class CreateUserControllerIT extends BaseIntegrationTester {
+public class CreateUserControllerIT extends IntegrationTestCase {
 
   @Test
   public void testCreateUserPageContainsTabs() {
     beginAt("/index");
     login("admin", "admin");
 
-    assertLinkPresentWithExactText("Create User");
-    clickLinkWithExactText("Create User");
+    assertAndClickLinkWithText("Create User");
 
     assertLinkPresentWithExactText("Simple Password");
     assertLinkPresentWithExactText("Extended Password");
@@ -28,8 +27,7 @@ public class CreateUserControllerIT extends BaseIntegrationTester {
     beginAt("/index");
     login("admin", "admin");
 
-    assertLinkPresentWithExactText("Create User");
-    clickLinkWithExactText("Create User");
+    assertAndClickLinkWithText("Create User");
 
     assertFormElementPresent("username");
     setTextField("username", "simple_username");
