@@ -18,8 +18,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class IntegrationTestCase {
 
   public static final String DEFAULT_HOST = "127.0.0.1";
-  public static final int DEFAULT_PORT = 8090;
-  public static final String MESSAGE_SOURCE_BUNDLE = "message";
+  public static final int DEFAULT_PORT = 9999;
+  public static final String MESSAGE_SOURCE_BUNDLE = "messages";
 
   private static Server server;
   private static WebAppContext webAppContext;
@@ -60,7 +60,6 @@ public class IntegrationTestCase {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
     messageSource.setBasename(MESSAGE_SOURCE_BUNDLE);
     return messageSource;
-
   }
 
   protected void login(String username, String password) {
