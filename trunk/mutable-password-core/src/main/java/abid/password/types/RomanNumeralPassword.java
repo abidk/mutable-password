@@ -18,14 +18,12 @@ package abid.password.types;
 
 import java.util.Map;
 
-import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ParameterRegister;
 
 /**
  * Replaces the number value with Roman numerals.
@@ -49,10 +47,10 @@ public class RomanNumeralPassword extends MutablePassword {
   }
 
   @Override
-  public String getEvaluatedPassword() throws ParseException {
-    Evaluator evaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String evaluation = evaluator.evaluateExpression(getExpression(), parameters);
+  public String getEvaluatedPassword() throws EvaluationException {
+    ExpressionEvaluator expressionEvaluator = getEvaluator();
+    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    String evaluation = expressionEvaluator.evaluate(getExpression(), parameters);
 
     String romanValue = getRoman(Long.parseLong(evaluation));
     String evaluatedPassword = getText() + romanValue;
@@ -64,7 +62,7 @@ public class RomanNumeralPassword extends MutablePassword {
     try {
       String evaluatedPassword = getEvaluatedPassword();
       return evaluatedPassword.equals(confirmPassword);
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       throw new PasswordException(e);
     }
   }
@@ -122,29 +120,4 @@ public class RomanNumeralPassword extends MutablePassword {
     return PASSWORD_TYPE;
   }
 
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param timeValue
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, TimeParameter timeValue) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
-    String mutablePassword = text + block;
-    return new RomanNumeralPassword(mutablePassword);
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param value
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, int value) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, String.valueOf(value));
-    String mutablePassword = text + block;
-    return new RomanNumeralPassword(mutablePassword);
-  }
 }

@@ -23,11 +23,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import abid.password.PasswordParseException;
+import abid.password.MutablePasswordParser;
 import abid.password.MutablePassword;
 import abid.password.Password;
-import abid.password.evaluator.ParseException;
-import abid.password.types.PasswordFactory;
-import abid.password.types.PasswordInstantiationException;
+import abid.password.evaluator.EvaluationException;
 
 @Entity
 public class User implements Serializable {
@@ -56,9 +56,9 @@ public class User implements Serializable {
   }
 
   @Transient
-  public String getEvaluatedPassword() throws PasswordInstantiationException, ParseException {
+  public String getEvaluatedPassword() throws PasswordParseException, EvaluationException {   
     String evalatedPassword = password;
-    Password passwordObj = PasswordFactory.getInstance(password);
+    Password passwordObj = new MutablePasswordParser().parse(password);
     if (passwordObj instanceof MutablePassword) {
       MutablePassword mutablePassword = (MutablePassword) passwordObj;
       evalatedPassword = mutablePassword.getEvaluatedPassword();

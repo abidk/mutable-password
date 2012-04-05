@@ -21,14 +21,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import abid.password.PasswordParseException;
+import abid.password.MutablePasswordParser;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.StatefulMutablePassword;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
 import abid.password.swing.Application;
 import abid.password.swing.model.User;
-import abid.password.types.PasswordFactory;
-import abid.password.types.PasswordInstantiationException;
 
 import com.jeta.forms.components.panel.FormPanel;
 
@@ -47,7 +47,7 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
     usernameLabel.setText(user.getUsername());
     passwordLabel.setText(user.getPassword());
     try {
-      Password password = PasswordFactory.getInstance(user.getPassword());
+      Password password = new MutablePasswordParser().parse(user.getPassword());
       if (password instanceof StatefulMutablePassword) {
         StatefulMutablePassword statefulPassword = (StatefulMutablePassword) password;
         statefulPassword.setState(user.getState());
@@ -56,9 +56,9 @@ public class UserListRenderer extends AbstractComponent implements ListCellRende
         MutablePassword mutablePassword = (MutablePassword) password;
         passwordLabel.setText(mutablePassword.getEvaluatedPassword());
       }
-    } catch (PasswordInstantiationException e) {
+    } catch (PasswordParseException e) {
       e.printStackTrace();
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       e.printStackTrace();
     }
     return getForm();

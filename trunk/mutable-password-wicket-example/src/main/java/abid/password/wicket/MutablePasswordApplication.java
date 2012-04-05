@@ -22,7 +22,7 @@ import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
 
 import abid.password.parameters.TimeParameter;
-import abid.password.types.ExtendedPassword;
+import abid.password.types.ExtendedPasswordBuilder;
 import abid.password.types.SimplePassword;
 import abid.password.wicket.pages.CreateUserPage;
 import abid.password.wicket.pages.LoginPage;
@@ -71,6 +71,7 @@ public class MutablePasswordApplication extends AuthenticatedWebApplication {
   private void createExampleUsers() {
     unitOfWork.beginWork();
     try {
+      ExtendedPasswordBuilder passwordBuilder = new ExtendedPasswordBuilder();
       //String user = "Example1";
       //String password = RomanNumeralPassword.createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
       //userService.saveUser(user, password);
@@ -78,16 +79,16 @@ public class MutablePasswordApplication extends AuthenticatedWebApplication {
       //password = CaesarCipherPassword.createPassword("caesar", TimeParameter.MINUTE).getPassword();
       //userService.saveUser(user, password);
       String user = "Example3";
-      String password = ExtendedPassword.createPassword("second_", TimeParameter.SECOND).getPassword();
+      String password = passwordBuilder.createPassword("second_", TimeParameter.SECOND).getPassword();
       userService.saveUser(user, password);
       user = "Example4";
-      password = ExtendedPassword.createPassword("minute_", TimeParameter.MINUTE).getPassword();
+      password = passwordBuilder.createPassword("minute_", TimeParameter.MINUTE).getPassword();
       userService.saveUser(user, password);
       user = "Example5";
-      password = ExtendedPassword.createPassword("hourly_", TimeParameter.HOUR).getPassword();
+      password = passwordBuilder.createPassword("hourly_", TimeParameter.HOUR).getPassword();
       userService.saveUser(user, password);
       user = "Example6";
-      password = ExtendedPassword.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
+      password = passwordBuilder.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
       userService.saveUser(user, password);
       user = "admin";
       password = new SimplePassword("admin").getPassword();

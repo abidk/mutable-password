@@ -36,10 +36,10 @@ import abid.password.springmvc.model.TabPanel;
 import abid.password.springmvc.model.TimeLockPasswordFormBean;
 import abid.password.springmvc.service.UserService;
 import abid.password.springmvc.validator.MutablePasswordValidator;
-import abid.password.types.CaesarCipherPassword;
-import abid.password.types.ExtendedPassword;
-import abid.password.types.ExtendedTimeLockPassword;
-import abid.password.types.TimeLockPassword;
+import abid.password.types.CaesarCipherPasswordBuilder;
+import abid.password.types.ExtendedPasswordBuilder;
+import abid.password.types.ExtendedTimeLockPasswordBuilder;
+import abid.password.types.TimeLockPasswordBuilder;
 
 @Controller
 @RequestMapping("/create")
@@ -125,7 +125,9 @@ public class CreateUserController {
     String username = formBean.getUsername();
     String passwordText = formBean.getPassword();
     TimeParameter parameter = formBean.getTimeParameter();
-    MutablePassword mutablePassword = ExtendedPassword.createPassword(passwordText, parameter);
+
+    ExtendedPasswordBuilder passwordBuilder = new ExtendedPasswordBuilder();
+    MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
 
     feedbackMessage.addMessage("user.created.success", username);
@@ -148,7 +150,9 @@ public class CreateUserController {
     TimeParameter timeParameter = formBean.getTimeParameter();
     int start = formBean.getStart();
     int end = formBean.getEnd();
-    MutablePassword mutablePassword = ExtendedTimeLockPassword.createPassword(passwordText, extended, timeParameter, start, end);
+    
+    ExtendedTimeLockPasswordBuilder passwordBuilder = new ExtendedTimeLockPasswordBuilder();
+    MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, extended, timeParameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
     feedbackMessage.addMessage("user.created.success", username);
@@ -170,7 +174,9 @@ public class CreateUserController {
     TimeParameter parameter = formBean.getTimeParameter();
     int start = formBean.getStart();
     int end = formBean.getEnd();
-    MutablePassword mutablePassword = TimeLockPassword.createPassword(passwordText, parameter, start, end);
+    
+    TimeLockPasswordBuilder passwordBuilder = new TimeLockPasswordBuilder();
+    MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, parameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
 
     feedbackMessage.addMessage("user.created.success", username);
@@ -190,7 +196,9 @@ public class CreateUserController {
     String username = formBean.getUsername();
     String passwordText = formBean.getPassword();
     TimeParameter parameter = formBean.getTimeParameter();
-    MutablePassword mutablePassword = CaesarCipherPassword.createPassword(passwordText, parameter);
+    
+    CaesarCipherPasswordBuilder passwordBuilder = new CaesarCipherPasswordBuilder();
+    MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());
 
     feedbackMessage.addMessage("user.created.success", username);

@@ -21,8 +21,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 
@@ -30,56 +28,35 @@ public class ParameterFactoryTest {
 
   @Test
   public void addParameterShouldOnlyAddAParameterWhenItdoesNotExistAlready() {
-    assertTrue(ParameterFactory.addParameter("test", new Parameter(1)));
-    assertFalse(ParameterFactory.addParameter("test", new Parameter(1)));
-    assertFalse(ParameterFactory.addParameter("test", new Parameter(2)));
+    assertTrue(ParameterRegister.registerParameter("test", new Parameter(1)));
+    assertFalse(ParameterRegister.registerParameter("test", new Parameter(1)));
+    assertFalse(ParameterRegister.registerParameter("test", new Parameter(2)));
   }
 
   @Test
   public void getParameterShouldReturnCorrectValue() {
-    ParameterFactory.addParameter("param2", new Parameter(1));
-    assertEquals(1, ParameterFactory.getParameter("param2").getValue());
+    ParameterRegister.registerParameter("param2", new Parameter(1));
+    assertEquals(1, ParameterRegister.getParameter("param2").getValue());
   }
 
   @Test
   public void getAllParamterDataShouldReturnParameters() {
-    ParameterFactory.addParameter("params", new Parameter(1));
-    assertEquals(1, ParameterFactory.getAllParamterData().get("params").getValue());
+    ParameterRegister.registerParameter("params", new Parameter(1));
+    assertEquals(1, ParameterRegister.getParameters().get("params").getValue());
   }
 
   @Test
   public void removeParameterShouldRemoveParamterWhenItExists() {
-    ParameterFactory.addParameter("param3", new Parameter(1));
-    
-    assertTrue(ParameterFactory.removeParameter("param3"));
-    assertFalse(ParameterFactory.removeParameter("param3"));
-    assertFalse(ParameterFactory.removeParameter("madeUp"));
-  }
+    ParameterRegister.registerParameter("param3", new Parameter(1));
 
-  @Test
-  public void addAllParametersShouldAddAndOverrideExistingParameters() {
-    Map<String, Parameter> newParams = new HashMap<String, Parameter>();
-    newParams.put("newKey1", new Parameter(99));
-    newParams.put("newKey2", new Parameter(98));
-    ParameterFactory.addAllParameters(newParams);
-
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    assertEquals(99, parameters.get("newKey1").getValue());
-    assertEquals(98, parameters.get("newKey2").getValue());
-    
-    newParams = new HashMap<String, Parameter>();
-    newParams.put("newKey1", new Parameter(79));
-    newParams.put("newKey2", new Parameter(78));
-    ParameterFactory.addAllParameters(newParams);
-    
-    parameters = ParameterFactory.getAllParamterData();
-    assertEquals(79, parameters.get("newKey1").getValue());
-    assertEquals(78, parameters.get("newKey2").getValue());
+    assertTrue(ParameterRegister.unregisterParameter("param3"));
+    assertFalse(ParameterRegister.unregisterParameter("param3"));
+    assertFalse(ParameterRegister.unregisterParameter("madeUp"));
   }
 
   @Test
   public void testSingletonConstruct() throws Exception {
-    final Class<?> cls = ParameterFactory.class;
+    final Class<?> cls = ParameterRegister.class;
     final Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
     c.newInstance((Object[]) null);

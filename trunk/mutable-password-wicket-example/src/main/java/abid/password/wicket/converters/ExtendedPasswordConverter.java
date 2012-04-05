@@ -20,7 +20,7 @@ import java.util.Locale;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
 import abid.password.types.ExtendedPassword;
 
 public class ExtendedPasswordConverter implements IConverter<ExtendedPassword> {
@@ -35,7 +35,7 @@ public class ExtendedPasswordConverter implements IConverter<ExtendedPassword> {
   public String convertToString(ExtendedPassword value, Locale locale) {
     try {
       return value.getEvaluatedPassword();
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       error("", "converterFailed", e);
     }
     return null;

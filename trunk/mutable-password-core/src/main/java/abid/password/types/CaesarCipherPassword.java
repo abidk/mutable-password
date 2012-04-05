@@ -18,14 +18,12 @@ package abid.password.types;
 
 import java.util.Map;
 
-import abid.password.MutableBlock;
 import abid.password.PasswordException;
 import abid.password.StatefulMutablePassword;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ParameterRegister;
 
 /**
  * Basically, a Caesar cipher.
@@ -77,78 +75,32 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
   }
 
   @Override
-  public String getEvaluatedPassword() throws ParseException {
+  public String getEvaluatedPassword() throws EvaluationException {
     String expression = getExpression();
     int shiftBy = 0;
     if (expression.equalsIgnoreCase("state")) {
       shiftBy = getState();
     } else {
-      Evaluator evaluator = getEvaluator();
-      Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-      String evaluation = evaluator.evaluateExpression(expression, parameters);
+      ExpressionEvaluator expressionEvaluator = getEvaluator();
+      Map<String, Parameter> parameters = ParameterRegister.getParameters();
+      String evaluation = expressionEvaluator.evaluate(expression, parameters);
       shiftBy = Integer.valueOf(evaluation);
     }
     return getShiftedPassword(shiftBy);
   }
 
   @Override
-  public boolean confirmPassword(String confirmPassword)
-      throws PasswordException {
+  public boolean confirmPassword(String confirmPassword) throws PasswordException {
     try {
       String evaluatedPassword = getEvaluatedPassword();
       return evaluatedPassword.equals(confirmPassword);
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       throw new PasswordException(e);
     }
   }
 
   public String getPasswordType() {
     return PASSWORD_TYPE;
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param timeType
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(TimeParameter timeType) {
-    return createMutableBlock(timeType.getTextField());
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param expression
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(String expression) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
-    return block;
-  }
-
-  /**
-   * Creates a state based mutable password based on the input values.
-   * 
-   * @param text
-   * @param timeType
-   * @return mutable password with state
-   */
-  public static StatefulMutablePassword createPassword(String text,
-      TimeParameter timeType) {
-    MutableBlock block = createMutableBlock(timeType);
-    return new CaesarCipherPassword(text + block);
-  }
-
-  /**
-   * Creates a state based mutable password based on the input values.
-   * 
-   * @param text
-   * @return mutable password with state
-   */
-  public static StatefulMutablePassword createPassword(String text) {
-    MutableBlock block = createMutableBlock("state");
-    return new CaesarCipherPassword(text + block);
   }
 
 }

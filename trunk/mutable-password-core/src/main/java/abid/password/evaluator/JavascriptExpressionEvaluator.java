@@ -32,21 +32,20 @@ import abid.password.parameters.Parameter;
  * 
  * @author Abid
  */
-public class JavascriptEvaluator implements Evaluator {
+public class JavascriptExpressionEvaluator implements ExpressionEvaluator {
 
   private ScriptEngine engine;
 
   /**
    * Initialise the built-in Javascript engine.
    */
-  public JavascriptEvaluator() {
+  public JavascriptExpressionEvaluator() {
     ScriptEngineManager manager = new ScriptEngineManager();
     engine = manager.getEngineByName("js");
   }
 
   @Override
-  public String evaluateExpression(String expression,
-      Map<String, Parameter> parameters) throws ParseException {
+  public String evaluate(String expression, Map<String, Parameter> parameters) throws EvaluationException {
     try {
       for (Map.Entry<String, Parameter> e : parameters.entrySet()) {
         String key = e.getKey();
@@ -59,7 +58,7 @@ public class JavascriptEvaluator implements Evaluator {
       // Remove the '.0' when two integers are added
       return removeEmptyDecimalPoint(result);
     } catch (ScriptException e) {
-      throw new ParseException(e);
+      throw new EvaluationException(e);
     }
   }
 

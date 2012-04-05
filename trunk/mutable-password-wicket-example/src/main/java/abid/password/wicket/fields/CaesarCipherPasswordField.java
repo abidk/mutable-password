@@ -28,7 +28,7 @@ import org.apache.wicket.model.Model;
 
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.CaesarCipherPassword;
+import abid.password.types.CaesarCipherPasswordBuilder;
 
 public class CaesarCipherPasswordField extends FormComponentPanel<String> {
 
@@ -57,7 +57,7 @@ public class CaesarCipherPasswordField extends FormComponentPanel<String> {
   protected void convertInput() {
     String password = passwordField.getConvertedInput();
     TimeParameter parameter = timeChoice.getConvertedInput();
-    MutablePassword extendedPassword = CaesarCipherPassword.createPassword(password, parameter);
+    MutablePassword extendedPassword = new CaesarCipherPasswordBuilder().createPassword(password, parameter);
     setConvertedInput(extendedPassword.getPassword());
   }
 

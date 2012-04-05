@@ -19,11 +19,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import abid.password.PasswordParseException;
+
 public class PasswordInstantiationExceptionTest {
 
   @Test
   public void passwordExceptionShouldContainCorrectMessage() {
-    PasswordInstantiationException exception = new PasswordInstantiationException("some text", new Exception("some exception"));
+    PasswordParseException exception = new PasswordParseException("some text", new Exception("some exception"));
     assertEquals("some text", exception.getMessage());
     assertEquals("some exception", exception.getCause().getMessage());
   }

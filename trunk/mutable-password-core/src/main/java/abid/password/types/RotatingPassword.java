@@ -16,7 +16,6 @@
 
 package abid.password.types;
 
-import abid.password.MutableBlock;
 import abid.password.StatefulMutablePassword;
 
 /**
@@ -73,31 +72,6 @@ public class RotatingPassword extends StatefulMutablePassword {
 
   public String getPasswordType() {
     return PASSWORD_TYPE;
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param mutableText
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(String mutableText) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, mutableText);
-    return block;
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param mutableText
-   * @return mutable password
-   */
-  public static StatefulMutablePassword createPassword(String text, String mutableText) {
-    MutableBlock block = createMutableBlock(mutableText);
-
-    String mutablePassword = text + block;
-    return new RotatingPassword(mutablePassword);
   }
 
 }

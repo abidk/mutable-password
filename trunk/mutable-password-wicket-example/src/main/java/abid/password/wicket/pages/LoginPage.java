@@ -34,9 +34,9 @@ import org.apache.wicket.util.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import abid.password.MutablePasswordParser;
 import abid.password.MutablePassword;
 import abid.password.Password;
-import abid.password.types.PasswordFactory;
 import abid.password.wicket.MutablePasswordApplication;
 import abid.password.wicket.MutablePasswordSession;
 import abid.password.wicket.components.AjaxFallbackLabel;
@@ -83,7 +83,7 @@ public class LoginPage extends BasePage {
         Label passLabel = new Label("passLabel", data.getPassword());
 
         try {
-          Password password = PasswordFactory.getInstance(data.getPassword());
+          Password password = new MutablePasswordParser().parse(data.getPassword());
           if (password instanceof MutablePassword) {
             MutablePassword mutablePassword = (MutablePassword) password;
             String evalatedPassword = mutablePassword.getEvaluatedPassword();

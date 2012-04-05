@@ -14,17 +14,29 @@
  * limitations under the License.
  */
 
-package abid.password.evaluator;
+package abid.password.types;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class ParseExceptionTest {
+import abid.password.MutablePassword;
+import abid.password.PasswordException;
+
+public class RotatingPasswordBuilderTest {
+
+  private RotatingPasswordBuilder builder;
+
+  @Before
+  public void setUp() {
+    builder = new RotatingPasswordBuilder();
+  }
 
   @Test
-  public void testParseExceptionReturnsCorrectMessage() {
-    ParseException exception = new ParseException(new Exception("some exception"));
-    assertEquals("some exception", exception.getCause().getMessage());
+  public void createPasswordShouldBuildPasswordAsExpected() throws PasswordException {
+    MutablePassword password = builder.createPassword("pass", "123456");
+    assertEquals("pass[rotating{123456}]", password.getPassword());
   }
+
 }

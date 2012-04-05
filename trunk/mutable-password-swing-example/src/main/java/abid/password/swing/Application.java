@@ -24,9 +24,9 @@ import javax.swing.JFrame;
 
 import abid.password.parameters.TimeParameter;
 import abid.password.swing.model.User;
-import abid.password.types.CaesarCipherPassword;
-import abid.password.types.ExtendedPassword;
-import abid.password.types.RomanNumeralPassword;
+import abid.password.types.CaesarCipherPasswordBuilder;
+import abid.password.types.ExtendedPasswordBuilder;
+import abid.password.types.RomanNumeralPasswordBuilder;
 import abid.password.types.SimplePassword;
 
 public class Application {
@@ -57,25 +57,25 @@ public class Application {
     users.clear();
     User user3 = new User();
     user3.setUsername("Example1");
-    String password3 = RomanNumeralPassword.createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
+    String password3 = new RomanNumeralPasswordBuilder().createPassword("romannumeral", TimeParameter.MINUTE).getPassword();
     user3.setPassword(password3);
     users.add(user3);
 
     User user4 = new User();
     user4.setUsername("Example2");
-    String password4 = CaesarCipherPassword.createPassword("caesar", TimeParameter.MINUTE).getPassword();
+    String password4 = new CaesarCipherPasswordBuilder().createPassword("caesar", TimeParameter.MINUTE).getPassword();
     user4.setPassword(password4);
     users.add(user4);
 
     User user1 = new User();
     user1.setUsername("Example3");
-    String password1 = ExtendedPassword.createPassword("second", TimeParameter.SECOND).getPassword();
+    String password1 = new ExtendedPasswordBuilder().createPassword("second", TimeParameter.SECOND).getPassword();
     user1.setPassword(password1);
     users.add(user1);
 
     User user2 = new User();
     user2.setUsername("Example4");
-    String password2 = ExtendedPassword.createPassword("minute", TimeParameter.MINUTE).getPassword();
+    String password2 = new ExtendedPasswordBuilder().createPassword("minute", TimeParameter.MINUTE).getPassword();
     user2.setPassword(password2);
     users.add(user2);
 

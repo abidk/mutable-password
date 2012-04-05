@@ -14,26 +14,17 @@
  * limitations under the License.
  */
 
-package abid.password.types;
+package abid.password.evaluator;
 
-/**
- * Capture exception when a password string cannot be initialised into an object.
- * 
- * @author Abid Khalil
- *
- */
-public class PasswordInstantiationException extends Exception {
+import static org.junit.Assert.*;
 
-  private static final long serialVersionUID = 1L;
+import org.junit.Test;
 
-  /**
-   * Constructs a new exception with the message and exception.
-   * 
-   * @param message
-   * @param cause
-   */
-  public PasswordInstantiationException(String message, Throwable cause) {
-    super(message, cause);
+public class EvaluationExceptionTest {
+
+  @Test
+  public void testParseExceptionReturnsCorrectMessage() {
+    EvaluationException exception = new EvaluationException(new Exception("some exception"));
+    assertEquals("some exception", exception.getCause().getMessage());
   }
-
 }

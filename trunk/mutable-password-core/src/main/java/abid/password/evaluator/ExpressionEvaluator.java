@@ -13,25 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package abid.password.springmvc.controller;
 
-import static net.sourceforge.jwebunit.junit.JWebUnit.*;
+package abid.password.evaluator;
 
-import org.junit.Test;
+import java.util.Map;
 
-import abid.password.springmvc.IntegrationTestCase;
+import abid.password.parameters.Parameter;
 
-public class HomeControllerIT extends IntegrationTestCase {
+/**
+ * Implement this class to create different evaluators i.e. using beanshell.
+ * 
+ * @author Abid
+ */
+public interface ExpressionEvaluator {
 
-  @Test
-  public void testHomePageContainsCorrectElements() {
-    beginAt("/index");
-    login("admin", "admin");
+  /**
+   * Evaluate and return evaluation result.
+   * 
+   * @param expression
+   * @param parameters
+   * @return evaluated value
+   * @throws EvaluationException
+   */
+  String evaluate(String expression, Map<String, Parameter> parameters) throws EvaluationException;
 
-    assertTitleEquals("Mutable Password Spring MVC Example");
-    assertTextPresent("Homepage");
-    assertLinkPresentWithExactText("Users");
-    assertLinkPresentWithExactText("Create User");
-    assertLinkPresentWithExactText("Logout");
-  }
 }
