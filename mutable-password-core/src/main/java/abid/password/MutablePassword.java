@@ -16,9 +16,9 @@
 
 package abid.password;
 
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.JavascriptEvaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.ExpressionEvaluator;
+import abid.password.evaluator.JavascriptExpressionEvaluator;
+import abid.password.evaluator.EvaluationException;
 
 /**
  * Abstract class to be extended when creating new mutable password types.
@@ -39,11 +39,11 @@ public abstract class MutablePassword extends Password {
    * Method will return the evaluation of the mutable block.
    * 
    * @return evaluated password
-   * @throws ParseException
+   * @throws EvaluationException
    */
-  public abstract String getEvaluatedPassword() throws ParseException;
+  public abstract String getEvaluatedPassword() throws EvaluationException;
 
-  private Evaluator evaluator = new JavascriptEvaluator();
+  private ExpressionEvaluator evaluator = new JavascriptExpressionEvaluator();
   private MutableBlock mutableBlock;
   private String text;
 
@@ -112,11 +112,11 @@ public abstract class MutablePassword extends Password {
   }
 
   /**
-   * Returns the password evaluator.
+   * Returns current password evaluator.
    * 
    * @return evaluator
    */
-  public Evaluator getEvaluator() {
+  public ExpressionEvaluator getEvaluator() {
     return evaluator;
   }
 
@@ -125,7 +125,7 @@ public abstract class MutablePassword extends Password {
    * 
    * @param evaluator
    */
-  public void setEvaluator(Evaluator evaluator) {
+  public void setEvaluator(ExpressionEvaluator evaluator) {
     this.evaluator = evaluator;
   }
 }

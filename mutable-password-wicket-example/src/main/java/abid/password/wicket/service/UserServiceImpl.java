@@ -20,9 +20,9 @@ import java.util.List;
 
 import com.google.inject.Inject;
 
+import abid.password.MutablePasswordParser;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.types.PasswordFactory;
 import abid.password.wicket.dao.UserDao;
 import abid.password.wicket.model.User;
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     Password userPass = null;
     try {
-      userPass = PasswordFactory.getInstance(user.getPassword());
+      userPass = new MutablePasswordParser().parse(user.getPassword());
     } catch (Exception e) {
       throw new UserException("An error occurred whilst parsing the password.", e);
     }

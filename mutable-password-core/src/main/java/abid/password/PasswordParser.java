@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package abid.password.evaluator;
+package abid.password;
 
 /**
- * Wrapper for any generic evaluation exceptions that are thrown by the
- * evaluator.
+ * 
+ * Parses password text into a password object.
  * 
  * @author Abid
+ * 
  */
-public class ParseException extends Exception {
-
-  private static final long serialVersionUID = 1L;
+public interface PasswordParser {
 
   /**
-   * Wraps the generic exception.
+   * Parse password text into a Password object.
    * 
-   * @param e
+   * @param password
+   *          Password text.
+   * @return Password object
+   * @throws PasswordParseException
    */
-  public ParseException(Exception e) {
-    super(e);
-  }
-
+  Password parse(String password) throws PasswordParseException;
 }

@@ -14,28 +14,35 @@
  * limitations under the License.
  */
 
-package abid.password.evaluator;
-
-import java.util.Map;
-
-import abid.password.parameters.Parameter;
+package abid.password;
 
 /**
- * Evaluator implementation to create different evaluators i.e. using beanshell.
+ * Capture exception when a password string cannot be converted.
  * 
- * @author Abid
+ * @author Abid Khalil
+ * 
  */
-public interface Evaluator {
+public class PasswordParseException extends PasswordException {
+
+  private static final long serialVersionUID = 1L;
 
   /**
-   * Evaluate the expression returning an evaluated value.
+   * Constructs a new exception with the message.
    * 
-   * @param expression
-   * @param parameters
-   * @return evaluated value
-   * @throws ParseException
+   * @param message
    */
-  String evaluateExpression(String expression, Map<String, Parameter> parameters)
-      throws ParseException;
+  public PasswordParseException(String message) {
+    super(message);
+  }
+
+  /**
+   * Constructs a new exception with the message and exception.
+   * 
+   * @param message
+   * @param cause
+   */
+  public PasswordParseException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
 }

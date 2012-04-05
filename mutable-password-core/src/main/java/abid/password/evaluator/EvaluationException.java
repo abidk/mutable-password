@@ -13,25 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package abid.password.springmvc.controller;
 
-import static net.sourceforge.jwebunit.junit.JWebUnit.*;
+package abid.password.evaluator;
 
-import org.junit.Test;
+/**
+ * Wrapper for any generic evaluation exceptions that are thrown by the
+ * evaluator.
+ * 
+ * @author Abid
+ */
+public class EvaluationException extends Exception {
 
-import abid.password.springmvc.IntegrationTestCase;
+  private static final long serialVersionUID = 1L;
 
-public class HomeControllerIT extends IntegrationTestCase {
-
-  @Test
-  public void testHomePageContainsCorrectElements() {
-    beginAt("/index");
-    login("admin", "admin");
-
-    assertTitleEquals("Mutable Password Spring MVC Example");
-    assertTextPresent("Homepage");
-    assertLinkPresentWithExactText("Users");
-    assertLinkPresentWithExactText("Create User");
-    assertLinkPresentWithExactText("Logout");
+  /**
+   * Wraps the generic exception.
+   * 
+   * @param e
+   */
+  public EvaluationException(Exception e) {
+    super(e);
   }
+
 }

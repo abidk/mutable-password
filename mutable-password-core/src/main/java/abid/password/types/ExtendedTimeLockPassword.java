@@ -18,14 +18,12 @@ package abid.password.types;
 
 import java.util.Map;
 
-import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ParameterRegister;
 
 /**
  * Combines Extended Mutable Password with Time Lock Password.
@@ -50,12 +48,12 @@ public class ExtendedTimeLockPassword extends MutablePassword {
   }
 
   @Override
-  public String getEvaluatedPassword() throws ParseException {
+  public String getEvaluatedPassword() throws EvaluationException {
     String[] expressions = getExpression().split(",");
     String extendTimeExpression = expressions[0];
-    Evaluator evaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String extendEvaluation = evaluator.evaluateExpression(extendTimeExpression, parameters);
+    ExpressionEvaluator expressionEvaluator = getEvaluator();
+    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    String extendEvaluation = expressionEvaluator.evaluate(extendTimeExpression, parameters);
     String evaluatedPassword = getText() + extendEvaluation;
     return evaluatedPassword;
   }
@@ -72,13 +70,13 @@ public class ExtendedTimeLockPassword extends MutablePassword {
       // check the time expression is correct
       String[] expressions = getExpression().split(",");
       String lockExpression = expressions[1];
-      Evaluator evaluator = getEvaluator();
-      String eval = evaluator.evaluateExpression(lockExpression, ParameterFactory.getAllParamterData());
+      ExpressionEvaluator expressionEvaluator = getEvaluator();
+      String eval = expressionEvaluator.evaluate(lockExpression, ParameterRegister.getParameters());
       if (!"true".equalsIgnoreCase(eval)) {
         return false;
       }
       return true;
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       throw new PasswordException(e);
     }
   }
@@ -86,42 +84,6 @@ public class ExtendedTimeLockPassword extends MutablePassword {
   @Override
   public String getPasswordType() {
     return PASSWORD_TYPE;
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param extendedTimeValue
-   * @param lockTimeType
-   * @param lockStartTime
-   * @param lockEndTime
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime,
-      int lockEndTime) {
-    String extendExpression = extendedTimeValue.getTextField();
-    String lockExpression = lockTimeType.getTextField() + ">=" + lockStartTime + "&&" + lockTimeType.getTextField() + "<=" + lockEndTime;
-    String expression = extendExpression + "," + lockExpression;
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
-    return block;
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param extendedTimeValue
-   * @param lockTimeType
-   * @param lockStartTime
-   * @param lockEndTime
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime,
-      int lockEndTime) {
-    MutableBlock block = createMutableBlock(extendedTimeValue, lockTimeType, lockStartTime, lockEndTime);
-
-    String mutablePassword = text + block;
-    return new ExtendedTimeLockPassword(mutablePassword);
   }
 
 }

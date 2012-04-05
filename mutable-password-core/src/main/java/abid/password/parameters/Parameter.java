@@ -18,8 +18,7 @@ package abid.password.parameters;
 import java.io.Serializable;
 
 /**
- * Wrapper to hold Object, this can then be used in a specific way by the
- * evaluator.
+ * Wrapper for the parameter object.
  * 
  * @author Abid
  */

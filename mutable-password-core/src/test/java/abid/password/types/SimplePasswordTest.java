@@ -16,35 +16,19 @@
 
 package abid.password.types;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import abid.password.PasswordParseException;
 import abid.password.Password;
 import abid.password.PasswordException;
 
 public class SimplePasswordTest {
 
   @Test
-  public void passwordFactoryShouldReturnSimplePassword() throws PasswordInstantiationException {
-    Password password = PasswordFactory.getInstance("pass1");
-    assertEquals(SimplePassword.class, password.getClass());
-
-    password = PasswordFactory.getInstance("pass[");
-    assertEquals(SimplePassword.class, password.getClass());
-
-    password = PasswordFactory.getInstance("pass[]");
-    assertEquals(SimplePassword.class, password.getClass());
-
-    password = PasswordFactory.getInstance("pass[{]");
-    assertEquals(SimplePassword.class, password.getClass());
-
-    password = PasswordFactory.getInstance("ab[id}]");
-    assertEquals(SimplePassword.class, password.getClass());
-  }
-
-  @Test
-  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordInstantiationException, PasswordException {
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordParseException, PasswordException {
     Password password = new SimplePassword("pass1");
     assertTrue(password.confirmPassword("pass1"));
     assertFalse(password.confirmPassword("pass123"));

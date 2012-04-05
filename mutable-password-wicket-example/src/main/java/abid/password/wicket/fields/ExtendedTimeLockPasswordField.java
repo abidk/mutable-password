@@ -27,7 +27,7 @@ import org.apache.wicket.model.Model;
 
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
-import abid.password.types.ExtendedTimeLockPassword;
+import abid.password.types.ExtendedTimeLockPasswordBuilder;
 
 public class ExtendedTimeLockPasswordField extends FormComponentPanel<String> {
 
@@ -77,7 +77,7 @@ public class ExtendedTimeLockPasswordField extends FormComponentPanel<String> {
     Integer start = startField.getConvertedInput();
     Integer end = endField.getConvertedInput();
 
-    MutablePassword extendedPassword = ExtendedTimeLockPassword.createPassword(password, extParameter, timeParameter, start, end);
+    MutablePassword extendedPassword = new ExtendedTimeLockPasswordBuilder().createPassword(password, extParameter, timeParameter, start, end);
     setConvertedInput(extendedPassword.getPassword());
   }
 

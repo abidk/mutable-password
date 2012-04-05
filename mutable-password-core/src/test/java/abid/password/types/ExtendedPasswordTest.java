@@ -16,7 +16,10 @@
 
 package abid.password.types;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
@@ -26,8 +29,8 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.Password;
 import abid.password.PasswordException;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
 import abid.password.parameters.TimeParameter;
 import abid.password.parameters.ZodiacParameter;
@@ -35,67 +38,65 @@ import abid.password.parameters.ZodiacParameter;
 public class ExtendedPasswordTest {
 
   @Test
-  public void passwordFactoryShouldReturnCorrectPasswordType() throws PasswordInstantiationException {
-    Password unknownPassword = PasswordFactory.getInstance(ExtendedPassword.createPassword("abid", TimeParameter.YEAR).getPassword());
-    assertEquals(ExtendedPassword.class, unknownPassword.getClass());
-    assertEquals(ExtendedPassword.PASSWORD_TYPE, ((MutablePassword) unknownPassword).getType());
+  public void getTypeShouldReturnExtendedPasswordType() throws PasswordException, EvaluationException {
+    MutablePassword password = createPassword("pass1", TimeParameter.YEAR);
+    assertEquals(ExtendedPassword.PASSWORD_TYPE, password.getType());
   }
 
   @Test
-  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordException, ParseException {
-    MutablePassword password = ExtendedPassword.createPassword("pass1", TimeParameter.YEAR);
+  public void confirmPasswordShouldValidatePasswordCorrectly() throws PasswordException, EvaluationException {
+    MutablePassword password = createPassword("pass1", TimeParameter.YEAR);
     assertTrue(password.confirmPassword("pass1" + TimeParameter.YEAR.getCalendarValue()));
     assertFalse(password.confirmPassword("pass1a" + TimeParameter.YEAR.getCalendarValue()));
 
-    password = ExtendedPassword.createPassword("pass1", "year+year");
+    password = createPassword("pass1", "year+year");
     assertTrue(password.confirmPassword("pass1" + (TimeParameter.YEAR.getCalendarValue() + TimeParameter.YEAR.getCalendarValue())));
     assertFalse(password.confirmPassword("pass1" + TimeParameter.YEAR.getCalendarValue()));
 
-    password = ExtendedPassword.createPassword("pass", "((year+year)*2)-10");
-    assertTrue(password
-        .confirmPassword("pass" + ((TimeParameter.YEAR.getCalendarValue() + TimeParameter.YEAR.getCalendarValue()) * 2 - 10)));
+    password = createPassword("pass", "((year+year)*2)-10");
+    assertTrue(password.confirmPassword("pass" + ((TimeParameter.YEAR.getCalendarValue() + TimeParameter.YEAR.getCalendarValue()) * 2 - 10)));
 
-    password = ExtendedPassword.createPassword("pass", "zodiac");
+    password = createPassword("pass", "zodiac");
     assertTrue(password.confirmPassword("pass" + ZodiacParameter.getTodaysZodiac().getSign()));
     assertFalse(password.confirmPassword("pass"));
 
-    password = ExtendedPassword.createPassword("ab^id", TimeParameter.YEAR);
+    password = createPassword("ab^id", TimeParameter.YEAR);
     assertTrue(password.confirmPassword("ab^id" + TimeParameter.YEAR.getCalendarValue()));
     assertFalse(password.confirmPassword("abid" + TimeParameter.YEAR.getCalendarValue()));
 
-    password = new ExtendedPassword("abid", ExtendedPassword.createMutableBlock(TimeParameter.HOUR));
+    password = new ExtendedPassword("abid", new ExtendedPasswordBuilder().createMutableBlock(TimeParameter.HOUR));
     assertTrue(password.confirmPassword("abid" + TimeParameter.HOUR.getCalendarValue()));
 
-    password = ExtendedPassword.createPassword("ab^id", TimeParameter.YEAR);
+    password = createPassword("ab^id", TimeParameter.YEAR);
     String confirmPassword = "ab^id" + TimeParameter.YEAR.getCalendarValue();
     assertTrue(password.confirmPassword(confirmPassword));
   }
 
   @Test
-  public void getEvaluatedPasswordShouldReturnCorrectEvaluation() throws ParseException {
-    MutablePassword password = ExtendedPassword.createPassword("pass", TimeParameter.YEAR.getTextField() + "-" + TimeParameter.YEAR.getTextField());
+  public void getEvaluatedPasswordShouldReturnCorrectEvaluation() throws EvaluationException {
+    MutablePassword password = createPassword("pass", TimeParameter.YEAR.getTextField() + "-" + TimeParameter.YEAR.getTextField());
     assertEquals("pass0", password.getEvaluatedPassword());
 
-    password = ExtendedPassword.createPassword("pass", "(year-year)+10");
+    password = createPassword("pass", "(year-year)+10");
     assertEquals("pass10", password.getEvaluatedPassword());
   }
 
   @Test
   public void createMutableBlockShouldReturnCorrectParameters() {
-    MutableBlock mutableBlock = ExtendedPassword.createMutableBlock(TimeParameter.HOUR);
+    MutableBlock mutableBlock = new ExtendedPasswordBuilder().createMutableBlock(TimeParameter.HOUR);
     assertEquals(TimeParameter.HOUR.getTextField(), mutableBlock.getExpression());
     assertEquals(ExtendedPassword.PASSWORD_TYPE, mutableBlock.getType());
   }
 
   @Test(expected = PasswordException.class)
   public void confirmPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws PasswordException {
-    Password password = ExtendedPassword.createPassword("pass", "year(year");
+    Password password = createPassword("pass", "year(year");
     password.confirmPassword("pass");
   }
 
-  @Test(expected = ParseException.class)
-  public void getEvaluatedPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws ParseException {
-    MutablePassword password = ExtendedPassword.createPassword("pass", "year(year");
+  @Test(expected = EvaluationException.class)
+  public void getEvaluatedPasswordShouldThrowExceptionWhenExpressionIsMalformed() throws EvaluationException {
+    MutablePassword password = createPassword("pass", "year(year");
     password.getEvaluatedPassword();
   }
 
@@ -121,12 +122,19 @@ public class ExtendedPasswordTest {
     assertEquals(NewEvalutator.class, password.getEvaluator().getClass());
   }
 
-  public class NewEvalutator implements Evaluator {
+  public class NewEvalutator implements ExpressionEvaluator {
 
     @Override
-    public String evaluateExpression(String expression, Map<String, Parameter> map) throws ParseException {
+    public String evaluate(String expression, Map<String, Parameter> map) throws EvaluationException {
       return null;
     }
   }
 
+  private MutablePassword createPassword(String text, String expression) {
+    return new ExtendedPasswordBuilder().createPassword(text, expression);
+  }
+
+  private MutablePassword createPassword(String text, TimeParameter timeValue) {
+    return new ExtendedPasswordBuilder().createPassword(text, timeValue);
+  }
 }

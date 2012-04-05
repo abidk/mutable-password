@@ -21,11 +21,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import abid.password.MutablePasswordParser;
 import abid.password.Password;
 import abid.password.PasswordException;
 import abid.password.springmvc.dao.UserDao;
 import abid.password.springmvc.model.User;
-import abid.password.types.PasswordFactory;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     Password userPass = null;
     try {
-      userPass = PasswordFactory.getInstance(user.getPassword());
+      userPass = new MutablePasswordParser().parse(user.getPassword());
     } catch (Exception e) {
       throw new UserException("An error occurred whilst parsing the password.", e);
     }

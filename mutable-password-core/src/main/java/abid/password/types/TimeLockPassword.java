@@ -21,11 +21,10 @@ import java.util.Map;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ParameterRegister;
 
 /**
  * Creates a password which can only be used at a specific time.
@@ -64,7 +63,7 @@ public class TimeLockPassword extends MutablePassword {
   }
 
   @Override
-  public String getEvaluatedPassword() throws ParseException {
+  public String getEvaluatedPassword() throws EvaluationException {
     // password does not need evaluating
     String passwordText = getText();
     return passwordText;
@@ -77,52 +76,23 @@ public class TimeLockPassword extends MutablePassword {
     if (confirmPassword.equals(passwordText)) {
       try {
         return isPasswordLocked();
-      } catch (ParseException e) {
+      } catch (EvaluationException e) {
         throw new PasswordException(e);
       }
     }
     return false;
   }
 
-  protected boolean isPasswordLocked() throws ParseException {
-    Evaluator evaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String result = evaluator.evaluateExpression(getExpression(), parameters);
+  protected boolean isPasswordLocked() throws EvaluationException {
+    ExpressionEvaluator expressionEvaluator = getEvaluator();
+    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    String result = expressionEvaluator.evaluate(getExpression(), parameters);
     return "true".equalsIgnoreCase(result);
   }
 
   @Override
   public String getPasswordType() {
     return PASSWORD_TYPE;
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param timeType
-   * @param start
-   * @param end
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(TimeParameter timeType, int start, int end) {
-    String type = timeType.getTextField();
-    String expression = type + ">=" + start + "&&" + type + "<=" + end;
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
-    return block;
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param timeType
-   * @param start
-   * @param end
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, TimeParameter timeType, int start, int end) {
-    MutableBlock block = createMutableBlock(timeType, start, end);
-    return new TimeLockPassword(text, block);
   }
 
 }

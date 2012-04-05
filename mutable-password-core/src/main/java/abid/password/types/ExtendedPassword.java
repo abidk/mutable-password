@@ -21,11 +21,10 @@ import java.util.Map;
 import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.PasswordException;
-import abid.password.evaluator.Evaluator;
-import abid.password.evaluator.ParseException;
+import abid.password.evaluator.EvaluationException;
+import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterFactory;
-import abid.password.parameters.TimeParameter;
+import abid.password.parameters.ParameterRegister;
 
 /**
  * Concatenates a parameter at the end of the static password.
@@ -63,10 +62,10 @@ public class ExtendedPassword extends MutablePassword {
   }
 
   @Override
-  public String getEvaluatedPassword() throws ParseException {
-    Evaluator evaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterFactory.getAllParamterData();
-    String evaluation = evaluator.evaluateExpression(getExpression(), parameters);
+  public String getEvaluatedPassword() throws EvaluationException {
+    ExpressionEvaluator expressionEvaluator = getEvaluator();
+    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    String evaluation = expressionEvaluator.evaluate(getExpression(), parameters);
     String evaluatedPassword = getText() + evaluation;
     // System.out.println( "==>" + evaluatedPassword);
     return evaluatedPassword;
@@ -77,59 +76,14 @@ public class ExtendedPassword extends MutablePassword {
     try {
       String evaluatedPassword = getEvaluatedPassword();
       return evaluatedPassword.equals(confirmPassword);
-    } catch (ParseException e) {
+    } catch (EvaluationException e) {
       throw new PasswordException(e);
     }
   }
-  
+
   @Override
   public String getPasswordType() {
     return PASSWORD_TYPE;
   }
 
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param expression
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(String expression) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, expression);
-    return block;
-  }
-
-  /**
-   * Creates a mutable block based on the input values.
-   * 
-   * @param timeValue
-   * @return mutable block
-   */
-  public static MutableBlock createMutableBlock(TimeParameter timeValue) {
-    MutableBlock block = new MutableBlock(PASSWORD_TYPE, timeValue.getTextField());
-    return block;
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param timeValue
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, TimeParameter timeValue) {
-    return createPassword(text, timeValue.getTextField());
-  }
-
-  /**
-   * Create the mutable password based on the input values.
-   * 
-   * @param text
-   * @param expression
-   * @return mutable password
-   */
-  public static MutablePassword createPassword(String text, String expression) {
-    MutableBlock block = createMutableBlock(expression);
-    String mutablePassword = text + block;
-    return new ExtendedPassword(mutablePassword);
-  }
 }
