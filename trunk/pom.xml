@@ -56,8 +56,7 @@
 		<url>https://mutable-password.googlecode.com/svn/trunk</url>
 	</scm>
 
-	<!-- If you receive an error about certificate validation then run 'mvn 
-		deploy' -->
+	<!-- If you receive an error about certificate validation, run 'mvn deploy' -->
 	<!-- and accept the certificate permanently, then re-run the 'release:perform' -->
 	<distributionManagement>
 		<repository>
