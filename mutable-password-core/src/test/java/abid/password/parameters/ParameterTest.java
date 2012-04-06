@@ -15,7 +15,7 @@
  */
 package abid.password.parameters;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -24,9 +24,9 @@ public class ParameterTest {
   @Test
   public void getValueShouldReturnParameterValue() {
     Parameter parameter = new Parameter("someValue");
-    assertEquals("someValue", parameter.getValue());
+    assertThat(parameter.getValue()).isEqualTo("someValue");
 
     parameter = new Parameter(new Integer(99));
-    assertEquals(99, parameter.getValue());
+    assertThat(parameter.getValue()).isEqualTo(99);
   }
 }
