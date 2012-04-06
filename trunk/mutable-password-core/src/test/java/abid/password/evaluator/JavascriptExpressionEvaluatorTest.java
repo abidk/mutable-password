@@ -24,7 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterRegister;
+import abid.password.parameters.ParameterRegistery;
 
 public class JavascriptExpressionEvaluatorTest {
 
@@ -34,7 +34,7 @@ public class JavascriptExpressionEvaluatorTest {
   @Before
   public void setUp() {
     evaluator = new JavascriptExpressionEvaluator();
-    parameters = ParameterRegister.getParameters();
+    parameters = ParameterRegistery.getParameters();
   }
 
   @Test

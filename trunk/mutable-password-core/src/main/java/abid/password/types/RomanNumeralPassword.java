@@ -23,7 +23,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.EvaluationException;
 import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterRegister;
+import abid.password.parameters.ParameterRegistery;
 
 /**
  * Replaces the number value with Roman numerals.
@@ -49,7 +49,7 @@ public class RomanNumeralPassword extends MutablePassword {
   @Override
   public String getEvaluatedPassword() throws EvaluationException {
     ExpressionEvaluator expressionEvaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    Map<String, Parameter> parameters = ParameterRegistery.getParameters();
     String evaluation = expressionEvaluator.evaluate(getExpression(), parameters);
 
     String romanValue = getRoman(Long.parseLong(evaluation));

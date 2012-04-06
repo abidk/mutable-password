@@ -23,7 +23,7 @@ import abid.password.StatefulMutablePassword;
 import abid.password.evaluator.EvaluationException;
 import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterRegister;
+import abid.password.parameters.ParameterRegistery;
 
 /**
  * Basically, a Caesar cipher.
@@ -82,7 +82,7 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
       shiftBy = getState();
     } else {
       ExpressionEvaluator expressionEvaluator = getEvaluator();
-      Map<String, Parameter> parameters = ParameterRegister.getParameters();
+      Map<String, Parameter> parameters = ParameterRegistery.getParameters();
       String evaluation = expressionEvaluator.evaluate(expression, parameters);
       shiftBy = Integer.valueOf(evaluation);
     }

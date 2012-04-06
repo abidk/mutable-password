@@ -24,40 +24,40 @@ import java.lang.reflect.Constructor;
 
 import org.junit.Test;
 
-public class ParameterFactoryTest {
+public class ParameterRegistryTest {
 
   @Test
   public void addParameterShouldOnlyAddAParameterWhenItdoesNotExistAlready() {
-    assertTrue(ParameterRegister.registerParameter("test", new Parameter(1)));
-    assertFalse(ParameterRegister.registerParameter("test", new Parameter(1)));
-    assertFalse(ParameterRegister.registerParameter("test", new Parameter(2)));
+    assertTrue(ParameterRegistery.registerParameter("test", new Parameter(1)));
+    assertFalse(ParameterRegistery.registerParameter("test", new Parameter(1)));
+    assertFalse(ParameterRegistery.registerParameter("test", new Parameter(2)));
   }
 
   @Test
   public void getParameterShouldReturnCorrectValue() {
-    ParameterRegister.registerParameter("param2", new Parameter(1));
-    assertEquals(1, ParameterRegister.getParameter("param2").getValue());
+    ParameterRegistery.registerParameter("param2", new Parameter(1));
+    assertEquals(1, ParameterRegistery.getParameter("param2").getValue());
   }
 
   @Test
   public void getAllParamterDataShouldReturnParameters() {
-    ParameterRegister.registerParameter("params", new Parameter(1));
-    assertEquals(1, ParameterRegister.getParameters().get("params").getValue());
+    ParameterRegistery.registerParameter("params", new Parameter(1));
+    assertEquals(1, ParameterRegistery.getParameters().get("params").getValue());
   }
 
   @Test
   public void removeParameterShouldRemoveParamterWhenItExists() {
-    ParameterRegister.registerParameter("param3", new Parameter(1));
+    ParameterRegistery.registerParameter("param3", new Parameter(1));
 
-    assertTrue(ParameterRegister.unregisterParameter("param3"));
-    assertFalse(ParameterRegister.unregisterParameter("param3"));
-    assertFalse(ParameterRegister.unregisterParameter("madeUp"));
+    assertTrue(ParameterRegistery.unregisterParameter("param3"));
+    assertFalse(ParameterRegistery.unregisterParameter("param3"));
+    assertFalse(ParameterRegistery.unregisterParameter("madeUp"));
   }
 
   @Test
   public void testSingletonConstruct() throws Exception {
-    final Class<?> cls = ParameterRegister.class;
-    final Constructor<?> c = cls.getDeclaredConstructors()[0];
+    Class<?> cls = ParameterRegistery.class;
+    Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
     c.newInstance((Object[]) null);
   }
