@@ -16,7 +16,7 @@
 
 package abid.password.evaluator;
 
-import static org.junit.Assert.*;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -25,6 +25,6 @@ public class EvaluationExceptionTest {
   @Test
   public void testParseExceptionReturnsCorrectMessage() {
     EvaluationException exception = new EvaluationException(new Exception("some exception"));
-    assertEquals("some exception", exception.getCause().getMessage());
+    assertThat(exception.getCause()).hasMessage("some exception");
   }
 }

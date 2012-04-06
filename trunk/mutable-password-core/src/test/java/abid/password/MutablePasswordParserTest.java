@@ -15,16 +15,12 @@
  */
 package abid.password;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import abid.password.MutablePasswordParser;
-import abid.password.MutableBlock;
-import abid.password.MutablePassword;
-import abid.password.Password;
 import abid.password.parameters.TimeParameter;
 import abid.password.types.CaesarCipherPassword;
 import abid.password.types.CaesarCipherPasswordBuilder;
@@ -53,53 +49,52 @@ public class MutablePasswordParserTest {
   @Test
   public void parseShouldReturnSimplePasswordWhenPasswordIsNotMutable() throws PasswordParseException {
     Password password = parser.parse(new SimplePassword("abid").getPassword());
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
 
     password = parser.parse("pass1");
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
 
     password = parser.parse("pass[");
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
 
     password = parser.parse("pass[]");
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
 
     password = parser.parse("pass[{]");
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
 
     password = parser.parse("ab[id}]");
-    assertEquals(SimplePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(SimplePassword.class);
   }
 
   @Test
   public void parseShouldReturnCorrectMutablePasswordType() throws PasswordParseException {
     Password password = parser.parse(new TimeLockPasswordBuilder().createPassword("abid", TimeParameter.HOUR, 0, 24).getPassword());
-    assertEquals(TimeLockPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(TimeLockPassword.class);
 
     password = parser.parse(new ExtendedPasswordBuilder().createPassword("abid", TimeParameter.HOUR).getPassword());
-    assertEquals(ExtendedPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(ExtendedPassword.class);
 
     password = parser.parse(new CaesarCipherPasswordBuilder().createPassword("abid").getPassword());
-    assertEquals(CaesarCipherPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(CaesarCipherPassword.class);
 
     password = parser.parse(new RotatingPasswordBuilder().createPassword("abid", "1234").getPassword());
-    assertEquals(RotatingPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(RotatingPassword.class);
 
     password = parser.parse(new RomanNumeralPasswordBuilder().createPassword("abid", 1234).getPassword());
-    assertEquals(RomanNumeralPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(RomanNumeralPassword.class);
 
     password = parser.parse(new ExtendedTimeLockPasswordBuilder().createPassword("abid", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24).getPassword());
-    assertEquals(ExtendedTimeLockPassword.class, password.getClass());
+    assertThat(password).isInstanceOf(ExtendedTimeLockPassword.class);
   }
 
   @Test
   public void parseShouldThrowExceptionWhenPasswordTypeNotRegistered() {
     try {
       parser.parse(buildMockPassword("something").getPassword());
-      fail("Expected MalformedPasswordException!");
+      fail("Expected Exception!");
     } catch (PasswordParseException e) {
-      assertEquals(PasswordParseException.class, e.getClass());
-      assertEquals("Unable to determine password type.", e.getMessage());
+      assertThat(e).isInstanceOf(PasswordParseException.class).hasMessage("Unable to determine password type.");
     }
   }
 
@@ -108,7 +103,7 @@ public class MutablePasswordParserTest {
     PasswordTypeRegistry.registerPasswordType(MockMutablePassword.class);
 
     Password password = parser.parse(buildMockPassword("something").getPassword());
-    assertEquals(MockMutablePassword.class, password.getClass());
+    assertThat(password).isInstanceOf(MockMutablePassword.class);
   }
 
   @Test(expected = PasswordParseException.class)

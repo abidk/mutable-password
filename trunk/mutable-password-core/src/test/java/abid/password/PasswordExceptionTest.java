@@ -16,24 +16,22 @@
 
 package abid.password;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
 public class PasswordExceptionTest {
 
-  private final String exceptionMsg = "some exception";
-
   @Test
   public void testPasswordException() {
-    PasswordException exception = new PasswordException(exceptionMsg);
-    assertEquals(exceptionMsg, exception.getMessage());
-    
-    exception = new PasswordException(new Exception(exceptionMsg));
-    assertEquals(exceptionMsg, exception.getCause().getMessage());
+    PasswordException exception = new PasswordException("some exception");
+    assertThat(exception).hasMessage("some exception");
 
-    exception = new PasswordException("some text", new Exception(exceptionMsg));
-    assertEquals("some text", exception.getMessage());
-    assertEquals(exceptionMsg, exception.getCause().getMessage());
+    exception = new PasswordException(new Exception("some cause exception"));
+    assertThat(exception.getCause()).hasMessage("some cause exception");
+
+    exception = new PasswordException("some text", new Exception("some cause exception"));
+    assertThat(exception).hasMessage("some text");
+    assertThat(exception.getCause()).hasMessage("some cause exception");
   }
 }
