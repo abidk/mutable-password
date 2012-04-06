@@ -55,7 +55,6 @@ public class ExtendedPasswordBuilder extends MutablePasswordBuilder {
    */
   public MutablePassword createPassword(String text, String expression) {
     MutableBlock block = createMutableBlock(expression);
-    String mutablePassword = text + block;
-    return new ExtendedPassword(mutablePassword);
+    return new ExtendedPassword(text + block);
   }
 }

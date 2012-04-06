@@ -47,8 +47,7 @@ public class ExtendedTimeLockPasswordBuilder extends MutablePasswordBuilder {
    */
   public MutablePassword createPassword(String text, TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime) {
     MutableBlock block = createMutableBlock(extendedTimeValue, lockTimeType, lockStartTime, lockEndTime);
-    String mutablePassword = text + block;
-    return new ExtendedTimeLockPassword(mutablePassword);
+    return new ExtendedTimeLockPassword(text + block);
   }
 
 }

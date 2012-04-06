@@ -43,8 +43,6 @@ public class RotatingPasswordBuilder extends MutablePasswordBuilder {
    */
   public StatefulMutablePassword createPassword(String text, String mutableText) {
     MutableBlock block = createMutableBlock(mutableText);
-
-    String mutablePassword = text + block;
-    return new RotatingPassword(mutablePassword);
+    return new RotatingPassword(text + block);
   }
 }
