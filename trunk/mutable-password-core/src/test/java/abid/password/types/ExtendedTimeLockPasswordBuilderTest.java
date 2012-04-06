@@ -36,8 +36,8 @@ public class ExtendedTimeLockPasswordBuilderTest {
 
   @Test
   public void createPasswordShouldBuildPasswordAsExpected() throws PasswordException {
-    MutablePassword password = builder.createPassword("A", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
-    assertEquals("A[extendedTimeLock{year,hour>=0&&hour<=24}]", password.getPassword());
+    MutablePassword password = builder.createPassword("pass", TimeParameter.YEAR, TimeParameter.HOUR, 0, 24);
+    assertEquals("pass[extendedTimeLock{year,hour>=0&&hour<=24}]", password.getPassword());
   }
 
 }

@@ -44,8 +44,7 @@ public class RomanNumeralPasswordBuilder extends MutablePasswordBuilder {
    */
   public MutablePassword createPassword(String text, TimeParameter timeValue) {
     MutableBlock block = createMutableBlock(timeValue);
-    String mutablePassword = text + block;
-    return new RomanNumeralPassword(mutablePassword);
+    return new RomanNumeralPassword(text + block);
   }
 
   /**
@@ -57,8 +56,7 @@ public class RomanNumeralPasswordBuilder extends MutablePasswordBuilder {
    */
   public MutablePassword createPassword(String text, int value) {
     MutableBlock block = createMutableBlock(String.valueOf(value));
-    String mutablePassword = text + block;
-    return new RomanNumeralPassword(mutablePassword);
+    return new RomanNumeralPassword(text + block);
   }
 
 }

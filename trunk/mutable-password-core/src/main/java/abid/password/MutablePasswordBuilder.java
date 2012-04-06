@@ -57,9 +57,9 @@ public abstract class MutablePasswordBuilder {
    */
   public MutableBlock createMutableBlock(TimeParameter timeType, int start, int end) {
     String type = timeType.getTextField();
-    String expression = type + ">=" + start + "&&" + type + "<=" + end;
-    MutableBlock block = createMutableBlock(expression);
-    return block;
+    ExpressionBuilder exp = new ExpressionBuilder();
+    exp.value(type).greaterEquals().value(start).and().value(type).lessEquals().value(end);
+    return createMutableBlock(exp);
   }
 
   /**
@@ -73,10 +73,12 @@ public abstract class MutablePasswordBuilder {
    */
   public MutableBlock createMutableBlock(TimeParameter extendedTimeValue, TimeParameter lockTimeType, int lockStartTime, int lockEndTime) {
     String extendExpression = extendedTimeValue.getTextField();
-    String lockExpression = lockTimeType.getTextField() + ">=" + lockStartTime + "&&" + lockTimeType.getTextField() + "<=" + lockEndTime;
+
+    ExpressionBuilder lockExpression = new ExpressionBuilder();
+    lockExpression.value(lockTimeType.getTextField()).greaterEquals().value(lockStartTime).and().value(lockTimeType.getTextField()).lessEquals().value(lockEndTime);
+
     String expression = extendExpression + "," + lockExpression;
-    MutableBlock block = createMutableBlock(expression);
-    return block;
+    return createMutableBlock(expression);
   }
 
   /**
@@ -86,8 +88,16 @@ public abstract class MutablePasswordBuilder {
    * @return mutable block
    */
   public MutableBlock createMutableBlock(String expression) {
-    MutableBlock block = new MutableBlock(passwordType, expression);
-    return block;
+    return new MutableBlock(passwordType, expression);
   }
 
+  /**
+   * Creates a mutable block based on the input values.
+   * 
+   * @param expression
+   * @return mutable block
+   */
+  public MutableBlock createMutableBlock(ExpressionBuilder expression) {
+    return new MutableBlock(passwordType, expression.toString());
+  }
 }
