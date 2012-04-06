@@ -24,11 +24,11 @@ import java.util.Map;
  * 
  * @author Abid
  */
-public class ParameterRegister {
+public class ParameterRegistery {
 
   private static final Map<String, Parameter> parameters = new HashMap<String, Parameter>();
 
-  private ParameterRegister() {
+  private ParameterRegistery() {
   }
 
   /**

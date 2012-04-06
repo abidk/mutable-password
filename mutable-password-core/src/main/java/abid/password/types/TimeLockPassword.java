@@ -24,7 +24,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.EvaluationException;
 import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterRegister;
+import abid.password.parameters.ParameterRegistery;
 
 /**
  * Creates a password which can only be used at a specific time.
@@ -85,7 +85,7 @@ public class TimeLockPassword extends MutablePassword {
 
   protected boolean isPasswordLocked() throws EvaluationException {
     ExpressionEvaluator expressionEvaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    Map<String, Parameter> parameters = ParameterRegistery.getParameters();
     String result = expressionEvaluator.evaluate(getExpression(), parameters);
     return "true".equalsIgnoreCase(result);
   }

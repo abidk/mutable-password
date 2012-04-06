@@ -23,7 +23,7 @@ import abid.password.PasswordException;
 import abid.password.evaluator.EvaluationException;
 import abid.password.evaluator.ExpressionEvaluator;
 import abid.password.parameters.Parameter;
-import abid.password.parameters.ParameterRegister;
+import abid.password.parameters.ParameterRegistery;
 
 /**
  * Combines Extended Mutable Password with Time Lock Password.
@@ -52,7 +52,7 @@ public class ExtendedTimeLockPassword extends MutablePassword {
     String[] expressions = getExpression().split(",");
     String extendTimeExpression = expressions[0];
     ExpressionEvaluator expressionEvaluator = getEvaluator();
-    Map<String, Parameter> parameters = ParameterRegister.getParameters();
+    Map<String, Parameter> parameters = ParameterRegistery.getParameters();
     String extendEvaluation = expressionEvaluator.evaluate(extendTimeExpression, parameters);
     String evaluatedPassword = getText() + extendEvaluation;
     return evaluatedPassword;
@@ -71,7 +71,7 @@ public class ExtendedTimeLockPassword extends MutablePassword {
       String[] expressions = getExpression().split(",");
       String lockExpression = expressions[1];
       ExpressionEvaluator expressionEvaluator = getEvaluator();
-      String eval = expressionEvaluator.evaluate(lockExpression, ParameterRegister.getParameters());
+      String eval = expressionEvaluator.evaluate(lockExpression, ParameterRegistery.getParameters());
       if (!"true".equalsIgnoreCase(eval)) {
         return false;
       }
