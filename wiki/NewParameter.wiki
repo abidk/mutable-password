@@ -43,7 +43,7 @@ public enum StockMarketParameter {
 }
 }}}
 
-2. Add the new parameters into the ParameterFactory
+2. Register the new parameter
 {{{
   for (StockMarketParameter stock : StockMarketParameter.values()) {
     ParameterFactory.addParameter(stock.getMarket(), stock.getIndexValue());
