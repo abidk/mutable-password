@@ -1,4 +1,4 @@
-*I have implemented the obvious parameters such as Time and Stock market data. If you come up with any other parameters, please feel free to contribute your code.*
+*If you come up with any other parameters, please feel free to contribute your code.*
 
 ----
 1. Retrieves the stock market value from Yahoo
