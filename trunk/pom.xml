@@ -113,9 +113,10 @@
 						<year>2012</year>
 					</properties>
 					<excludes>
-						<exclude>LICENSE.txt</exclude>
+						<exclude>**/*.txt</exclude>
 						<exclude>**/*.xml</exclude>
 						<exclude>**/*.html</exclude>
+						<exclude>**/*.properties</exclude>
 						<exclude>**/src/main/webapp/**</exclude>
 						<exclude>**/src/main/resources/**</exclude>
 						<exclude>**/src/test/resources/**</exclude>
