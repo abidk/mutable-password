@@ -1,9 +1,8 @@
 =Contents=
   * [Introduction Introduction]
   * [Installation Installation]
-  * Passwords
+  * Password Types
     * [NewPassword Register new mutable password]
-    * [AlgebraicPassword Algebra Expression Password]
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
     * [ExtendedTimeLockPassword Extended Time Lock Password]
@@ -11,6 +10,7 @@
     * [TimeLockPassword Time Lock Password]
     * [RomanNumeralPassword Roman Numeral Password]
     * [RotatingPassword Rotating Password]
+    * [AlgebraicPassword Algebra Expression Password]
   * Parameters
     * [NewParameter Register a new parameter]
     * [TimeParameter Time Parameter]
