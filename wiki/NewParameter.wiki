@@ -49,5 +49,3 @@ public enum StockMarketParameter {
     ParameterFactory.addParameter(stock.getMarket(), stock.getIndexValue());
   }
 }}}
-
-3. This can now be used in any password implementation.
