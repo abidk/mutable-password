@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Abid Khalil
+ * Copyright 2012 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package abid.password.evaluator;
 
 import java.util.Map;
@@ -27,7 +26,7 @@ import abid.password.parameters.Parameter;
 /**
  * Javascript implementation to evaluate expression.
  * 
- * This uses Java version 6 JavaScript features, to make this compatible with
+ * Note: This uses Java version 6 JavaScript features, to make this compatible with
  * Java version 5, remove this class and use beanshell instead.
  * 
  * @author Abid
@@ -54,14 +53,15 @@ public class JavascriptExpressionEvaluator implements ExpressionEvaluator {
       }
 
       String result = String.valueOf(engine.eval(expression));
-
-      // Remove the '.0' when two integers are added
       return removeEmptyDecimalPoint(result);
     } catch (ScriptException e) {
       throw new EvaluationException(e);
     }
   }
 
+  /*
+   * Removes the '.0' when two integers are added.
+   */
   private String removeEmptyDecimalPoint(String value) {
     return value.replace(".0", "");
   }

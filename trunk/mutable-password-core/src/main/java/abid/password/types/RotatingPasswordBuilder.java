@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Abid Khalil
+ * Copyright 2012 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import abid.password.MutablePasswordBuilder;
 import abid.password.StatefulMutablePassword;
 
 /**
- * Convenient builder class to build password.
+ * Convenient builder class to build Rotating password.
  * 
  * @author Abid
  * 

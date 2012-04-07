@@ -110,11 +110,12 @@
 					<strictCheck>true</strictCheck>
 					<header>src/main/resources/META-INF/license-header.txt</header>
 					<properties>
-						<year>2011</year>
+						<year>2012</year>
 					</properties>
 					<excludes>
 						<exclude>LICENSE.txt</exclude>
-						<exclude>checkstyle.xml</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.html</exclude>
 						<exclude>**/src/main/webapp/**</exclude>
 						<exclude>**/src/main/resources/**</exclude>
 						<exclude>**/src/test/resources/**</exclude>

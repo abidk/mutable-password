@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Abid Khalil
+ * Copyright 2012 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.Map;
 
 /**
  * Basically converts the given data/parameter into a Zodiac sign.
+ * 
  * @author Abid
  */
 public enum ZodiacParameter {
