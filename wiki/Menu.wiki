@@ -2,8 +2,8 @@
   * [Introduction Introduction]
   * [Installation Installation]
   * Passwords
+    * [NewPassword Register a new password]
     * [AlgebraicPassword Algebra Expression Password]
-    * [NewPassword Create a new password]
     * [SimplePassword Simple Password]
     * [ExtendedPassword Extended Password]
     * [ExtendedTimeLockPassword Extended Time Lock Password]
@@ -12,7 +12,7 @@
     * [RomanNumeralPassword Roman Numeral Password]
     * [RotatingPassword Rotating Password]
   * Parameters
-    * [NewParameter Create a new parameter]
+    * [NewParameter Register a new parameter]
     * [TimeParameter Time Parameter]
     * [ZodiacParameter Zodiac Parameter]
     * [StockMarketParameter Stock Market Parameter]
