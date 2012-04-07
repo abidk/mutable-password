@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Abid Khalil
+ * Copyright 2012 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package abid.password.types;
 
 import java.util.Map;
@@ -36,9 +35,8 @@ import abid.password.parameters.ParameterRegistery;
  */
 public class CaesarCipherPassword extends StatefulMutablePassword {
 
-  // public String PASSWORD_TYPE = getClass().getSimpleName();
-  /** Password type name. */
   public static final String PASSWORD_TYPE = "caesarCipher";
+  public static final String STATE_EXPRESSION_PARAM = "state";
 
   /**
    * Constructs a Caesar Cipher Password object with the password argument.
@@ -55,7 +53,7 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
    * @param shiftBy
    * @return shifted value
    */
-  public String getShiftedPassword(int shiftBy) {
+  protected String getShiftedPassword(int shiftBy) {
     StringBuilder shiftPassword = new StringBuilder();
     for (char character : getText().toCharArray()) {
       if (character >= 65 && character <= 90) {
@@ -78,7 +76,7 @@ public class CaesarCipherPassword extends StatefulMutablePassword {
   public String getEvaluatedPassword() throws EvaluationException {
     String expression = getExpression();
     int shiftBy = 0;
-    if (expression.equalsIgnoreCase("state")) {
+    if (STATE_EXPRESSION_PARAM.equalsIgnoreCase(expression)) {
       shiftBy = getState();
     } else {
       ExpressionEvaluator expressionEvaluator = getEvaluator();

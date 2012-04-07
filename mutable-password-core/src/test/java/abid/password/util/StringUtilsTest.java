@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 Abid Khalil
+ * Copyright 2012 Abid Khalil
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
  */
 package abid.password.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -54,8 +56,8 @@ public class StringUtilsTest {
 
   @Test
   public void testPrivateConstructor() throws Exception {
-    final Class<?> cls = StringUtils.class;
-    final Constructor<?> c = cls.getDeclaredConstructors()[0];
+    Class<?> cls = StringUtils.class;
+    Constructor<?> c = cls.getDeclaredConstructors()[0];
     c.setAccessible(true);
     c.newInstance((Object[]) null);
   }
