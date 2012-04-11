@@ -10,7 +10,7 @@ Parameter Values:
 
 Usage:
 {{{
-    Password password = new ExtendedPasswordBuilder().createPassword("pass", TimeParameter.YEAR);
+Password password = new ExtendedPasswordBuilder().createPassword("pass", TimeParameter.YEAR);
 }}}
 
 
