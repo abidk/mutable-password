@@ -3,9 +3,7 @@ Parameter Values:
 
 Usage:
 {{{
-    // create password using zodiac parameter
-    MutablePassword password = ExtendedPassword.createPassword("PASS", ZodiacParameter.ZODIAC.getParameter());
-    String storePass = password.getPassword());
+    Password password = new ExtendedPasswordBuilder().createPassword("pass", ZodiacParameter.ZODIAC.getParameter());
 }}}
 
 
