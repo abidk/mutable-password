@@ -17,6 +17,7 @@
     * [ZodiacParameter Zodiac Parameter]
     * [StockMarketParameter Stock Market Parameter]
   * [JavaFiveSupport Java 1.5 Support]
+  * [ExpressionBuilder Expression Builder]
   * Examples
     * [SpringMVCExample Swing MVC Example]
     * [WicketExample Wicket Example]
