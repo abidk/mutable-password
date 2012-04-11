@@ -32,20 +32,12 @@ public enum StockMarketParameter {
     Float value = Float.valueOf(splitData[1]);
     return value;
   }
-
-  public static Map<String, Number> getValues() throws IOException {
-    Map<String, Number> map = new HashMap<String, Number>();
-    for (StockMarketParameter stock : StockMarketParameter.values()) {
-      map.put(stock.getMarket(), stock.getIndexValue());
-    }
-    return map;
-  }
 }
 }}}
 
 2. Register the new parameter
 {{{
   for (StockMarketParameter stock : StockMarketParameter.values()) {
-    ParameterFactory.addParameter(stock.getMarket(), stock.getIndexValue());
+    ParameterRegistery.registerParameter(stock.getMarket(), new Parameter(stock.getIndexValue()));
   }
 }}}
