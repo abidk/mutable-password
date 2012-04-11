@@ -10,9 +10,7 @@ Parameter Values:
 
 Usage:
 {{{
-    TimeParameter timeType = TimeParameter.YEAR;
-    Password password = ExtendedPassword.createPassword("PASS", timeType);
-    String storePass = password.getPassword());
+    Password password = new ExtendedPasswordBuilder().createPassword("pass", TimeParameter.YEAR);
 }}}
 
 
