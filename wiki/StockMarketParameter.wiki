@@ -5,6 +5,5 @@ Parameter Values:
 Usage:
 {{{
    StockMarketParameter stock = StockMarketParameter.FTSE100; 
-   Password password = ExtendedPassword.createPassword("PASS", stock.getMarket());
-   String storePass = password.getPassword());
+   Password password = new ExtendedPasswordBuikder().createPassword("pass", stock.getMarket());
 }}}
