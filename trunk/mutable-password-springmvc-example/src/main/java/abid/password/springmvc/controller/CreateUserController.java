@@ -27,13 +27,13 @@ import org.springframework.web.servlet.ModelAndView;
 import abid.password.MutablePassword;
 import abid.password.parameters.TimeParameter;
 import abid.password.springmvc.FeedbackMessage;
-import abid.password.springmvc.model.CaesarCipherPasswordFormBean;
-import abid.password.springmvc.model.ExtendedPasswordFormBean;
-import abid.password.springmvc.model.ExtendedTimeLockPasswordFormBean;
-import abid.password.springmvc.model.SimplePasswordFormBean;
+import abid.password.springmvc.model.CaesarCipherPasswordForm;
+import abid.password.springmvc.model.ExtendedPasswordForm;
+import abid.password.springmvc.model.ExtendedTimeLockPasswordForm;
+import abid.password.springmvc.model.SimplePasswordForm;
 import abid.password.springmvc.model.Tab;
 import abid.password.springmvc.model.TabPanel;
-import abid.password.springmvc.model.TimeLockPasswordFormBean;
+import abid.password.springmvc.model.TimeLockPasswordForm;
 import abid.password.springmvc.service.UserService;
 import abid.password.springmvc.validator.MutablePasswordValidator;
 import abid.password.types.CaesarCipherPasswordBuilder;
@@ -71,6 +71,31 @@ public class CreateUserController {
     this.feedbackMessage = feedbackMessage;
   }
 
+  @ModelAttribute("simplePasswordForm")
+  public SimplePasswordForm getSimplePasswordForm() {
+    return new SimplePasswordForm();
+  }
+
+  @ModelAttribute("extendedPasswordForm")
+  public ExtendedPasswordForm getExtendedPasswordForm() {
+    return new ExtendedPasswordForm();
+  }
+
+  @ModelAttribute("extendedTimeLockPasswordForm")
+  public ExtendedTimeLockPasswordForm getExtendedTimeLockPasswordForm() {
+    return new ExtendedTimeLockPasswordForm();
+  }
+
+  @ModelAttribute("timeLockPasswordForm")
+  public TimeLockPasswordForm getTimeLockPasswordForm() {
+    return new TimeLockPasswordForm();
+  }
+
+  @ModelAttribute("caesarCipherPasswordForm")
+  public CaesarCipherPasswordForm getCaesarCipherPasswordForm() {
+    return new CaesarCipherPasswordForm();
+  }
+
   @RequestMapping(method = RequestMethod.GET, value = { "", "/" })
   public ModelAndView handleGetCreateUser() {
     return new ModelAndView("redirect:/app/create/" + DEFAULT_SELECTED_TAB);
@@ -86,18 +111,11 @@ public class CreateUserController {
     ModelAndView model = new ModelAndView("createUser");
     model.getModelMap().put("tabPanel", tabPanel);
     model.getModelMap().put("timeParameter", TimeParameter.values());
-    model.getModelMap().put("SimplePasswordFormBean", new SimplePasswordFormBean());
-    model.getModelMap().put("ExtendedPasswordFormBean", new ExtendedPasswordFormBean());
-    model.getModelMap().put("ExtendedTimeLockPasswordFormBean", new ExtendedTimeLockPasswordFormBean());
-    model.getModelMap().put("TimeLockPasswordFormBean", new TimeLockPasswordFormBean());
-    model.getModelMap().put("CaesarCipherPasswordFormBean", new CaesarCipherPasswordFormBean());
     return model;
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createSimplePassword")
-  public ModelAndView handlePostSimplePassword(
-      @ModelAttribute("SimplePasswordFormBean") SimplePasswordFormBean formBean,
-      BindingResult result) {
+  public ModelAndView handlePostSimplePassword(@ModelAttribute("formBean") SimplePasswordForm formBean, BindingResult result) {
 
     mutablePasswordValidator.validateSimplePassword(formBean, result);
     if (result.hasErrors()) {
@@ -113,9 +131,7 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedPassword")
-  public ModelAndView handlePostExtendedPassword(
-      @ModelAttribute("ExtendedPasswordFormBean") ExtendedPasswordFormBean formBean,
-      BindingResult result) {
+  public ModelAndView handlePostExtendedPassword(@ModelAttribute("formBean") ExtendedPasswordForm formBean, BindingResult result) {
 
     mutablePasswordValidator.validateExtendedPassword(formBean, result);
     if (result.hasErrors()) {
@@ -135,9 +151,7 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createExtendedTimeLockPassword")
-  public ModelAndView handlePostExtendedTimeLockPassword(
-      @ModelAttribute("ExtendedTimeLockPasswordFormBean") ExtendedTimeLockPasswordFormBean formBean, 
-      BindingResult result) {
+  public ModelAndView handlePostExtendedTimeLockPassword(@ModelAttribute("formBean") ExtendedTimeLockPasswordForm formBean, BindingResult result) {
 
     mutablePasswordValidator.validateExtendedTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
@@ -150,7 +164,7 @@ public class CreateUserController {
     TimeParameter timeParameter = formBean.getTimeParameter();
     int start = formBean.getStart();
     int end = formBean.getEnd();
-    
+
     ExtendedTimeLockPasswordBuilder passwordBuilder = new ExtendedTimeLockPasswordBuilder();
     MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, extended, timeParameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
@@ -160,9 +174,7 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createTimeLockPassword")
-  public ModelAndView handlePostTimeLockPassword(
-      @ModelAttribute("TimeLockPasswordFormBean") TimeLockPasswordFormBean formBean,
-      BindingResult result) {
+  public ModelAndView handlePostTimeLockPassword(@ModelAttribute("formBean") TimeLockPasswordForm formBean, BindingResult result) {
 
     mutablePasswordValidator.validateTimeLockPassword(formBean, result);
     if (result.hasErrors()) {
@@ -174,7 +186,7 @@ public class CreateUserController {
     TimeParameter parameter = formBean.getTimeParameter();
     int start = formBean.getStart();
     int end = formBean.getEnd();
-    
+
     TimeLockPasswordBuilder passwordBuilder = new TimeLockPasswordBuilder();
     MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, parameter, start, end);
     userService.saveUser(username, mutablePassword.getPassword());
@@ -184,9 +196,7 @@ public class CreateUserController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/createCaesarCipherPassword")
-  public ModelAndView handlePostCaesarCipherPassword(
-      @ModelAttribute("CaesarCipherPasswordFormBean") CaesarCipherPasswordFormBean formBean,
-      BindingResult result) {
+  public ModelAndView handlePostCaesarCipherPassword(@ModelAttribute("formBean") CaesarCipherPasswordForm formBean, BindingResult result) {
 
     mutablePasswordValidator.validateCaesarCipherPassword(formBean, result);
     if (result.hasErrors()) {
@@ -196,7 +206,7 @@ public class CreateUserController {
     String username = formBean.getUsername();
     String passwordText = formBean.getPassword();
     TimeParameter parameter = formBean.getTimeParameter();
-    
+
     CaesarCipherPasswordBuilder passwordBuilder = new CaesarCipherPasswordBuilder();
     MutablePassword mutablePassword = passwordBuilder.createPassword(passwordText, parameter);
     userService.saveUser(username, mutablePassword.getPassword());

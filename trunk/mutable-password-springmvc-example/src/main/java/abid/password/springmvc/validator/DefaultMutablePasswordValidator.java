@@ -18,17 +18,17 @@ package abid.password.springmvc.validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
-import abid.password.springmvc.model.CaesarCipherPasswordFormBean;
-import abid.password.springmvc.model.ExtendedPasswordFormBean;
-import abid.password.springmvc.model.ExtendedTimeLockPasswordFormBean;
-import abid.password.springmvc.model.SimplePasswordFormBean;
-import abid.password.springmvc.model.TimeLockPasswordFormBean;
+import abid.password.springmvc.model.CaesarCipherPasswordForm;
+import abid.password.springmvc.model.ExtendedPasswordForm;
+import abid.password.springmvc.model.ExtendedTimeLockPasswordForm;
+import abid.password.springmvc.model.SimplePasswordForm;
+import abid.password.springmvc.model.TimeLockPasswordForm;
 import abid.password.springmvc.util.StringUtils;
 
 @Component
 public class DefaultMutablePasswordValidator implements MutablePasswordValidator {
 
-  public void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors) {
+  public void validateSimplePassword(SimplePasswordForm formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {
       errors.rejectValue("username", "user.username.required");
     }
@@ -38,7 +38,7 @@ public class DefaultMutablePasswordValidator implements MutablePasswordValidator
     }
   }
 
-  public void validateCaesarCipherPassword(CaesarCipherPasswordFormBean formBean, Errors errors) {
+  public void validateCaesarCipherPassword(CaesarCipherPasswordForm formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {
       errors.rejectValue("username", "user.username.required");
     }
@@ -48,7 +48,7 @@ public class DefaultMutablePasswordValidator implements MutablePasswordValidator
     }
   }
 
-  public void validateExtendedPassword(ExtendedPasswordFormBean formBean, Errors errors) {
+  public void validateExtendedPassword(ExtendedPasswordForm formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {
       errors.rejectValue("username", "user.username.required");
     }
@@ -58,7 +58,7 @@ public class DefaultMutablePasswordValidator implements MutablePasswordValidator
     }
   }
 
-  public void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordFormBean formBean, Errors errors) {
+  public void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordForm formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {
       errors.rejectValue("username", "user.username.required");
     }
@@ -68,7 +68,7 @@ public class DefaultMutablePasswordValidator implements MutablePasswordValidator
     }
   }
 
-  public void validateTimeLockPassword(TimeLockPasswordFormBean formBean, Errors errors) {
+  public void validateTimeLockPassword(TimeLockPasswordForm formBean, Errors errors) {
     if (StringUtils.isEmpty(formBean.getUsername())) {
       errors.rejectValue("username", "user.username.required");
     }

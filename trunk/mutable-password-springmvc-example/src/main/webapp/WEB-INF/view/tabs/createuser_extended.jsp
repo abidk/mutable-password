@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url var="formUrl" value="/app/create/createExtendedPassword" />        
-<form:form  autocomplete="off" action="${formUrl}" modelAttribute="ExtendedPasswordFormBean" method="post">
+<form:form  autocomplete="off" action="${formUrl}" modelAttribute="extendedPasswordForm" method="post">
   <form:errors path="*" cssClass="errorMessages" element="div" /> 
 
   <fieldset>

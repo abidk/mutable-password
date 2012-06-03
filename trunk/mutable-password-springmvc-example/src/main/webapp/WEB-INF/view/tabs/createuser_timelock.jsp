@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url var="formUrl" value="/app/create/createTimeLockPassword" />        
-<form:form  autocomplete="off" action="${formUrl}" modelAttribute="TimeLockPasswordFormBean" method="post">     
+<form:form  autocomplete="off" action="${formUrl}" modelAttribute="timeLockPasswordForm" method="post">     
   <form:errors path="*" cssClass="errorMessages" element="div" /> 
 
   <fieldset>
