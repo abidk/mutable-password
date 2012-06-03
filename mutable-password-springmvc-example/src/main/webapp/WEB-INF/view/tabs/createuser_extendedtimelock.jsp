@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url var="formUrl" value="/app/create/createExtendedTimeLockPassword" />        
-<form:form  autocomplete="off" action="${formUrl}" modelAttribute="ExtendedTimeLockPasswordFormBean" method="post">
+<form:form  autocomplete="off" action="${formUrl}" modelAttribute="extendedTimeLockPasswordForm" method="post">
   <form:errors path="*" cssClass="errorMessages" element="div" /> 
 
   <fieldset>

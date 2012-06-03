@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url var="formUrl" value="/app/create/createSimplePassword" />        
-<form:form  autocomplete="off" action="${formUrl}" modelAttribute="SimplePasswordFormBean" method="post">
+<form:form  autocomplete="off" action="${formUrl}" modelAttribute="simplePasswordForm" method="post">
   <form:errors path="*" cssClass="errorMessages" element="div" /> 
   
   <fieldset>

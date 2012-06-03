@@ -17,21 +17,21 @@ package abid.password.springmvc.validator;
 
 import org.springframework.validation.Errors;
 
-import abid.password.springmvc.model.CaesarCipherPasswordFormBean;
-import abid.password.springmvc.model.ExtendedPasswordFormBean;
-import abid.password.springmvc.model.ExtendedTimeLockPasswordFormBean;
-import abid.password.springmvc.model.SimplePasswordFormBean;
-import abid.password.springmvc.model.TimeLockPasswordFormBean;
+import abid.password.springmvc.model.CaesarCipherPasswordForm;
+import abid.password.springmvc.model.ExtendedPasswordForm;
+import abid.password.springmvc.model.ExtendedTimeLockPasswordForm;
+import abid.password.springmvc.model.SimplePasswordForm;
+import abid.password.springmvc.model.TimeLockPasswordForm;
 
 public interface MutablePasswordValidator {
 
-  void validateSimplePassword(SimplePasswordFormBean formBean, Errors errors);
+  void validateSimplePassword(SimplePasswordForm formBean, Errors errors);
 
-  void validateCaesarCipherPassword(CaesarCipherPasswordFormBean formBean, Errors errors);
+  void validateCaesarCipherPassword(CaesarCipherPasswordForm formBean, Errors errors);
 
-  void validateExtendedPassword(ExtendedPasswordFormBean formBean, Errors errors);
+  void validateExtendedPassword(ExtendedPasswordForm formBean, Errors errors);
 
-  void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordFormBean formBean, Errors errors);
+  void validateExtendedTimeLockPassword(ExtendedTimeLockPasswordForm formBean, Errors errors);
 
-  void validateTimeLockPassword(TimeLockPasswordFormBean formBean, Errors errors);
+  void validateTimeLockPassword(TimeLockPasswordForm formBean, Errors errors);
 }

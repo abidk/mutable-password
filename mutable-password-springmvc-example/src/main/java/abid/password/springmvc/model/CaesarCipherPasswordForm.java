@@ -15,10 +15,13 @@
  */
 package abid.password.springmvc.model;
 
-public class SimplePasswordFormBean {
-  
+import abid.password.parameters.TimeParameter;
+
+public class CaesarCipherPasswordForm {
+
   private String username;
   private String password;
+  private TimeParameter timeParameter;
 
   public String getUsername() {
     return username;
@@ -35,4 +38,13 @@ public class SimplePasswordFormBean {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public TimeParameter getTimeParameter() {
+    return timeParameter;
+  }
+
+  public void setTimeParameter(TimeParameter timeParameter) {
+    this.timeParameter = timeParameter;
+  }
+
 }
