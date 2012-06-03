@@ -5,12 +5,21 @@
 
 body {
 	background: #4f6e8d;
+	color: #444;
 	display: block;
-	font-family: Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font:12px/1.5 sans-serif;
 	text-align: center;
 	min-width: 965px;
+	line-height: 1.5;
 }
+
+
+
+a {
+	text-decoration: none;
+}
+a:focus,a:hover {}
+a img {border: none;}
 
 #wrapper {
 	margin: 0 auto;
@@ -47,15 +56,6 @@ body {
 	color: #FF6A00;
 }
 
-.maintext {
-	font-family: verdana;
-	position: relative;
-	width: 610px;
-	font-size: 12px;
-	padding-top: 15px;
-	padding-left: 10px;
-	color: #000;
-}
 
 #nav {
 	height: 85px;
@@ -105,17 +105,7 @@ body {
 	padding-right: 15px;
 }
 
-#footer {
-	position: relative;
-	font-size: 10px;
-	width: 674px;
-	text-align: left;
-	align: left;
-	color: white;
-	background: url(/images/footer_1px.jpg);
-	height: 83px;
-	width: 100%;
-}
+
 
 #footer #footernav {
 	position: relative;
@@ -186,29 +176,28 @@ ul.tabs li a:hover,div.tabpanel div.tab-row ul li a:hover {
 	background: #727274;
 }
 
-ul.tabs li.active,div.tabpanel div.tab-row ul li.selected {
+ul.tabs li.active,div.tabpanel div.tab-row ul li.active {
 	border: 1px solid #688dcb;
 	border-bottom: 1px solid #fff;
 	margin-top: -2px;
 }
 
-ul.tabs li.active a,div.tabpanel div.tab-row ul li.selected a {
+ul.tabs li.active a,div.tabpanel div.tab-row ul li.active a {
 	color: #688dcb;
 	background: #fff;
 	padding-bottom: 2px;
 }
 
-ul.tabs li.active a:hover,div.tabpanel div.tab-row ul li.selected a:hover
-	{
+ul.tabs li.active a:hover,div.tabpanel div.tab-row ul li.active a:hover {
 	text-decoration: none;
 	background: #fff;
 }
 
-div.tabpanel div.tab-row ul li.selected {
+div.tabpanel div.tab-row ul li.active {
 	margin-top: -1px;
 }
 
-div.tabpanel div.tab-row ul li.selected a {
+div.tabpanel div.tab-row ul li.active a {
 	padding-bottom: 1px;
 }
 
@@ -223,9 +212,11 @@ div.tabcontent div.tabpanel div.tab-row ul li a {
 	color: #688dcb;
 }
 
-div.tabcontent div.tabpanel div.tab-row ul li.selected a {
+div.tabcontent div.tabpanel div.tab-row ul li.active a {
 	background-color: #fff;
 }
+
+
 
 div.tight div.tab-row ul {
 	margin-bottom: 0 !important;

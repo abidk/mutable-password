@@ -30,7 +30,7 @@
 	</bean>
 
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
@@ -46,11 +46,11 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
     <!-- Add sample data to database -->
-	<bean id="sampleData" class="abid.password.springmvc.SampleData" init-method="initDbWithUsers" />
+	<bean id="sampleData" class="abid.password.springmvc.SampleData"/>
 
 </beans>

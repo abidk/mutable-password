@@ -29,13 +29,9 @@ import abid.password.springmvc.model.User;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired
   private UserDao userDao;
 
-  public UserDao getUserDao() {
-    return userDao;
-  }
-
+  @Autowired
   public void setUserDao(UserDao userDao) {
     this.userDao = userDao;
   }

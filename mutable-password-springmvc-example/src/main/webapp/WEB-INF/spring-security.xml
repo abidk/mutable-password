@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	                    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:http use-expressions="true" auto-config="true">
-		<security:intercept-url pattern="/css/**" filters="none" />
-		<security:intercept-url pattern="/images/**" filters="none" />
+	<security:http pattern="/css/**" security="none" />
+	<security:http pattern="/images/**" security="none" />
 		
+	<security:http use-expressions="true" auto-config="true">		
 		<security:intercept-url pattern="/login*" access="isAnonymous()" />
 		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		
