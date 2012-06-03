@@ -27,7 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import abid.password.springmvc.model.User;
@@ -39,16 +39,15 @@ public class MutablePasswordAuthenticationProvider extends AbstractUserDetailsAu
 
   private static final Logger log = LoggerFactory.getLogger(MutablePasswordAuthenticationProvider.class);
 
-  @Autowired
   private UserService userService;
 
+  @Autowired
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
 
   @Override
-  protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
-      throws AuthenticationException {
+  protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
   }
 
   @Override
@@ -74,7 +73,7 @@ public class MutablePasswordAuthenticationProvider extends AbstractUserDetailsAu
   }
 
   private String getLocalisedMessage(String code) {
-    return messages.getMessage(code, code + "missing!");
+    return messages.getMessage(code, "Missing [" + code + "]");
   }
 
   public static class CustomUserDetails implements UserDetails {
@@ -88,7 +87,7 @@ public class MutablePasswordAuthenticationProvider extends AbstractUserDetailsAu
 
     public Collection<GrantedAuthority> getAuthorities() {
       List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-      authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+      authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
       return authorities;
     }
 

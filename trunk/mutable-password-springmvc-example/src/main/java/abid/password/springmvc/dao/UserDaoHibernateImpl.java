@@ -29,9 +29,9 @@ import abid.password.springmvc.model.User;
 @Repository
 public class UserDaoHibernateImpl implements UserDao {
 
-  @Autowired
   private SessionFactory sessionFactory;
 
+  @Autowired
   public void setSessionFactory(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
   }

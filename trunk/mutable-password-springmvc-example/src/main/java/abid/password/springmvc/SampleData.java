@@ -15,10 +15,13 @@
  */
 package abid.password.springmvc;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import abid.password.Password;
 import abid.password.parameters.TimeParameter;
 import abid.password.springmvc.service.UserService;
 import abid.password.types.ExtendedPasswordBuilder;
@@ -28,38 +31,27 @@ public class SampleData {
 
   private static final Logger log = LoggerFactory.getLogger(SampleData.class);
 
-  @Autowired
   private UserService userService;
 
+  @Autowired
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
 
-  /*
-   * Initiate the database with users.
-   */
-  public void initDbWithUsers() {
-    ExtendedPasswordBuilder passwordBuilder = new ExtendedPasswordBuilder();
+  @PostConstruct
+  public void initSampleData() {
+    ExtendedPasswordBuilder extPasswordBuilder = new ExtendedPasswordBuilder();
 
-    String user = "Example3";
-    String password = passwordBuilder.createPassword("second_", TimeParameter.SECOND).getPassword();
-    userService.saveUser(user, password);
+    saveUser("Example3", extPasswordBuilder.createPassword("second_", TimeParameter.SECOND));
+    saveUser("Example4", extPasswordBuilder.createPassword("minute_", TimeParameter.MINUTE));
+    saveUser("Example5", extPasswordBuilder.createPassword("hourly_", TimeParameter.HOUR));
+    saveUser("Example6", extPasswordBuilder.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH));
+    saveUser("admin", new SimplePassword("admin"));
 
-    user = "Example4";
-    password = passwordBuilder.createPassword("minute_", TimeParameter.MINUTE).getPassword();
-    userService.saveUser(user, password);
-
-    user = "Example5";
-    password = passwordBuilder.createPassword("hourly_", TimeParameter.HOUR).getPassword();
-    userService.saveUser(user, password);
-
-    user = "Example6";
-    password = passwordBuilder.createPassword("day_of_month_", TimeParameter.DAY_OF_MONTH).getPassword();
-    userService.saveUser(user, password);
-
-    user = "admin";
-    password = new SimplePassword("admin").getPassword();
-    userService.saveUser(user, password);
     log.info("Sample users added!");
+  }
+
+  private void saveUser(String username, Password password) {
+    userService.saveUser(username, password.getPassword());
   }
 }

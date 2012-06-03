@@ -29,9 +29,4 @@ public class HomeController {
     return model;
   }
 
-  // private String getUser() {
-  // Authentication auth =
-  // SecurityContextHolder.getContext().getAuthentication();
-  // return auth.getName();
-  // }
 }
