@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>abid.password</groupId>
 		<artifactId>mutable-password-parent</artifactId>
-		<version>1.10-SNAPSHOT</version>
+		<version>1.10</version>
 	</parent>
 	<artifactId>mutable-password-wicket-example</artifactId>
 	<packaging>war</packaging>
