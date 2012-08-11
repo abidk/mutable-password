@@ -1,0 +1,29 @@
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+    <definition name="base.definition" template="/WEB-INF/template/layout.jsp">
+        <put-attribute name="body" value="" />
+    </definition>
+
+    <definition name="index" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/view/index.jsp" />
+    </definition>
+
+    <definition name="login" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/view/login.jsp" />
+    </definition>
+
+    <definition name="viewUsers" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/view/viewUsers.jsp" />
+    </definition>
+
+
+    <definition name="createUser" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/view/createUser.jsp" />
+    </definition>
+
+
+
+</tiles-definitions>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"  
+      xml:lang="en"  
+      lang="en"> 
+<head>
+  <title>Mutable Password Wicket Example</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="layout.css" />
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="container">
+      <div id="logo"></div>
+
+      <div id="nav">
+	    <div id="button">
+		    <div id="buttonlink"><a wicket:id="usersLink">Users</a></div>
+	    </div>
+	    <div id="button">
+		    <div id="buttonlink"><a wicket:id="createUserLink">Create User</a></div>
+	    </div>
+	    <div id="button">
+		    <div id="buttonlink"><a wicket:id="logoutLink">Logout</a></div>
+	    </div>
+	    <div id="button">
+		    <div id="buttonlink"></div>
+	    </div>
+      </div>	
+
+
+      <div style="clear:both;height:2px;width:1px;"></div>
+      <div id="content">
+        <div wicket:id="feedbackPanel"></div>
+        <div style="clear:both;height:6px;width:1px;"></div>
+        
+        <wicket:child />
+      </div>
+    </div>
+
+	<div id="footer">
+	</div>
+  </div>
+</body>
+</html>
