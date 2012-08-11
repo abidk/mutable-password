@@ -36,6 +36,9 @@ public class HashedPasswordBuilder extends MutablePasswordBuilder {
   private int digestLength = DEFAULT_DIGEST_LENGTH;
   private int saltLength = DEFAULT_SALT_LENGTH;
 
+  /**
+   * Builds Hashed Password.
+   */
   public HashedPasswordBuilder() {
     super(HashedPassword.PASSWORD_TYPE);
   }
@@ -79,7 +82,7 @@ public class HashedPasswordBuilder extends MutablePasswordBuilder {
    * 
    * @param plainPassword
    * @param salt
-   * @return
+   * @return mutable password
    */
   public MutablePassword createPassword(String plainPassword) {
     return createPassword(plainPassword, DigestUtils.generateSalt(saltLength));
@@ -91,7 +94,7 @@ public class HashedPasswordBuilder extends MutablePasswordBuilder {
    * 
    * @param plainPassword
    * @param salt
-   * @return
+   * @return mutable password
    */
   public MutablePassword createPassword(String plainPassword, byte[] salt) {
     String hexSalt = DigestUtils.toHex(salt);
