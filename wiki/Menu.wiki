@@ -11,6 +11,7 @@
     * [RomanNumeralPassword Roman Numeral Password]
     * [RotatingPassword Rotating Password]
     * [AlgebraicPassword Algebra Expression Password]
+    * [HashedPassword Hashed Password]
   * Parameters
     * [NewParameter Register a new parameter]
     * [TimeParameter Time Parameter]
