@@ -6,9 +6,15 @@ import abid.password.MutableBlock;
 import abid.password.MutablePassword;
 import abid.password.util.DigestUtils;
 
+/**
+ * Hashes plain password, so it can be securely stored in database.
+ * 
+ * @author Abid
+ * 
+ */
 public class HashedPassword extends MutablePassword {
 
-  /** Password type name **/
+  /** Password type name. **/
   public static final String PASSWORD_TYPE = "hashed";
 
   /**
