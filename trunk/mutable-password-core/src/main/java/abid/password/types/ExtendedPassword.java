@@ -39,9 +39,8 @@ public class ExtendedPassword extends MutablePassword {
   public static final String PASSWORD_TYPE = "extend";
 
   /**
-   * Takes the String password, which is then separated into the text and
-   * mutable block. The mutable block is split into the password type and
-   * expression.
+   * Password is separated into the text and mutable block. The mutable block is
+   * split into the password type and expression.
    * 
    * @param password
    */

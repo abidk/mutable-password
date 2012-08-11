@@ -36,7 +36,7 @@ public abstract class Password {
   private String password;
 
   /**
-   * Stores the password and provides the ability to confirm a password.
+   * Stores the original password.
    * 
    * @param password
    */
@@ -45,7 +45,7 @@ public abstract class Password {
   }
 
   /**
-   * Returns the password.
+   * Returns password.
    * 
    * @return password
    */

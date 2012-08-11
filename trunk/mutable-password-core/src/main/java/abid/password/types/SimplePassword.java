@@ -17,6 +17,7 @@ package abid.password.types;
 
 import abid.password.Password;
 
+
 /**
  * Just a bog standard plain password that does not mutate.
  * 
