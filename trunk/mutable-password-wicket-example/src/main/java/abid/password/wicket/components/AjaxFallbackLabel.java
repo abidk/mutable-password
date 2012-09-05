@@ -17,12 +17,13 @@ package abid.password.wicket.components;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 
 /**
- * Displays text inside the label when JavaScript is enabled, otherwise it will
- * default to some other text when JavaScript is disabled.
+ * When JavaScript is enabled the ajaxEnabled text is displayed otherwise the
+ * default text is used when JavaScript is disabled.
  * 
  * @author Abid Khalil
  * 
@@ -43,8 +44,9 @@ public class AjaxFallbackLabel extends Label {
       @Override
       public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-        response.renderOnLoadJavaScript(String.format("document.getElementById('%s').innerHTML='%s'", getMarkupId(), ajaxEnabledText));
+        response.render(OnDomReadyHeaderItem.forScript(String.format("document.getElementById('%s').innerHTML='%s'", getMarkupId(), ajaxEnabledText)));
       }
+
     });
   }
 
