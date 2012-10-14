@@ -109,9 +109,8 @@ public class CreateUserPage extends BasePage {
       }
     });
 
-    AjaxTabbedPanel tabsPanel = new AjaxTabbedPanel("tabsPanel", tabs);
+    AjaxTabbedPanel<ITab> tabsPanel = new AjaxTabbedPanel<ITab>("tabsPanel", tabs);
     add(tabsPanel);
-
   }
 
   public class AllPasswordPanel extends Panel {
@@ -139,7 +138,6 @@ public class CreateUserPage extends BasePage {
 
         @Override
         protected boolean wantOnSelectionChangedNotifications() {
-          // relies on AJAX, could instead add an update button TODO?
           return true;
         }
 
